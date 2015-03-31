@@ -14,4 +14,6 @@ $user = new User;
 
 define('SITE_URL', 'http://'.$site_config->site_host.$site_config->site_module);
 
+$template->set_custom_template(DIR_BASE.'styles', 'default');
+
 ?>
