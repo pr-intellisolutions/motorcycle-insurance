@@ -1,0 +1,308 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Software Project Management Plan (SPMP) for Rubeli Motorcycle Road Services 
+
+
+
+Baseline version 1.0
+Issued on: 
+
+
+Issued by: PR InteliSolution
+Issued for: Rubeli Motorcycle Road Services
+
+Revision Chart 
+
+Version
+Date
+Author 
+Changes 
+0.1
+April 19, 2015
+Karina Malpica
+Document creation. 
+
+
+
+
+
+
+
+
+
+  Preface 
+
+The following Software Project Management Plan (SPMP) describes the PR InteliSolutions proposed plan to complete the website requested by Rubeli Motorcycle Road Services. The project will deal with the required interfaces, databases, and payments. 
+
+This SPMP is intended to be used by Rubeli Motorcycle Road Services in order to evaluate  PR InteliSolutions' response to their Project Proposal. This SPMP will also be used as reference to project plans and process by the project participant in case the Rubeli Motorcycle Road Services accept the SPMP. 
+
+
+Table of Contents
+
+
+List of Figures
+
+
+List of Tables 
+
+
+1 Introduction
+
+1.1 Project Overview
+
+1.1.1 Purpose, Scope and Objectives
+
+The purpose of this project is to evaluate the design, implementation and maintenance requirements of the Rubeli Motorcycle Road Services web page. 
+
+The creation of the website, the database and the required route algorithms are within the scope of this project. Activities not directly related to this topic will be considered out of scope. 
+
+Following the project objectives: 
+Complete the project by the due data.
+Fulfill all Rubeli Motorcycle Road Services requirements. 
+
+1.2 Project Deliverables
+
+The following listed items are the deliverables required by the Rubeli Motorcycle Road Services project: 
+
+Requirements Specification Document describing the functional and non-functional requirements of the system plus use case.   
+
+Requirement Analysis describing the functional and non-functional requirements of the system plus high level object model and sequence diagrams.
+
+Architecture Specifications describing design goals, system decomposition, software/hardware platforms and data management. 
+
+Object Specification describing low level class design based on the functional and nonfunctional specifications, cases and the system decomposition.
+
+Source code including a functional prototype of the system. 
+
+Test Plan describing the system unit and the performed tests including the expected and actual results. 
+
+1.3 Evolution of the SPMP
+
+The software project management plan is under version control, new versions will be available on the PR InteliSolutions GitHub page where is available for all the project members. 
+
+1.4 Reference Materials
+
+The following is used by this project: 
+
+
+
+1.5 Definitions and Acronyms
+
+SPMP	Software Project Management Plan
+
+
+2 Project Organization 
+
+2.1 Process Model
+
+This project start on March ……, 2015 and plan to be terminated on November 1st, 2015. 
+
+The Waterfall model will be followed for this project giving us the ability to make changes to any higher stage if required. …………………………………………………………..
+
+
+2.2 Organizational Structure
+
+The team has 4 members and …. deliverables and …. phases.  There is a team leader for the whole project………………... There is a team leader for each phase……………….
+
+2.3 Organizational Boundaries and Interfaces
+
+Following the team members information. 
+
+Name 
+Email
+Carlos 
+
+Christian 
+
+Dennis Borrero
+
+Karina Malpica
+malpica_85989@students.pupr.edu
+
+
+2.4 Project Responsibilities
+
+Team leader will be responsible for the following:
+Coordinate meetings: Verifying all actions are complete. 
+Team notifications: Distribute update information to project members. 
+
+Team members will be responsible for the following:
+Complete agreed actions by the deadline.
+Attend team meetings. 
+
+
+3 Managerial Process
+
+3.1 Management Objectives and Priorities
+
+The management objective is to deliver to Rubeli Motorcycle Road Services the system on time. The planning and monitoring process will allow us to complete this objective plus providing a quality product. 
+
+3.2 Assumptions, Dependencies, and Constraints
+
+The team will manage the project to comply with the real world specifications and environment, although the project will be limited by the class environment constraints. 
+
+3.3 Risk Management
+
+Risk: Due date appears to be untenable.
+Contingency:  Request deliverable to be rolled.
+
+Risk: Team member s dropping the course.
+Contingency: Break the member part into smaller parts that can be redistribute between the group members. 
+
+Risk: Client does not respond to system questions and requirements in a reasonable time frame. 
+Contingency: Use team consensus to assume the question's answer. 
+
+Risk: Loss of critical documents or information.
+Contingency: Each member is responsible to backup the information on the server before making any changes, in case of needed use the most recent version to replace the information or documents. 
+
+3.4 Monitoring and Controlling Mechanisms
+
+The minutes produces in each meeting will contain the assigned actions of each member. Each member is responsible for submit each action before the due date. This actions will be monitored by the team leader.  In case any team member can not complete an action by the due date they should contact the project team in order to manage the situation and its contingency actions. 
+
+3.5 Staffing Plan
+
+Quantity of personnel
+Task
+Required Skills 
+Training or Retraining 
+Start time 
+Task Duration 
+
+
+
+
+
+
+
+
+4 Technical Process
+ 
+4.1 Methods, Tools, and Techniques
+
+The following list the tools required for the life cycle of the project, changes may applied. 
+
+Purpose
+Tool
+
+
+Communication Tools
+GitHub Inc.
+Internet Browser
+Google Chrome 
+FTP Solution
+FileZilla
+
+
+
+
+4.2 Software Documentation
+
+The following result in project deliverable and should be reviewed by the team leader. 
+
+Project Planning: Software Project Management Plan (SPMP)
+Requirement Analysis: Software Requirement Specifications (SRS)
+System Design: System Design Document (SDD)
+Object Specification: Object Design Document (ODD)
+Test Plan: Software Test Plan (STD) 
+
+4.3 Project Support Functions
+
+Besides the team leader other group members should be responsible of different task in order to complete the project within the established time and with comply with the requirements. 
+
+Verification and Validation: check that the software is within the established requirements. 
+
+Web page configuration: plan, control and coordinate the identification and change of the web  interfaces through all the phases. 
+
+5 Work Packages, Schedule, and Budget
+
+5.1 Work Packages
+
+Work Package
+Responsible 
+Estimated Hours
+SPMP
+
+
+SRS
+
+
+SDD
+
+
+Code 
+
+
+STD
+
+
+
+
+
+Document Reviews
+
+
+Meetings 
+
+
+Presentations
+
+
+
+
+5.2 Dependencies
+
+………………….
+
+5.3 Resource Requirements
+
+All the members of the group are required as human resources from the starting to the end of the project and the hourly rate will be $0 as this project is only for course purposes. In addition the following 
+
+5.4 Budget and Resource Allocation
+
+All needed resources will be covered by the team member since this project is impulse by academic purposes.  Human resource allocation will be based on the based on the deliverables and will be described in the Schedule section of this document. 
+
+5.5 Schedule
+
+The following list the tasks to be complete and each deadline, however some changes may applied in the process. 
+
+Task 
+Deadline
+Intermediate presentation
+May 2015
+SPMP
+
+SDD
+
+Code 
+
+STD
+
+Coding complete
+
+Acceptance test
+November 2015
+Final presentation
+November 2015
+Project deadline 
+November 2015
+
+
+6 Additional Components 
+
+6.1 Index
+
+6.2 Appendices 
