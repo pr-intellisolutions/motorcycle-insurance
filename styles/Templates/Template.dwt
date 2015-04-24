@@ -1,15 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/Template.dwt" codeOutsideHTMLIsLocked="false" -->
+<html xmlns="http://www.w3.org/1999/xhtml">
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="robots" content="all" />
-      <!-- InstanceBeginEditable name="doctitle" -->
+      <!-- TemplateBeginEditable name="doctitle" -->
       <title>Seguros de Motoras</title>
-      <!-- InstanceEndEditable -->
-      <link href="css/dcmegamenu.css" rel="stylesheet" type="text/css" />
+      <!-- TemplateEndEditable -->
+      <link href="../css/dcmegamenu.css" rel="stylesheet" type="text/css" />
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-   <script type='text/javascript' src='js/jquery.hoverIntent.minified.js'></script>
-   <script type='text/javascript' src='js/jquery.dcmegamenu.1.3.3.js'></script>
+   <script type='text/javascript' src='../js/jquery.hoverIntent.minified.js'></script>
+   <script type='text/javascript' src='../js/jquery.dcmegamenu.1.3.3.js'></script>
       <script type="text/javascript">
          $(document).ready(function($){
          	$('#mega-menu-1').dcMegaMenu({
@@ -21,14 +21,14 @@
          	});
          });
       </script>
-   <link href="css/motorcycleInsurance.css" rel="stylesheet" type="text/css" />
+   <link href="../css/motorcycleInsurance.css" rel="stylesheet" type="text/css" />
    
 
 <div class="wrap">
 
          <ul class="mega-menu" id="mega-menu-1" name="mega-menu-1">
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="login.html">Iniciar Sesión</a></li>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="../login.html">Iniciar Sesión</a></li>
             <li>
                <a href="#">Servicios</a>
                <ul>
@@ -71,13 +71,9 @@
    </head>
    
    <body>
-<!-- InstanceBeginEditable name="body" -->
+<!-- TemplateBeginEditable name="body" -->
 
-<br /><br /><br /><br /><br /><br /><br /><br /><br />
-<center> INICIO </center>
-
-
-<!-- InstanceEndEditable -->
+<!-- TemplateEndEditable -->
    </body>
    
-<!-- InstanceEnd --></html>
+</html>

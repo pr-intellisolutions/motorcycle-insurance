@@ -4,7 +4,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="robots" content="all" />
       <!-- InstanceBeginEditable name="doctitle" -->
-      <title>Seguros de Motoras</title>
+      <title>Iniciar Sesión - Seguros para Motoras</title>
       <!-- InstanceEndEditable -->
       <link href="css/dcmegamenu.css" rel="stylesheet" type="text/css" />
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -72,11 +72,27 @@
    
    <body>
 <!-- InstanceBeginEditable name="body" -->
-
-<br /><br /><br /><br /><br /><br /><br /><br /><br />
-<center> INICIO </center>
-
-
+      <div class="welcome">
+         <p align="right"><a href="../login/logoff.php">Terminar Sesión</a></p>
+      </div>
+      <!-- ELSE -->
+      <br />
+      <br />
+      <br />
+      <br />
+   <div class="login">
+         <form action="{LOGIN_FORM_ACTION}" method="{LOGIN_FORM_METHOD}">
+            <fieldset>
+               <legend>Acceso</legend>
+               <br />
+               <label>Nombre de usuario: <input id="username" type="text" name="username"></label>
+               <br />
+               <label>Contrase&ntilde;a: <input id="password" type="password" name="password"></label>
+               <br /><br />
+               <input type="submit" value="Acceder">
+            </fieldset>
+         </form>
+      </div>
 <!-- InstanceEndEditable -->
    </body>
    
