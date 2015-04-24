@@ -1,7 +1,8 @@
 <?php
 require_once('../common.php');
 
-$template->set_custom_template(DIR_BASE.'login/styles', 'login', DIR_BASE.'styles');
+$template->set_custom_template(DIR_BASE.'styles', 'default');
+$template->assign_var('SITE_URL', SITE_URL);
 
 if ($user->auth())
 {
@@ -39,4 +40,12 @@ if (isset($_POST['username']) && isset($_POST['password']))
 		}
 	}
 }
+else
+{
+	$template->assign_vars(array('LOGIN_FORM_ACTION' => $_SERVER['PHP_SELF'],
+		'LOGIN_FORM_METHOD' => 'POST'));
+}
+$template->set_filenames(array('body' => 'login.html'));
+
+$template->display('body');
 ?>
