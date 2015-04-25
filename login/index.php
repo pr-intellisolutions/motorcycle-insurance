@@ -40,11 +40,11 @@ if (isset($_POST['username']) && isset($_POST['password']))
 		}
 	}
 }
-else
-{
-	$template->assign_vars(array('LOGIN_FORM_ACTION' => $_SERVER['PHP_SELF'],
-		'LOGIN_FORM_METHOD' => 'POST'));
-}
+
+$template->assign_vars(array('LOGIN_FORM_ACTION' => $_SERVER['PHP_SELF'],
+	'LOGIN_FORM_METHOD' => 'POST',
+	'LOGIN_ERROR_MESSAGE' => $error_message));
+
 $template->set_filenames(array('body' => 'login.html'));
 
 $template->display('body');

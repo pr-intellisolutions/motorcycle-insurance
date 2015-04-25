@@ -4,7 +4,7 @@ form {
     margin: auto;
     position:relative;
     width: 400px;
-    height: 250px;
+    /*height: 250px;*/
     font-family: Arial;
     font-size: 16px;
     line-height: 20px;
@@ -20,6 +20,12 @@ form {
     -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+hr {
+	height: 0;
+	border: 0;
+	border-top: 1px solid rgba(0,0,0,0.1);
+	border-bottom: 1px solid rgba(255,255,255,0.3);
 }
 input {
     width: 375px;
