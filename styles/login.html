@@ -77,25 +77,53 @@
       <br />
       <br />
    <div class="login">
-         <form action="{LOGIN_FORM_ACTION}" method="{LOGIN_FORM_METHOD}">
+         <form id="loginForm" action="{LOGIN_FORM_ACTION}" method="{LOGIN_FORM_METHOD}">
             <fieldset>
                <legend>Acceso</legend>
                <br />
-               <label>Nombre de usuario: <input id="username" type="text" name="username"></label>
+               <label>Nombre de usuario: <span id="emptyUser" style="color:red;"></span><input id="username" type="text" name="username"></label>
                <br />
-               <label>Contrase&ntilde;a: <input id="password" type="password" name="password"></label>
+               <label>Contrase&ntilde;a: <span id="emptyPass" style="color:red;"></span><input id="password" type="password" name="password"></label>
                <br /><br />
                <input type="submit" value="Acceder">
 			   <br />
-			   <p style="color:red;text-align:center;">{LOGIN_ERROR_MESSAGE}</p>
+			   <p id="loginErrorMessage" style="color:red;text-align:center;">{LOGIN_ERROR_MESSAGE}</p>
 			   <hr />
-			   <a href="{SITE_URL}login/username.recovery.php">¿Olvidó su nombre de usuario?</a>
-			   <br />
-			   <a href="{SITE_URL}login/password.recovery.php">¿Olvidó su contraseña?</a>
+			   <a href="{SITE_URL}recovery/">¿Olvidó su nombre de usuario o contraseña?</a>
 			   <br />
 			   <a href="{SITE_URL}register/">Crear una cuenta</a>
             </fieldset>
          </form>
+		<script>
+		// <![CDATA[
+			document.getElementById('loginForm').onsubmit = function()
+			{
+				var emptyField = false;
+
+				document.getElementById('emptyUser').innerHTML = "";
+				document.getElementById('emptyPass').innerHTML = "";
+				document.getElementById('loginErrorMessage').innerHTML = "";
+
+				if (document.getElementById('username').value == null || document.getElementById('username').value == "")
+				{
+					document.getElementById('emptyUser').innerHTML = "*";
+					emptyField = true;
+				}
+				if (document.getElementById('password').value == null || document.getElementById('password').value == "")
+				{
+					document.getElementById('emptyPass').innerHTML = "*";
+					emptyField = true;
+				}
+				if (emptyField == true)
+				{
+					document.getElementById('loginErrorMessage').innerHTML = "Los campos marcados con * son requeridos";
+					return false;
+				}
+				else
+					return true;
+			}
+		// ]]
+		</script>
       </div>
 <!-- InstanceEndEditable -->
    </body>
