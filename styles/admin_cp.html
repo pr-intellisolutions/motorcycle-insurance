@@ -1,181 +1,287 @@
-<!-- INCLUDE admin_header.html -->
-<div class="container-fuid">
-	<div class="row">
-		<div class="col-md-2">
+		<!-- INCLUDE admin_header.html -->
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-2">
 
-		</div>
-
-		<div class="col-md-8">
-			<h3 class="page-header">Panel de administración <small><a href="{SITE_URL}">(Salir)</a></small></h3>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-md-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Navegación</h3>
 				</div>
 
-				<div class="list-group">
-				  <a href="index.php?option=siteConfig" class="list-group-item">Configuración general del sitio</a>
-				  <a href="index.php?option=dbConfig" class="list-group-item">Configuración de la base de datos</a>
-				  <a href="index.php?option=security" class="list-group-item">Ajustar niveles de seguridad</a>
-				  <a href="index.php?option=dbBackup" class="list-group-item">Resguardar base de datos</a>
-				  <a href="index.php?option=dbRestore" class="list-group-item">Recuperar base de datos</a>
+				<div class="col-md-8">
+					<h3 class="page-header">Panel de administración <small><a href="{SITE_URL}">(Salir)</a></small></h3>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-2">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Navegación</h3>
+						</div>
+
+						<div class="list-group">
+						  <a href="index.php?option=general" class="list-group-item">Configuración general del sitio</a>
+						  <a href="index.php?option=db" class="list-group-item">Configuración de la base de datos</a>
+						  <a href="index.php?option=security" class="list-group-item">Ajustar niveles de seguridad</a>
+						  <a href="index.php?option=backup" class="list-group-item">Resguardar base de datos</a>
+						  <a href="index.php?option=restore" class="list-group-item">Recuperar base de datos</a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-8">
+				<script>
+				$(document).ready(function(){
+					$('[data-toggle="popover"]').popover(); 
+				});
+				</script>
+					<!-- IF CONTEXT_MENU == "home" -->
+						<!-- IF FORM_STATUS == "INVALID" -->
+							<ol class="breadcrumb">
+								<li class="active">Inicio</li>
+							</ol>
+							<p class="text-primary">Vea el menú a la izquierda para más opciones.</p>
+						<!-- ELSEIF FORM_STATUS == "SUCCESS" -->
+							<div class="alert alert-success" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								¡La configuración ha sido guardada correctamente!
+							</div>
+							<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin';",1500);
+							</script>
+						<!-- ELSEIF FORM_STATUS == "CANCEL" -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								¡No se efectuó ningún cambio en la configuración!
+							</div>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin';",1500);
+							</script>
+							<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+						<!-- ENDIF -->
+					<!-- ELSEIF CONTEXT_MENU == "general" -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li class="active">Configuración general del sitio</li>
+						</ol>
+						<div class="alert alert-info" role="alert">
+							<strong>Nota:</strong>
+							Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
+						</div>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Nombre del sitio:</label>
+							<div class="col-sm-4">
+								<textarea class="form-control" rows="3" name="siteName"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Modifique el nombre del sitio. Este nombre puede aparecer en la 
+								parte superior de la página principal y como metadata para los sitios de busqueda.">{SITE_NAME}</textarea>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Descripción del sitio:</label>
+							<div class="col-sm-4">
+								<textarea class="form-control" rows="3" name="siteDesc"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Modifique la descripción del sitio. Esta descripción puede aparecer en la 
+								parte superior de la página principal y como metadata para los sitios de busqueda.">{SITE_DESC}</textarea>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Dirección del sitio:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="siteHost" value="{SITE_HOST}" placeholder="{SITE_HOST}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="La dirección del sitio es aquella que usualmente termina en '.com' como por ejemplo:
+								www.mywebsite.com. También puede ser una dirección de IP que contenga la página web. Esta opción
+								es importante para el funcionamiento correcto de los enlaces de las páginas.">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Directorio principal:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="siteModule" value="{SITE_MODULE}" placeholder="{SITE_MODULE}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="El directorio principal es donde se encuentra la página principal. Usualmente
+								comienza con la dirección del sitio seguido por /. Si la página principal se encuentra en un
+								directorio dentro de la direccion del sitio entonces se debe indicar en este espacio por
+								ejemplo: www.mywebsite.com/homepage/index.html. Donde homepage es un directorio dentro del domain.">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<div class="col-sm-offset-3 col-sm-4">
+							  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
+							  <button type="submit" class="btn btn-primary" name="action" value="saveSiteConfig">Guardar</button>
+							</div>
+						  </div>
+						</form>
+					<!-- ELSEIF CONTEXT_MENU == "db" -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li class="active">Configuración de la base de datos</li>
+						</ol>
+						<div class="alert alert-info" role="alert">
+							<strong>Nota:</strong>
+							Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
+						</div>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Dirección de la base de datos: </label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="dbHost" value="{DB_HOST}" placeholder="{DB_HOST}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="La dirección de la base de datos es la dirección del servidor donde se encuentra
+								ubicada. La misma puede ser una dirección de IP o el nombre del dominio.">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Puerto de la base de datos</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="dbPort" value="{DB_PORT}" placeholder="{DB_PORT}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="El puerto de la base de datos es el número que se le asignó para acceder al servidor.
+								Si este número es 0 el sistema automaticamente detecta el puerto de acceso. Si el puerto fue cambiado
+								en el servidor entonces debe ser especificado.">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Nombre de la base de datos:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="dbName" value="{DB_NAME}" placeholder="{DB_NAME}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="El nombre de la base de datos es el nombre que se le asignó dentro del servidor.">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Usuario:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="dbUser" value="{DB_USER}" placeholder="{DB_USER}">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Contraseña:</label>
+							<div class="col-sm-4">
+								<input type="password" class="form-control" name="dbPass" value="{DB_PASS}" placeholder="{DB_PASS}">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<div class="col-sm-offset-3 col-sm-4">
+							  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
+							  <button type="submit" class="btn btn-primary" name="action" value="saveSiteDB">Guardar</button>
+							</div>
+						  </div>
+						</form>
+					<!-- ELSEIF CONTEXT_MENU == "security" -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li class="active">Ajustar niveles de seguridad</li>
+						</ol>
+						<div class="alert alert-info" role="alert">
+							<strong>Nota:</strong>
+							Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
+						</div>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Complejidad del nombre de usuario:</label>
+							<div class="col-sm-4">
+								<select class="form-control">
+									<option>Alfanumérico</option>
+									<option>Alfanumérico con símbolos</option>
+								</select>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Tamaño mínimo del nombre de usuario:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="userMinLen" value="{USER_MINLEN}" placeholder="{USER_MINLEN}">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Tamaño máximo del nombre de usuario:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="userMaxLen" value="{USER_MAXLEN}" placeholder="{USER_MAXLEN}">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Complejidad de la contraseña:</label>
+							<div class="col-sm-4">
+								<select class="form-control">
+									<option>Simple</option>
+									<option>Normal</option>
+									<option>Fuerte</option>
+								</select>
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Tamaño mínimo de la contraseña:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="passMinLen" value="{PASS_MINLEN}" placeholder="{PASS_MINLEN}">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Tamaño máximo de la contraseña:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="passMaxLen" value="{PASS_MAXLEN}" placeholder="{PASS_MAXLEN}">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Tiempo de expiración de la contraseña:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="passExpiration" value="{PASS_EXPIRATION}" placeholder="{PASS_EXPIRATION}">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label class="col-sm-3 control-label">Intentos antes de bloquar la cuenta:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="userLockdown" value="{USER_LOCKDOWN}" placeholder="{USER_LOCKDOWN}">
+							</div>
+						  </div>
+						  <div class="form-group">
+							<div class="col-sm-offset-3 col-sm-4">
+							  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
+							  <button type="submit" class="btn btn-primary" name="action" value="saveSecurity">Guardar</button>
+							</div>
+						  </div>
+						</form>
+					<!-- ELSEIF CONTEXT_MENU == "backup" -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li class="active">Resguardar base de datos</li>
+						</ol>
+					<!-- ELSEIF CONTEXT_MENU == "restore" -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li class="active">Recuperar base de datos</li>
+						</ol>
+					<!-- ENDIF -->
 				</div>
 			</div>
 		</div>
-		
-		<div class="col-md-8">
-			<!-- IF CONTEXT_MENU == "home" -->
-				<!-- IF FORM_STATUS == "INVALID" -->
-					<p class="text-primary">Vea el menú a la izquierda para más opciones.</p>
-				<!-- ELSEIF FORM_STATUS == "SUCCESS" -->
-					<div class="alert alert-success" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						¡La configuración ha sido guardada correctamente!
-					</div>
-					<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
-					<script type="text/JavaScript">
-						setTimeout("location.href = '{SITE_URL}admin';",1500);
-					</script>
-				<!-- ELSEIF FORM_STATUS == "CANCEL" -->
-					<div class="alert alert-danger" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						¡No se efectuó ningún cambio en la configuración!
-					</div>
-					<script type="text/JavaScript">
-						setTimeout("location.href = '{SITE_URL}admin';",1500);
-					</script>
-					<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
-				<!-- ENDIF -->
-			<!-- ELSEIF CONTEXT_MENU == "siteConfig" -->
-				<p class="text-primary">Configuración general del sitio</p>
-				<div class="alert alert-info" role="alert">
-					<strong>Nota:</strong>
-					Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
-				</div>
-				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Nombre del sitio:</label>
-					<div class="col-sm-4">
-						<textarea class="form-control" rows="3" name="siteName">{SITE_NAME}</textarea>
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Descripción del sitio:</label>
-					<div class="col-sm-4">
-						<textarea class="form-control" rows="3" name="siteDesc">{SITE_DESC}</textarea>
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Dirección web:</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="siteHost" value="{SITE_HOST}" placeholder="{SITE_HOST}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Directorio principal:</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="siteModule" value="{SITE_MODULE}" placeholder="{SITE_MODULE}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<div class="col-sm-offset-3 col-sm-4">
-					  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
-					  <button type="submit" class="btn btn-primary" name="action" value="saveSiteConfig">Guardar</button>
-					</div>
-				  </div>
-				</form>
-			<!-- ELSEIF CONTEXT_MENU == "dbConfig" -->
-				<p class="text-primary">Configuración de la base de datos</p>
-				<div class="alert alert-info" role="alert">
-					<strong>Nota:</strong>
-					Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
-				</div>
-				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Dirección de la base de datos: </label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="dbHost" value="{DB_HOST}" placeholder="{DB_HOST}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Puerto de la base de datos</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="dbPort" value="{DB_PORT}" placeholder="{DB_PORT}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Nombre de la base de datos:</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="dbName" value="{DB_NAME}" placeholder="{DB_NAME}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Usuario:</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="dbUser" value="{DB_USER}" placeholder="{DB_USER}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Contraseña:</label>
-					<div class="col-sm-4">
-						<input type="password" class="form-control" name="dbPass" value="{DB_PASS}" placeholder="{DB_PASS}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<div class="col-sm-offset-3 col-sm-4">
-					  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
-					  <button type="submit" class="btn btn-primary" name="action" value="saveSiteDB">Guardar</button>
-					</div>
-				  </div>
-				</form>
-			<!-- ELSEIF CONTEXT_MENU == "security" -->
-				<p class="text-primary">Ajustar niveles de seguridad</p>
-				<div class="alert alert-info" role="alert">
-					<strong>Nota:</strong>
-					Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
-				</div>
-				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Nombre del sitio:</label>
-					<div class="col-sm-4">
-						<textarea class="form-control" rows="3" name="siteName">{SITE_NAME}</textarea>
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Descripción del sitio:</label>
-					<div class="col-sm-4">
-						<textarea class="form-control" rows="3" name="siteDesc">{SITE_DESC}</textarea>
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Dirección web:</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="siteHost" value="{SITE_HOST}" placeholder="{SITE_HOST}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<label class="col-sm-3 control-label">Directorio principal:</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" name="siteModule" value="{SITE_MODULE}" placeholder="{SITE_MODULE}">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<div class="col-sm-offset-3 col-sm-4">
-					  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
-					  <button type="submit" class="btn btn-primary" name="action" value="saveSecurity">Guardar</button>
-					</div>
-				  </div>
-				</form>
-			<!-- ELSEIF CONTEXT_MENU == "dbBackup" -->
-				<p>Resguardo</p>
-			<!-- ELSEIF CONTEXT_MENU == "dbRestore" -->
-				<p>Recuperar</p>
-			<!-- ENDIF -->
-		</div>
-	</div>
-</div>
-<!-- INCLUDE admin_footer.html -->
+		<!-- INCLUDE admin_footer.html -->

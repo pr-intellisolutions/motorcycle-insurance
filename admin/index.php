@@ -34,18 +34,18 @@ if ($user->auth())
 	{
 		$template->assign_var("FORM_STATUS", "CANCEL");
 	}
-	else if (isset($_GET['option']) && $_GET['option'] === 'siteConfig')
+	else if (isset($_GET['option']) && $_GET['option'] === 'general')
 	{
-		$template->assign_vars(array("CONTEXT_MENU" => 'siteConfig',
+		$template->assign_vars(array("CONTEXT_MENU" => 'general',
 			"SITE_NAME" => $site_config->site_name,
 			"SITE_DESC" => $site_config->site_desc,
 			"SITE_HOST" => $site_config->site_host,
 			"SITE_MODULE" => $site_config->site_module));
 	}
 
-	else if (isset($_GET['option']) && $_GET['option'] === 'dbConfig')
+	else if (isset($_GET['option']) && $_GET['option'] === 'db')
 	{
-		$template->assign_vars(array("CONTEXT_MENU" => 'dbConfig',
+		$template->assign_vars(array("CONTEXT_MENU" => 'db',
 			"DB_HOST" => $site_config->db_host,
 			"DB_PORT" => $site_config->db_port,
 			"DB_NAME" => $site_config->db_name,
@@ -55,11 +55,11 @@ if ($user->auth())
 	else if (isset($_GET['option']) && $_GET['option'] === 'security')
 		$template->assign_var("CONTEXT_MENU", "security");
 
-	else if (isset($_GET['option']) && $_GET['option'] === 'dbBackup')
-		$template->assign_var("CONTEXT_MENU", "dbBackup");
+	else if (isset($_GET['option']) && $_GET['option'] === 'backup')
+		$template->assign_var("CONTEXT_MENU", "backup");
 
-	else if (isset($_GET['option']) && $_GET['option'] === 'dbRestore')
-		$template->assign_var("CONTEXT_MENU", "dbRestore");
+	else if (isset($_GET['option']) && $_GET['option'] === 'restore')
+		$template->assign_var("CONTEXT_MENU", "restore");
 
 	$template->set_filenames(array('body' => 'admin_cp.html'));
 
