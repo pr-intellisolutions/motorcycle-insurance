@@ -6,12 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<!-- Bootstrap core CSS -->
-		<link href="../styles/css/bootstrap.min.css" rel="stylesheet">
+		<link href="{SITE_URL}styles/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap custom CSS -->
+		<link href="{SITE_URL}styles/css/sticky-footer.css" rel="stylesheet">
 		<!-- Bootstrap theme -->
-		<link href="../styles/css/bootstrap-theme.min.css" rel="stylesheet">
+		<link href="{SITE_URL}styles/css/bootstrap-theme.min.css" rel="stylesheet">
 		<!-- Bootstrap JavaScript components -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="../styles/js/bootstrap.min.js"></script>
+		<script src="{SITE_URL}styles/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-inverse">
@@ -24,16 +26,16 @@
 					  <span class="icon-bar"></span>
 					</button>
 
-					<img alt="TRO" src="../styles/images/small_logo.png" height="48" width="92">
+					<img alt="TRO" src="{SITE_URL}styles/images/small_logo.png" height="48" width="92">
 				</div>
 			
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Inicio<span class="sr-only">(current)</span></a></li>
-						<li><a href="#">Usuarios y Miembros</a></li>
-						<li><a href="#">Planes y Servicios</a></li>
-						<li><a href="#">Finanzas</a></li>
-						<li><a href="#">Reportes</a></li>
+						<li class="active"><a href="{SITE_URL}admin">Inicio<span class="sr-only">(current)</span></a></li>
+						<li><a href="{SITE_URL}admin/users">Usuarios</a></li>
+						<li><a href="{SITE_URL}admin/services">Planes y Servicios</a></li>
+						<li><a href="{SITE_URL}admin/finances">Finanzas</a></li>
+						<li><a href="{SITE_URL}admin/reports">Reportes</a></li>
 					</ul>
 					
 					<ul class="nav navbar-nav navbar-right">

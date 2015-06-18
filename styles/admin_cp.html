@@ -2,11 +2,11 @@
 <div class="container-fuid">
 	<div class="row">
 		<div class="col-md-2">
-			<!-- Empty for alignment -->
+
 		</div>
 
 		<div class="col-md-8">
-			<h3 class="page-header">Panel de administración</h3>
+			<h3 class="page-header">Panel de administración <small><a href="{SITE_URL}">(Salir)</a></small></h3>
 		</div>
 	</div>
 	
@@ -18,17 +18,163 @@
 				</div>
 
 				<div class="list-group">
-				  <a href="#" class="list-group-item">Cras justo odio</a>
-				  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-				  <a href="#" class="list-group-item">Morbi leo risus</a>
-				  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-				  <a href="#" class="list-group-item">Vestibulum at eros</a>
+				  <a href="index.php?option=siteConfig" class="list-group-item">Configuración general del sitio</a>
+				  <a href="index.php?option=dbConfig" class="list-group-item">Configuración de la base de datos</a>
+				  <a href="index.php?option=security" class="list-group-item">Ajustar niveles de seguridad</a>
+				  <a href="index.php?option=dbBackup" class="list-group-item">Resguardar base de datos</a>
+				  <a href="index.php?option=dbRestore" class="list-group-item">Recuperar base de datos</a>
 				</div>
 			</div>
 		</div>
 		
 		<div class="col-md-8">
-			<h3>Añadir Contexto</h3>
+			<!-- IF CONTEXT_MENU == "home" -->
+				<!-- IF FORM_STATUS == "INVALID" -->
+					<p class="text-primary">Vea el menú a la izquierda para más opciones.</p>
+				<!-- ELSEIF FORM_STATUS == "SUCCESS" -->
+					<div class="alert alert-success" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						¡La configuración ha sido guardada correctamente!
+					</div>
+					<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+					<script type="text/JavaScript">
+						setTimeout("location.href = '{SITE_URL}admin';",1500);
+					</script>
+				<!-- ELSEIF FORM_STATUS == "CANCEL" -->
+					<div class="alert alert-danger" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						¡No se efectuó ningún cambio en la configuración!
+					</div>
+					<script type="text/JavaScript">
+						setTimeout("location.href = '{SITE_URL}admin';",1500);
+					</script>
+					<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+				<!-- ENDIF -->
+			<!-- ELSEIF CONTEXT_MENU == "siteConfig" -->
+				<p class="text-primary">Configuración general del sitio</p>
+				<div class="alert alert-info" role="alert">
+					<strong>Nota:</strong>
+					Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
+				</div>
+				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Nombre del sitio:</label>
+					<div class="col-sm-4">
+						<textarea class="form-control" rows="3" name="siteName">{SITE_NAME}</textarea>
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Descripción del sitio:</label>
+					<div class="col-sm-4">
+						<textarea class="form-control" rows="3" name="siteDesc">{SITE_DESC}</textarea>
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Dirección web:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="siteHost" value="{SITE_HOST}" placeholder="{SITE_HOST}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Directorio principal:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="siteModule" value="{SITE_MODULE}" placeholder="{SITE_MODULE}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<div class="col-sm-offset-3 col-sm-4">
+					  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
+					  <button type="submit" class="btn btn-primary" name="action" value="saveSiteConfig">Guardar</button>
+					</div>
+				  </div>
+				</form>
+			<!-- ELSEIF CONTEXT_MENU == "dbConfig" -->
+				<p class="text-primary">Configuración de la base de datos</p>
+				<div class="alert alert-info" role="alert">
+					<strong>Nota:</strong>
+					Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
+				</div>
+				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Dirección de la base de datos: </label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="dbHost" value="{DB_HOST}" placeholder="{DB_HOST}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Puerto de la base de datos</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="dbPort" value="{DB_PORT}" placeholder="{DB_PORT}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Nombre de la base de datos:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="dbName" value="{DB_NAME}" placeholder="{DB_NAME}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Usuario:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="dbUser" value="{DB_USER}" placeholder="{DB_USER}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Contraseña:</label>
+					<div class="col-sm-4">
+						<input type="password" class="form-control" name="dbPass" value="{DB_PASS}" placeholder="{DB_PASS}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<div class="col-sm-offset-3 col-sm-4">
+					  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
+					  <button type="submit" class="btn btn-primary" name="action" value="saveSiteDB">Guardar</button>
+					</div>
+				  </div>
+				</form>
+			<!-- ELSEIF CONTEXT_MENU == "security" -->
+				<p class="text-primary">Ajustar niveles de seguridad</p>
+				<div class="alert alert-info" role="alert">
+					<strong>Nota:</strong>
+					Cualquier cambio que efectúe puede afectar el comportamiendo adecuado de la página, sepa de antemano lo que está modificando.
+				</div>
+				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Nombre del sitio:</label>
+					<div class="col-sm-4">
+						<textarea class="form-control" rows="3" name="siteName">{SITE_NAME}</textarea>
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Descripción del sitio:</label>
+					<div class="col-sm-4">
+						<textarea class="form-control" rows="3" name="siteDesc">{SITE_DESC}</textarea>
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Dirección web:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="siteHost" value="{SITE_HOST}" placeholder="{SITE_HOST}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<label class="col-sm-3 control-label">Directorio principal:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="siteModule" value="{SITE_MODULE}" placeholder="{SITE_MODULE}">
+					</div>
+				  </div>
+				  <div class="form-group">
+					<div class="col-sm-offset-3 col-sm-4">
+					  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
+					  <button type="submit" class="btn btn-primary" name="action" value="saveSecurity">Guardar</button>
+					</div>
+				  </div>
+				</form>
+			<!-- ELSEIF CONTEXT_MENU == "dbBackup" -->
+				<p>Resguardo</p>
+			<!-- ELSEIF CONTEXT_MENU == "dbRestore" -->
+				<p>Recuperar</p>
+			<!-- ENDIF -->
 		</div>
 	</div>
 </div>
