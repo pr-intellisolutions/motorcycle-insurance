@@ -1,10 +1,17 @@
+		</div><!-- container-fluid -->
 		<footer class="footer">
-		  <div class="container">
-			<p class="text-muted" align="center"> TRO AdminCP v0.1 created by PR-IntelliSolutions and powered by
-				<a href="getbootstrap.com">Bootstrap</a> and
-				<a href="www.phpbb.com">phpBB</a>.
+			<div class="container">
+				<p class="text-muted" align="center"> TRO AdminCP v0.1 created by PR-IntelliSolutions and powered by
+					<a href="getbootstrap.com">Bootstrap</a> and
+					<a href="www.phpbb.com">phpBB</a>.
 				</p>
-		  </div>
+			</div>
 		</footer>
+		<!-- This script enables the popover feature used as help tips for the configuration options. -->
+		<script>
+			$(document).ready(function(){
+				$('[data-toggle="popover"]').popover(); 
+			});
+		</script>
 	</body>
 </html>

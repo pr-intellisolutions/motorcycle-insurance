@@ -8,10 +8,30 @@ $template->assign_var('SITE_URL', SITE_URL);
 
 if ($user->auth())
 {
-	$template->assign_vars(array('CONTEXT_MENU' => 'home',
-		"FORM_ACTION" => $_SERVER['PHP_SELF'],
-		"FORM_METHOD" => "POST",
-		"FORM_STATUS" => "INVALID"));
+	$stmnt = sprintf("SELECT * FROM login WHERE user = '%s'", $user->user);
+
+	$result = $user->sql_conn->query($stmnt);
+
+	if ($result->num_rows > 0)
+	{
+		$row = $result->fetch_assoc();	
+
+		$template->assign_vars(array('CONTEXT_MENU' => 'home',
+			"FORM_ACTION" => $_SERVER['PHP_SELF'],
+			"FORM_METHOD" => "POST",
+			"FORM_STATUS" => "INVALID",
+			"USERNAME" => $row['user'],
+			"LAST_VISIT" => $row['lastvisit'],
+			"LAST_IP_ADDRESS" => $row['lastvisitip'],
+			"LAST_BROWSER" => $row['lastvisitbrowser'],
+			"CURRENT_BROWSER" => $_SERVER['HTTP_USER_AGENT'],
+			"CURRENT_IP_ADDRESS" => $_SERVER['REMOTE_ADDR'],
+			"CURRENT_DATE" => date('Y-m-d G:i:s')));
+	}
+	else
+		trigger_error('AdminCP::PageLoad(): '.$this->sql_conn->connect_error, E_USER_ERROR);
+
+	$result->close();
 
 	if (isset($_POST['action']) && $_POST['action'] === 'saveSiteConfig')
 	{		

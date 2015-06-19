@@ -1,24 +1,12 @@
 		<!-- INCLUDE admin_header.html -->
-		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-2">
-
-				</div>
-
-				<div class="col-md-8">
-					<h3 class="page-header">Panel de administración <small><a href="{SITE_URL}">(Salir)</a></small></h3>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">Navegación</h3>
 						</div>
-
 						<div class="list-group">
-						  <a href="index.php?option=general" class="list-group-item">Configuración general del sitio</a>
+						  <a href="index.php?option=general" class="list-group-item">Configuración del sitio</a>
 						  <a href="index.php?option=db" class="list-group-item">Configuración de la base de datos</a>
 						  <a href="index.php?option=security" class="list-group-item">Ajustar niveles de seguridad</a>
 						  <a href="index.php?option=backup" class="list-group-item">Resguardar base de datos</a>
@@ -26,19 +14,46 @@
 						</div>
 					</div>
 				</div>
-				
 				<div class="col-md-8">
-				<script>
-				$(document).ready(function(){
-					$('[data-toggle="popover"]').popover(); 
-				});
-				</script>
 					<!-- IF CONTEXT_MENU == "home" -->
 						<!-- IF FORM_STATUS == "INVALID" -->
 							<ol class="breadcrumb">
 								<li class="active">Inicio</li>
 							</ol>
-							<p class="text-primary">Vea el menú a la izquierda para más opciones.</p>
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Información General</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Última visita registrada</td>
+											<td>{LAST_VISIT}</td>
+										</tr>
+										<tr> 
+											<td>Última dirección de ip registrada</td>
+											<td>{LAST_IP_ADDRESS}</td>
+										</tr>
+										<tr> 
+											<td>Último navegador registrado</td>
+											<td>{LAST_BROWSER}</td>
+										</tr>
+										<tr> 
+											<td>Navegador actual</td>
+											<td>{CURRENT_BROWSER}</td>
+										</tr>
+										<tr>
+											<td>Dirección de ip actual</td>
+											<td>{CURRENT_IP_ADDRESS}</td>
+										</tr>
+										<tr> 
+											<td>Fecha actual</td>
+											<td>{CURRENT_DATE}</td>
+										</tr>
+									</tbody>
+								</table>
 						<!-- ELSEIF FORM_STATUS == "SUCCESS" -->
 							<div class="alert alert-success" role="alert">
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -61,7 +76,7 @@
 					<!-- ELSEIF CONTEXT_MENU == "general" -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
-							<li class="active">Configuración general del sitio</li>
+							<li class="active">Configuración del sitio</li>
 						</ol>
 						<div class="alert alert-info" role="alert">
 							<strong>Nota:</strong>
@@ -182,13 +197,25 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Usuario:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="dbUser" value="{DB_USER}" placeholder="{DB_USER}">
+								<input type="text" class="form-control" name="dbUser" value="{DB_USER}" placeholder="{DB_USER}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="El nombre de usuario para la cuenta con privilegios para acceder la base de datos.">
 							</div>
 						  </div>
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Contraseña:</label>
 							<div class="col-sm-4">
-								<input type="password" class="form-control" name="dbPass" value="{DB_PASS}" placeholder="{DB_PASS}">
+								<input type="password" class="form-control" name="dbPass" value="{DB_PASS}" placeholder="{DB_PASS}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="La contraseña para la cuenta con privilegios para acceder la base de datos.">
 							</div>
 						  </div>
 						  <div class="form-group">
@@ -258,7 +285,7 @@
 							</div>
 						  </div>
 						  <div class="form-group">
-							<label class="col-sm-3 control-label">Intentos antes de bloquar la cuenta:</label>
+							<label class="col-sm-3 control-label">Intentos antes de bloquar una cuenta:</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="userLockdown" value="{USER_LOCKDOWN}" placeholder="{USER_LOCKDOWN}">
 							</div>
@@ -283,5 +310,4 @@
 					<!-- ENDIF -->
 				</div>
 			</div>
-		</div>
 		<!-- INCLUDE admin_footer.html -->
