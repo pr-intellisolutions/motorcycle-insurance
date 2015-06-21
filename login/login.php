@@ -57,7 +57,7 @@ class Login extends User
 					$this->passchg = User::OLDPASS_EXPIRED;
 				else
 				{
-					$stmt = sprintf("UPDATE login SET lastvisit = now(), lastvisitip = ip, lastvisitbrowser = browser, ip = '%s', browser = '%s', session = '%s', login_attempts = %d WHERE user = '%s'",
+					$stmt = sprintf("UPDATE login SET lastvisit = now(), lastip = ip, lastbrowser = browser, ip = '%s', browser = '%s', session = '%s', login_attempts = %d WHERE user = '%s'",
 						$_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], session_id(), 0, $this->user);
 
 					if (!$this->sql_conn->query($stmt))

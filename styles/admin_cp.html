@@ -6,16 +6,16 @@
 							<h3 class="panel-title">Navegación</h3>
 						</div>
 						<div class="list-group">
-						  <a href="index.php?option=general" class="list-group-item">Configuración del sitio</a>
-						  <a href="index.php?option=db" class="list-group-item">Configuración de la base de datos</a>
-						  <a href="index.php?option=security" class="list-group-item">Ajustar niveles de seguridad</a>
-						  <a href="index.php?option=backup" class="list-group-item">Resguardar base de datos</a>
-						  <a href="index.php?option=restore" class="list-group-item">Recuperar base de datos</a>
+						  <a href="index.php?option=1" class="list-group-item">Configuración del sitio</a>
+						  <a href="index.php?option=2" class="list-group-item">Configuración de la base de datos</a>
+						  <a href="index.php?option=3" class="list-group-item">Ajustar niveles de seguridad</a>
+						  <a href="index.php?option=4" class="list-group-item">Resguardar base de datos</a>
+						  <a href="index.php?option=5" class="list-group-item">Recuperar base de datos</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-8">
-					<!-- IF CONTEXT_MENU == "home" -->
+					<!-- IF SIDE_CONTENT == "home" -->
 						<!-- IF FORM_STATUS == "INVALID" -->
 							<ol class="breadcrumb">
 								<li class="active">Inicio</li>
@@ -73,7 +73,7 @@
 							</script>
 							<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
 						<!-- ENDIF -->
-					<!-- ELSEIF CONTEXT_MENU == "general" -->
+					<!-- ELSEIF SIDE_CONTENT == 1 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Configuración del sitio</li>
@@ -145,7 +145,7 @@
 							</div>
 						  </div>
 						</form>
-					<!-- ELSEIF CONTEXT_MENU == "db" -->
+					<!-- ELSEIF SIDE_CONTENT == 2 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Configuración de la base de datos</li>
@@ -221,11 +221,11 @@
 						  <div class="form-group">
 							<div class="col-sm-offset-3 col-sm-4">
 							  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
-							  <button type="submit" class="btn btn-primary" name="action" value="saveSiteDB">Guardar</button>
+							  <button type="submit" class="btn btn-primary" name="action" value="saveDBConfig">Guardar</button>
 							</div>
 						  </div>
 						</form>
-					<!-- ELSEIF CONTEXT_MENU == "security" -->
+					<!-- ELSEIF SIDE_CONTENT == 3 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Ajustar niveles de seguridad</li>
@@ -238,9 +238,9 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Complejidad del nombre de usuario:</label>
 							<div class="col-sm-4">
-								<select class="form-control">
-									<option>Alfanumérico</option>
-									<option>Alfanumérico con símbolos</option>
+								<select class="form-control" name="userComplexity">
+									<option value="alphanumeric" {ALPHANUMERIC_SELECTED}>Alfanumérico</option>
+									<option value="alphanumeric with spacers" {ALPHA_SPACERS_SELECTED}>Alfanumérico con símbolos</option>
 								</select>
 							</div>
 						  </div>
@@ -259,10 +259,10 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Complejidad de la contraseña:</label>
 							<div class="col-sm-4">
-								<select class="form-control">
-									<option>Simple</option>
-									<option>Normal</option>
-									<option>Fuerte</option>
+								<select class="form-control" name="passComplexity">
+									<option value="simple" {SIMPLE_SELECTED}>Simple</option>
+									<option value="normal" {NORMAL_SELECTED}>Normal</option>
+									<option value="strong" {STRONG_SELECTED}>Fuerte</option>
 								</select>
 							</div>
 						  </div>
@@ -287,22 +287,22 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Intentos antes de bloquar una cuenta:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="userLockdown" value="{USER_LOCKDOWN}" placeholder="{USER_LOCKDOWN}">
+								<input type="text" class="form-control" name="maxLoginAttempts" value="{MAX_LOGIN_ATTEMPTS}" placeholder="{MAX_LOGIN_ATTEMPTS}">
 							</div>
 						  </div>
 						  <div class="form-group">
 							<div class="col-sm-offset-3 col-sm-4">
 							  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
-							  <button type="submit" class="btn btn-primary" name="action" value="saveSecurity">Guardar</button>
+							  <button type="submit" class="btn btn-primary" name="action" value="saveSecurityConfig">Guardar</button>
 							</div>
 						  </div>
 						</form>
-					<!-- ELSEIF CONTEXT_MENU == "backup" -->
+					<!-- ELSEIF SIDE_CONTENT == 4 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Resguardar base de datos</li>
 						</ol>
-					<!-- ELSEIF CONTEXT_MENU == "restore" -->
+					<!-- ELSEIF SIDE_CONTENT == 5 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Recuperar base de datos</li>
