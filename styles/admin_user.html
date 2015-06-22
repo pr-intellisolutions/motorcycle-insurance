@@ -7,20 +7,86 @@
 						</div>
 
 						<div class="list-group">
-						  <a href="#" class="list-group-item">Ver listado de usuarios</a>
-						  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-						  <a href="#" class="list-group-item">Morbi leo risus</a>
-						  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-						  <a href="#" class="list-group-item">Vestibulum at eros</a>
+						  <a href="#" class="list-group-item">Crear una cuenta</a>
+						  <a href="#" class="list-group-item">Manejar perfil de usuarios</a>
+						  <a href="#" class="list-group-item">Manejar privilegios de usuarios</a>
+						  <a href="#" class="list-group-item">Manejar planes y servicios de usuarios</a>
+						  <a href="#" class="list-group-item">Manejar vehiculos de motor de usuarios</a>
 						</div>
 					</div>
 				</div>
 				
 				<div class="col-md-8">
-					<ol class="breadcrumb">
-						<li><a href="{SITE_URL}admin">Inicio</a></li>
-						<li class="active">Usuarios</li>
-					</ol>
+					<!-- IF SIDE_CONTENT == "home" -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li class="active">Usuarios y miembros</li>
+						</ol>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Información General</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td> <a href="#" data-toggle="modal" data-target="#myModal">Número de usuarios registrados</a></td>
+									<td>{NUM_REG_USERS}1</td>
+									<!-- Modal -->
+									<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+										  </div>
+										  <div class="modal-body">
+											...
+										  </div>
+										  <div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary">Save changes</button>
+										  </div>
+										</div>
+									  </div>
+									</div>
+								</tr>
+								<tr> 
+									<td>Número de usuarios activos</td>
+									<td>{NUM_ACTIVE_USERS}1</td>
+								</tr>
+								<tr> 
+									<td>Número de usuarios inactivos</td>
+									<td>{NUM_INACTIVE_USERS}1</td>
+								</tr>
+								<tr> 
+									<td>Número de usuarios bloqueados</td>
+									<td>{NUM_LOCKED_USERS}1</td>
+								</tr>
+								<tr> 
+									<td>Número de usuarios suspendidos</td>
+									<td>{NUM_SUSPENDED_USERS}1</td>
+								</tr>
+							</tbody>
+						</table>
+						<p class="text-info">Buscar un usuario en particular</p>
+						<form class="form-inline">
+							<div class="form-group">
+								<label for="selectSearch">Buscar por: </label>
+								<select class="form-control" id="selectSearch" name="searchType">
+									<option value="username">Nombre de usuario</option>
+									<option value="id">Número de miembro</option>
+									<option value="first">Nombre del miembro</option>
+									<option value="last">Apellido del miembro</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" id="inputSearch">
+							</div>
+							<button type="submit" class="btn btn-default">Buscar</button>
+						</form>
+					<!-- ENDIF -->
 				</div>
 			</div>
 		<!-- INCLUDE admin_footer.html -->

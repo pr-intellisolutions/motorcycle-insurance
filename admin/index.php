@@ -17,16 +17,16 @@ if ($user->auth())
 		$row = $result->fetch_assoc();	
 
 		$template->assign_vars(array('SIDE_CONTENT' => 'home',
-			"FORM_ACTION" => $_SERVER['PHP_SELF'],
-			"FORM_METHOD" => "POST",
-			"FORM_STATUS" => "INVALID",
-			"USERNAME" => $row['user'],
-			"LAST_VISIT" => $row['lastvisit'],
-			"LAST_IP_ADDRESS" => $row['lastip'],
-			"LAST_BROWSER" => $row['lastbrowser'],
-			"CURRENT_BROWSER" => $_SERVER['HTTP_USER_AGENT'],
-			"CURRENT_IP_ADDRESS" => $_SERVER['REMOTE_ADDR'],
-			"CURRENT_DATE" => date('Y-m-d G:i:s')));
+			'FORM_ACTION' => $_SERVER['PHP_SELF'],
+			'FORM_METHOD' => 'POST',
+			'FORM_STATUS' => 'INVALID',
+			'USERNAME' => $row['user'],
+			'LAST_VISIT' => $row['lastvisit'],
+			'LAST_IP_ADDRESS' => $row['lastip'],
+			'LAST_BROWSER' => $row['lastbrowser'],
+			'CURRENT_BROWSER' => $_SERVER['HTTP_USER_AGENT'],
+			'CURRENT_IP_ADDRESS' => $_SERVER['REMOTE_ADDR'],
+			'CURRENT_DATE' => date('Y-m-d G:i:s')));
 	}
 	else
 		trigger_error('/admin/index.php: '.$this->sql_conn->connect_error, E_USER_ERROR);
@@ -47,7 +47,8 @@ if ($user->auth())
 		if (!$user->sql_conn->query($stmt))
 			trigger_error('/admin/index.php: '.$user->sql_conn->error, E_USER_ERROR);
 
-		$template->assign_var("FORM_STATUS", "SUCCESS");		
+		$template->assign_vars(array("FORM_STATUS" => "SUCCESS",
+			"VIEW_OPTION" => 1));		
 	}
 	else if (isset($_POST['action']) && $_POST['action'] === 'saveDBConfig')
 	{
@@ -59,8 +60,9 @@ if ($user->auth())
 	
 		$user->save_db_config();
 
-		$template->assign_var("FORM_STATUS", "SUCCESS");		
-	}
+		$template->assign_vars(array("FORM_STATUS" => "SUCCESS",
+			"VIEW_OPTION" => 2));	
+		}
 	else if (isset($_POST['action']) && $_POST['action'] === 'saveSecurityConfig')
 	{
 		$site_config->user_minlen = $_POST['userMinLen'];
@@ -80,8 +82,9 @@ if ($user->auth())
 		if (!$user->sql_conn->query($stmt))
 			trigger_error('/admin/index.php: '.$user->sql_conn->error, E_USER_ERROR);
 
-		$template->assign_var("FORM_STATUS", "SUCCESS");
-	}
+		$template->assign_vars(array("FORM_STATUS" => "SUCCESS",
+			"VIEW_OPTION" => 3));	
+		}
 	else if (isset($_POST['action']) && $_POST['action'] === 'cancel')
 	{
 		$template->assign_var("FORM_STATUS", "CANCEL");
@@ -94,7 +97,6 @@ if ($user->auth())
 			"SITE_HOST" => $site_config->site_host,
 			"SITE_MODULE" => $site_config->site_module));
 	}
-
 	else if (isset($_GET['option']) && $_GET['option'] == 2)
 	{
 		$template->assign_vars(array("SIDE_CONTENT" => 2,

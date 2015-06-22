@@ -61,7 +61,7 @@
 							</div>
 							<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
 							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin';",1500);
+								setTimeout("location.href = '{SITE_URL}admin/index.php?option={VIEW_OPTION}';",1500);
 							</script>
 						<!-- ELSEIF FORM_STATUS == "CANCEL" -->
 							<div class="alert alert-danger" role="alert">
@@ -118,9 +118,7 @@
 								data-placement="right"
 								data-trigger="focus"
 								title="Información sobre la opción"
-								data-content="La dirección del sitio es aquella que usualmente termina en '.com' como por ejemplo:
-								www.mywebsite.com. También puede ser una dirección de IP que contenga la página web. Esta opción
-								es importante para el funcionamiento correcto de los enlaces de las páginas.">
+								data-content="Dirección del servidor que contiene el sitio y sus páginas web.">
 							</div>
 						  </div>
 						  <div class="form-group">
@@ -132,10 +130,8 @@
 								data-placement="right"
 								data-trigger="focus"
 								title="Información sobre la opción"
-								data-content="El directorio principal es donde se encuentra la página principal. Usualmente
-								comienza con la dirección del sitio seguido por /. Si la página principal se encuentra en un
-								directorio dentro de la direccion del sitio entonces se debe indicar en este espacio por
-								ejemplo: www.mywebsite.com/homepage/index.html. Donde homepage es un directorio dentro del domain.">
+								data-content="Directorio dentro del servidor que contiene el sitio y sus páginas web. Si este es el directorio principal,
+								se deberá colocar el símbolo '/' para indicar que el sitio se encuentra en el directorio principal.">
 							</div>
 						  </div>
 						  <div class="form-group">
@@ -164,8 +160,7 @@
 								data-placement="right"
 								data-trigger="focus"
 								title="Información sobre la opción"
-								data-content="La dirección de la base de datos es la dirección del servidor donde se encuentra
-								ubicada. La misma puede ser una dirección de IP o el nombre del dominio.">
+								data-content="Dirección del servidor donde se encuentra ubicada la base de datos.">
 							</div>
 						  </div>
 						  <div class="form-group">
@@ -177,9 +172,7 @@
 								data-placement="right"
 								data-trigger="focus"
 								title="Información sobre la opción"
-								data-content="El puerto de la base de datos es el número que se le asignó para acceder al servidor.
-								Si este número es 0 el sistema automaticamente detecta el puerto de acceso. Si el puerto fue cambiado
-								en el servidor entonces debe ser especificado.">
+								data-content="El puerto utilizado para acceder la base de datos en el servidor.">
 							</div>
 						  </div>
 						  <div class="form-group">
@@ -191,7 +184,7 @@
 								data-placement="right"
 								data-trigger="focus"
 								title="Información sobre la opción"
-								data-content="El nombre de la base de datos es el nombre que se le asignó dentro del servidor.">
+								data-content="El nombre de la base de datos que contiene toda la configuración y los datos del sitio.">
 							</div>
 						  </div>
 						  <div class="form-group">
@@ -203,7 +196,7 @@
 								data-placement="right"
 								data-trigger="focus"
 								title="Información sobre la opción"
-								data-content="El nombre de usuario para la cuenta con privilegios para acceder la base de datos.">
+								data-content="El nombre de usuario utilizado para acceder la base de datos.">
 							</div>
 						  </div>
 						  <div class="form-group">
@@ -215,7 +208,7 @@
 								data-placement="right"
 								data-trigger="focus"
 								title="Información sobre la opción"
-								data-content="La contraseña para la cuenta con privilegios para acceder la base de datos.">
+								data-content="La contraseña utilizada para acceder la base de datos.">
 							</div>
 						  </div>
 						  <div class="form-group">
@@ -238,7 +231,14 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Complejidad del nombre de usuario:</label>
 							<div class="col-sm-4">
-								<select class="form-control" name="userComplexity">
+								<select class="form-control" name="userComplexity"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="La opción alfanumérica permite que el usuario cree una cuenta utilizando letras y números solamente.
+								La opción alfanumérica con símbolos permite que el usuario cree una cuenta utilizando letras, números y carácteres especiales.">
 									<option value="alphanumeric" {ALPHANUMERIC_SELECTED}>Alfanumérico</option>
 									<option value="alphanumeric with spacers" {ALPHA_SPACERS_SELECTED}>Alfanumérico con símbolos</option>
 								</select>
@@ -247,19 +247,42 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tamaño mínimo del nombre de usuario:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="userMinLen" value="{USER_MINLEN}" placeholder="{USER_MINLEN}">
+								<input type="text" class="form-control" name="userMinLen" value="{USER_MINLEN}" placeholder="{USER_MINLEN}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Esta opción indica cuantos carácteres el nombre de usuario puede tener como mínimo al momento de
+								crear una cuenta.">
 							</div>
 						  </div>
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tamaño máximo del nombre de usuario:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="userMaxLen" value="{USER_MAXLEN}" placeholder="{USER_MAXLEN}">
+								<input type="text" class="form-control" name="userMaxLen" value="{USER_MAXLEN}" placeholder="{USER_MAXLEN}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Esta opción indica cuantos carácteres el nombre de usuario puede tener como máximo al momento de
+								crear una cuenta.">
 							</div>
 						  </div>
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Complejidad de la contraseña:</label>
 							<div class="col-sm-4">
-								<select class="form-control" name="passComplexity">
+								<select class="form-control" name="passComplexity"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="La opción simple permite que el usuario cree una contraseña utilizando letras y números como mínimo.
+								La opción normal permite que el usuario cree una contraseña utilizando letras, números y símbolos como mínimo.
+								La opción fuerte impone que el usuario cree una contraseña que contenga por lo menos dos letras mayúsculas y minúsculas,
+								dos números y dos símbolos.">
 									<option value="simple" {SIMPLE_SELECTED}>Simple</option>
 									<option value="normal" {NORMAL_SELECTED}>Normal</option>
 									<option value="strong" {STRONG_SELECTED}>Fuerte</option>
@@ -269,25 +292,52 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tamaño mínimo de la contraseña:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="passMinLen" value="{PASS_MINLEN}" placeholder="{PASS_MINLEN}">
+								<input type="text" class="form-control" name="passMinLen" value="{PASS_MINLEN}" placeholder="{PASS_MINLEN}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Esta opción indica cuantos carácteres la contraseña puede tener como mínimo al momento de
+								crear una cuenta.">
 							</div>
 						  </div>
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tamaño máximo de la contraseña:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="passMaxLen" value="{PASS_MAXLEN}" placeholder="{PASS_MAXLEN}">
+								<input type="text" class="form-control" name="passMaxLen" value="{PASS_MAXLEN}" placeholder="{PASS_MAXLEN}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Esta opción indica cuantos carácteres la contraseña puede tener como máximo al momento de
+								crear una cuenta.">
 							</div>
 						  </div>
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tiempo de expiración de la contraseña:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="passExpiration" value="{PASS_EXPIRATION}" placeholder="{PASS_EXPIRATION}">
+								<input type="text" class="form-control" name="passExpiration" value="{PASS_EXPIRATION}" placeholder="{PASS_EXPIRATION}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Esta opción determina el tiempo de renovación de una contraseña en días.">
 							</div>
 						  </div>
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Intentos antes de bloquar una cuenta:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="maxLoginAttempts" value="{MAX_LOGIN_ATTEMPTS}" placeholder="{MAX_LOGIN_ATTEMPTS}">
+								<input type="text" class="form-control" name="maxLoginAttempts" value="{MAX_LOGIN_ATTEMPTS}" placeholder="{MAX_LOGIN_ATTEMPTS}"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Esta opción determina la cantidad de intentos que un usuario puede hacer al tratar de acceder su cuenta. Después
+								de la cantidad máxima de intentos, la cuenta será bloqueada para protegerla contra algún acceso no autorizado.">
 							</div>
 						  </div>
 						  <div class="form-group">
