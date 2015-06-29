@@ -15,6 +15,7 @@ class Login extends User
 	}
 	public function validate_user($user, $pass)
 	{
+		global $site_config;
 		// Remove unwanted or malicious user input
 		$this->user = $this->sanitize_input($user);
 		$this->pass = $this->sanitize_input($pass);
@@ -33,7 +34,7 @@ class Login extends User
 			else if ($row['disabled'])
 				$this->set_error(self::LOGIN_DISABLED);
 
-			else if ($this->max_login_attempts > 0 && $row['login_attempts'] >= $this->max_login_attempts)
+			else if ($site_config->max_login_attempts > 0 && $row['login_attempts'] >= $site_config->max_login_attempts)
 			{
 				$stmt = sprintf("UPDATE login SET disabled = 1 WHERE user = '%s'", $this->user);
 
@@ -42,7 +43,7 @@ class Login extends User
 				else
 					trigger_error('Login::valid(): '.$this->sql_conn->error, E_USER_ERROR);
 			}
-			else if ($this->pass_expiration > 0 && $this->pass_expired($row['passdate']))
+			else if ($site_config->pass_expiration > 0 && $this->pass_expired($row['passdate']))
 			{
 				$stmt = sprintf("UPDATE login SET passchg = 1 WHERE user = '%s'", $this->user);
 

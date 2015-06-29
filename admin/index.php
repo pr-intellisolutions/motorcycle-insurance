@@ -6,7 +6,7 @@ $template->set_custom_template(DIR_BASE.'styles', 'default');
 
 $template->assign_var('SITE_URL', SITE_URL);
 
-if ($user->auth())
+if ($user->auth() && $user->role == 'admin')
 {
 	$stmnt = sprintf("SELECT user, lastvisit, lastip, lastbrowser FROM login WHERE id = '%s'", $user->user_id);
 
@@ -14,7 +14,7 @@ if ($user->auth())
 
 	if ($result->num_rows > 0)
 	{
-		$row = $result->fetch_assoc();	
+		$row = $result->fetch_assoc();
 
 		$template->assign_vars(array('SIDE_CONTENT' => 'home',
 			'FORM_ACTION' => $_SERVER['PHP_SELF'],
@@ -84,7 +84,7 @@ if ($user->auth())
 
 		$template->assign_vars(array("FORM_STATUS" => "SUCCESS",
 			"VIEW_OPTION" => 3));	
-		}
+	}
 	else if (isset($_POST['action']) && $_POST['action'] === 'cancel')
 	{
 		$template->assign_var("FORM_STATUS", "CANCEL");
