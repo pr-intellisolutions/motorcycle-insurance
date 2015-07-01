@@ -6,12 +6,12 @@
 							<h3 class="panel-title">Navegación</h3>
 						</div>
 						<div class="list-group">
-						  <a href="index.php?option=1&id=0" class="list-group-item">Crear una cuenta</a>
-						  <a href="index.php?option=2&id=0" class="list-group-item">Manejar perfil de usuarios</a>
-						  <a href="index.php?option=3&id=0" class="list-group-item">Manejar privilegios de usuarios</a>
-						  <a href="index.php?option=4&id=0" class="list-group-item">Manejar planes y servicios de usuarios</a>
-						  <a href="index.php?option=5&id=0" class="list-group-item">Manejar vehiculos de motor de usuarios</a>
-						  <a href="index.php?option=6&id=0" class="list-group-item">Desbloquear cuenta de usuario</a>
+						  <a href="index.php?option=1" class="list-group-item">Crear una cuenta</a>
+						  <a href="index.php?option=2" class="list-group-item">Manejar perfil de usuarios</a>
+						  <a href="index.php?option=3" class="list-group-item">Manejar privilegios de usuarios</a>
+						  <a href="index.php?option=4" class="list-group-item">Manejar planes y servicios de usuarios</a>
+						  <a href="index.php?option=5" class="list-group-item">Manejar vehículos de motor de usuarios</a>
+						  <a href="index.php?option=6" class="list-group-item">Desbloquear cuenta de usuario</a>
 						</div>
 					</div>
 				</div>
@@ -61,25 +61,19 @@
 								<h4 class="modal-title" id="myModalLabel">Usuarios registrados</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_REG_RESULTS == 1 -->
+								<!-- IF NO_REG_RESULTS == true -->
 									<p class="text-info"> -- No se encontro ningún resultado -- </p>
 								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th>
-											<th> Usuario </th>
-											<th> Fecha de registro </th>
-											<th> Última visita </th>
+											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
-											  <td>{user_reg_list.INDEX}</td>
-											  <td>{user_reg_list.USERNAME}</td>
-											  <td>{user_reg_list.REG_DATE}</td>
-											  <td>{user_reg_list.LAST_VISIT}</td>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.USERNAME}</td><td>{user_reg_list.REG_DATE}</td><td>{user_reg_list.LAST_VISIT}</td>
 										  </tr>
 										<!-- END user_reg_list -->
 									  </tbody>
@@ -101,25 +95,19 @@
 								<h4 class="modal-title" id="myModalLabel">Usuarios Activos</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_ACTIVE_RESULTS == 1 -->
+								<!-- IF NO_ACTIVE_RESULTS == true -->
 									<p class="text-info"> -- No se encontro ningún resultado -- </p>
 								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th>
-											<th> Usuario </th>
-											<th> Fecha de registro </th>
-											<th> Última visita </th>
+											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_active_list -->
 										  <tr>
-											  <td>{user_active_list.INDEX}</td>
-											  <td>{user_active_list.USERNAME}</td>
-											  <td>{user_active_list.REG_DATE}</td>
-											  <td>{user_active_list.LAST_VISIT}</td>
+											  <td>{user_active_list.INDEX}</td><td>{user_active_list.USERNAME}</td><td>{user_active_list.REG_DATE}</td><td>{user_active_list.LAST_VISIT}</td>
 										  </tr>
 										<!-- END user_active_list -->
 									  </tbody>
@@ -141,25 +129,19 @@
 								<h4 class="modal-title" id="myModalLabel">Usuarios Inactivos</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_INACTIVE_RESULTS == 1 -->
+								<!-- IF NO_INACTIVE_RESULTS == true -->
 									<p class="text-info"> -- No se encontro ningún resultado -- </p>
 								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th>
-											<th> Usuario </th>
-											<th> Fecha de registro </th>
-											<th> Última visita </th>
+											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_inactive_list -->
 										  <tr>
-											  <td>{user_inactive_list.INDEX}</td>
-											  <td>{user_inactive_list.USERNAME}</td>
-											  <td>{user_inactive_list.REG_DATE}</td>
-											  <td>{user_inactive_list.LAST_VISIT}</td>
+											  <td>{user_inactive_list.INDEX}</td><td>{user_inactive_list.USERNAME}</td><td>{user_inactive_list.REG_DATE}</td><td>{user_inactive_list.LAST_VISIT}</td>
 										  </tr>
 										<!-- END user_inactive_list -->
 									  </tbody>
@@ -181,25 +163,19 @@
 								<h4 class="modal-title" id="myModalLabel">Usuarios Bloqueados</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_DISABLED_RESULTS == 1 -->
+								<!-- IF NO_DISABLED_RESULTS == true -->
 									<p class="text-info"> -- No se encontro ningún resultado -- </p>
 								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th>
-											<th> Usuario </th>
-											<th> Fecha de registro </th>
-											<th> Última visita </th>
+											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_disabled_list -->
 										  <tr>
-											  <td>{user_disabled_list.INDEX}</td>
-											  <td>{user_disabled_list.USERNAME}</td>
-											  <td>{user_disabled_list.REG_DATE}</td>
-											  <td>{user_disabled_list.LAST_VISIT}</td>
+											  <td>{user_disabled_list.INDEX}</td><td>{user_disabled_list.USERNAME}</td><td>{user_disabled_list.REG_DATE}</td><td>{user_disabled_list.LAST_VISIT}</td>
 										  </tr>
 										<!-- END user_disabled_list -->
 									  </tbody>
@@ -221,25 +197,19 @@
 								<h4 class="modal-title" id="myModalLabel">Usuarios Suspendidos</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_EXPIRED_RESULTS == 1 -->
+								<!-- IF NO_EXPIRED_RESULTS == true -->
 									<p class="text-info"> -- No se encontro ningún resultado -- </p>
 								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th>
-											<th> Usuario </th>
-											<th> Fecha de registro </th>
-											<th> Última visita </th>
+											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_expired_list -->
 										  <tr>
-											  <td>{user_expired_list.INDEX}</td>
-											  <td>{user_expired_list.USERNAME}</td>
-											  <td>{user_expired_list.REG_DATE}</td>
-											  <td>{user_expired_list.LAST_VISIT}</td>
+											  <td>{user_expired_list.INDEX}</td><td>{user_expired_list.USERNAME}</td><td>{user_expired_list.REG_DATE}</td><td>{user_expired_list.LAST_VISIT}</td>
 										  </tr>
 										<!-- END user_expired_list -->
 									  </tbody>
@@ -252,21 +222,134 @@
 							</div>
 						  </div>
 						</div>
+					<!-- ELSEIF SIDE_CONTENT == 'create_account_status' -->
+						<div class="alert alert-success" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							¡La cuenta ha sido creada exitosamente!
+						</div>
+						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+						<script type="text/JavaScript">
+							setTimeout("location.href = '{SITE_URL}admin/users/index.php';",1500);
+						</script>
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Crear una cuenta</li>
 						</ol>
-						<P>CREATE ACCOUNT</P>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="userRole">Tipo de cuenta:</label>
+								<div class="col-sm-4">
+									<select class="form-control" name="userRole">
+										<option value="user" default>usuario</option>
+										<option value="admin">administrador</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Nombre de usuario: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="username" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Contraseña: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="password" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Confirmar contraseña: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="password_confirm" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Email: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="email" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Primer nombre:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="first">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Segundo nombre:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="middle">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Apellido paterno:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="last">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Apellido materno:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="maiden">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Dirección Línea 1:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="address1">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Dirección Línea 2:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="address2">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Ciudad:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="city">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Estado:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="state">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Zip:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="zip">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">País:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="country">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Teléfono:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="telephone">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-4">
+									<button type="submit" class="btn btn-primary" name="action" value="create_account">Crear cuenta</button>
+								</div>
+							</div>
+						</form>
 					<!-- ELSEIF SIDE_CONTENT == 2 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar perfil de usuarios</li>
 						</ol>
-						<p class="text-info">Perfil del usuario</p>
-						<form class="form-inline" action="{FORM_ACTION}" method="FORM_METHOD">
+						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 							<div class="form-group">
 								<label for="selectSearch">Buscar por: </label>
 								<select class="form-control" name="searchType">
@@ -274,6 +357,7 @@
 									<option value="id">Número de miembro</option>
 									<option value="first">Nombre del miembro</option>
 									<option value="last">Apellido del miembro</option>
+									<option value="last">Tablilla de vehículo</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -281,29 +365,12 @@
 							</div>
 							<button type="submit" class="btn btn-primary">Mostrar</button>
 						</form>
-						  <table class="table table-hover">
-							  <thead>
-								<tr>
-									<th> # </th>
-									<th> Usuarios </th>
-								</tr>
-							  </thead>
-							  <tbody>
-								<!-- BEGIN user_reg_list -->
-								  <tr>
-									  <td><a href="index.php?option=2&id={user_reg_list.ID}">{user_reg_list.INDEX}</a></td>
-									  <td><a href="index.php?option=2&id={user_reg_list.ID}">{user_reg_list.USERNAME}</a></td>
-								  </tr>
-								<!-- END user_reg_list -->
-							  </tbody>
-						  </table>
 					<!-- ELSEIF SIDE_CONTENT == 3 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar privilegios de usuarios</li>
 						</ol>
-						<p class="text-info">Permisos del usuario</p>
 						<form class="form-inline" action="{FORM_ACTION}" method="FORM_METHOD">
 							<div class="form-group">
 								<label for="selectSearch">Buscar por: </label>
@@ -312,6 +379,7 @@
 									<option value="id">Número de miembro</option>
 									<option value="first">Nombre del miembro</option>
 									<option value="last">Apellido del miembro</option>
+									<option value="last">Tablilla de vehículo</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -319,29 +387,12 @@
 							</div>
 							<button type="submit" class="btn btn-primary">Mostrar</button>
 						</form>
-						  <table class="table table-hover">
-							  <thead>
-								<tr>
-									<th> # </th>
-									<th> Usuarios </th>
-								</tr>
-							  </thead>
-							  <tbody>
-								<!-- BEGIN user_reg_list -->
-								  <tr>
-									  <td><a href="index.php?option=3&id={user_reg_list.ID}">{user_reg_list.INDEX}</a></td>
-									  <td><a href="index.php?option=3&id={user_reg_list.ID}">{user_reg_list.USERNAME}</a></td>
-								  </tr>
-								<!-- END user_reg_list -->
-							  </tbody>
-						  </table>
 					<!-- ELSEIF SIDE_CONTENT == 4 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar planes y servicios de usuarios</li>
 						</ol>
-						<p class="text-info">Manejar planes y servicios del usuario</p>
 						<form class="form-inline" action="{FORM_ACTION}" method="FORM_METHOD">
 							<div class="form-group">
 								<label for="selectSearch">Buscar por: </label>
@@ -350,6 +401,7 @@
 									<option value="id">Número de miembro</option>
 									<option value="first">Nombre del miembro</option>
 									<option value="last">Apellido del miembro</option>
+									<option value="last">Tablilla de vehículo</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -357,29 +409,12 @@
 							</div>
 							<button type="submit" class="btn btn-primary">Mostrar</button>
 						</form>
-						  <table class="table table-hover">
-							  <thead>
-								<tr>
-									<th> # </th>
-									<th> Usuarios </th>
-								</tr>
-							  </thead>
-							  <tbody>
-								<!-- BEGIN user_reg_list -->
-								  <tr>
-									  <td><a href="index.php?option=4&id={user_reg_list.ID}">{user_reg_list.INDEX}</a></td>
-									  <td><a href="index.php?option=4&id={user_reg_list.ID}">{user_reg_list.USERNAME}</a></td>
-								  </tr>
-								<!-- END user_reg_list -->
-							  </tbody>
-						  </table>
 					<!-- ELSEIF SIDE_CONTENT == 5 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar vehiculos de motor de usuarios</li>
 						</ol>
-						<p class="text-info">Manejar vehiculos de motor del usuario</p>
 						<form class="form-inline" action="{FORM_ACTION}" method="FORM_METHOD">
 							<div class="form-group">
 								<label for="selectSearch">Buscar por: </label>
@@ -388,6 +423,7 @@
 									<option value="id">Número de miembro</option>
 									<option value="first">Nombre del miembro</option>
 									<option value="last">Apellido del miembro</option>
+									<option value="last">Tablilla de vehículo</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -395,29 +431,12 @@
 							</div>
 							<button type="submit" class="btn btn-primary">Mostrar</button>
 						</form>
-						  <table class="table table-hover">
-							  <thead>
-								<tr>
-									<th> # </th>
-									<th> Usuarios </th>
-								</tr>
-							  </thead>
-							  <tbody>
-								<!-- BEGIN user_reg_list -->
-								  <tr>
-									  <td><a href="index.php?option=5&id={user_reg_list.ID}">{user_reg_list.INDEX}</a></td>
-									  <td><a href="index.php?option=5&id={user_reg_list.ID}">{user_reg_list.USERNAME}</a></td>
-								  </tr>
-								<!-- END user_reg_list -->
-							  </tbody>
-						  </table>
 					<!-- ELSEIF SIDE_CONTENT == 6 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Desbloquear cuenta de usuario</li>
 						</ol>
-						<p class="text-info">Desbloquear cuenta de usuario</p>
 						<form class="form-inline" action="{FORM_ACTION}" method="FORM_METHOD">
 							<div class="form-group">
 								<label for="selectSearch">Buscar por: </label>
@@ -426,6 +445,7 @@
 									<option value="id">Número de miembro</option>
 									<option value="first">Nombre del miembro</option>
 									<option value="last">Apellido del miembro</option>
+									<option value="last">Tablilla de vehículo</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -433,22 +453,6 @@
 							</div>
 							<button type="submit" class="btn btn-primary">Mostrar</button>
 						</form>
-						  <table class="table table-hover">
-							  <thead>
-								<tr>
-									<th> # </th>
-									<th> Usuarios </th>
-								</tr>
-							  </thead>
-							  <tbody>
-								<!-- BEGIN user_reg_list -->
-								  <tr>
-									  <td><a href="index.php?option=6&id={user_reg_list.ID}">{user_reg_list.INDEX}</a></td>
-									  <td><a href="index.php?option=6&id={user_reg_list.ID}">{user_reg_list.USERNAME}</a></td>
-								  </tr>
-								<!-- END user_reg_list -->
-							  </tbody>
-						  </table>
 					<!-- ENDIF -->
 				</div>
 			</div>
