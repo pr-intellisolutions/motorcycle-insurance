@@ -188,6 +188,54 @@ if ($user->auth() && $user->role == 'admin')
 				break;
 		}
 	}
+	else if (isset($_POST['action']) && $_POST['action'] === 'unlock_user')
+	{
+		switch($_POST['searchType'])
+		{
+			case 'user':
+				$stmnt = sprintf("SELECT disabled FROM login WHERE disabled = 1 and user = '%s'", $_POST['inputSearch']);
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$stmnt = sprintf("UPDATE login SET disabled = 0 WHERE user = '%s'", $_POST['inputSearch']);
+
+					if (!$user->sql_conn->query($stmnt))
+						trigger_error('/admin/users/index.php: '.$user->sql_conn->error, E_USER_ERROR);
+
+					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 1));
+				}
+				else
+					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 2));
+				$result->close();
+				break;
+			case 'id':
+				$stmnt = sprintf("SELECT disabled FROM login INNER JOIN profile ON login.id = profile.userid WHERE disabled = 1 and profile.id = %d", $_POST['inputSearch']);
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$stmnt = sprintf("UPDATE login SET disabled = 0 WHERE user = '%s'", $_POST['inputSearch']);
+
+					if (!$user->sql_conn->query($stmnt))
+						trigger_error('/admin/users/index.php: '.$user->sql_conn->error, E_USER_ERROR);
+
+					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 1));
+				}
+				else
+					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 2));
+				$result->close();
+				break;
+			case 'first':
+				break;
+			case 'last':
+				break;
+			case 'plate':
+				break;
+			default:
+				break;
+		}
+	}
 	// Create an account side content
 	else if (isset($_GET['option']) && $_GET['option'] == 1)
 	{
@@ -201,22 +249,22 @@ if ($user->auth() && $user->role == 'admin')
 	// Modify permissions side content
 	else if (isset($_GET['option']) && $_GET['option'] == 3)
 	{
-		$template->assign_var('SIDE_CONTENT', 3);
+		$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 0));
 	}
 	// Modify plans and services side content
 	else if (isset($_GET['option']) && $_GET['option'] == 4)
 	{
-		$template->assign_var('SIDE_CONTENT', 4);
+		$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 0));
 	}
 	// Modify vehicles side content
 	else if (isset($_GET['option']) && $_GET['option'] == 5)
 	{
-		$template->assign_var('SIDE_CONTENT', 5);
+		$template->assign_vars(array('SIDE_CONTENT' => 5, 'USERNAME_FOUND' => 0));
 	}
 	// Unlock user account side content
 	else if (isset($_GET['option']) && $_GET['option'] == 6)
 	{
-		$template->assign_var('SIDE_CONTENT', 6);
+		$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 0));
 	}
 	// Information for home content
 	else
