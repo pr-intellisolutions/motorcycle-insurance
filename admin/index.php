@@ -8,30 +8,11 @@ $template->assign_var('SITE_URL', SITE_URL);
 
 if ($user->auth() && $user->role == 'admin')
 {
-	$stmnt = sprintf("SELECT user, lastvisit, lastip, lastbrowser FROM login WHERE id = '%s'", $user->user_id);
-
-	$result = $user->sql_conn->query($stmnt);
-
-	if ($result->num_rows > 0)
-	{
-		$row = $result->fetch_assoc();
-
-		$template->assign_vars(array('SIDE_CONTENT' => 'home',
-			'FORM_ACTION' => $_SERVER['PHP_SELF'],
-			'FORM_METHOD' => 'POST',
-			'FORM_STATUS' => 'INVALID',
-			'USERNAME' => $row['user'],
-			'LAST_VISIT' => $row['lastvisit'],
-			'LAST_IP_ADDRESS' => $row['lastip'],
-			'LAST_BROWSER' => $row['lastbrowser'],
-			'CURRENT_BROWSER' => $_SERVER['HTTP_USER_AGENT'],
-			'CURRENT_IP_ADDRESS' => $_SERVER['REMOTE_ADDR'],
-			'CURRENT_DATE' => date('Y-m-d G:i:s')));
-	}
-	else
-		trigger_error('/admin/index.php: '.$this->sql_conn->connect_error, E_USER_ERROR);
-
-	$result->close();
+	
+	$template->assign_vars(array('SIDE_CONTENT' => 'home',
+		'FORM_ACTION' => $_SERVER['PHP_SELF'],
+		'FORM_METHOD' => 'POST',
+		'USERNAME' => $user->user));
 
 	if (isset($_POST['action']) && $_POST['action'] === 'saveSiteConfig')
 	{		
@@ -62,7 +43,7 @@ if ($user->auth() && $user->role == 'admin')
 
 		$template->assign_vars(array("FORM_STATUS" => "SUCCESS",
 			"VIEW_OPTION" => 2));	
-		}
+	}
 	else if (isset($_POST['action']) && $_POST['action'] === 'saveSecurityConfig')
 	{
 		$site_config->user_minlen = $_POST['userMinLen'];
@@ -133,7 +114,29 @@ if ($user->auth() && $user->role == 'admin')
 
 	else if (isset($_GET['option']) && $_GET['option'] == 5)
 		$template->assign_var("SIDE_CONTENT", 5);
+	else
+	{
+		$stmnt = sprintf("SELECT lastvisit, lastip, lastbrowser FROM login WHERE id = '%s'", $user->user_id);
 
+		$result = $user->sql_conn->query($stmnt);
+
+		if ($result->num_rows > 0)
+		{
+			$row = $result->fetch_assoc();
+
+			$template->assign_vars(array('FORM_STATUS' => 'INVALID',
+				'LAST_VISIT' => $row['lastvisit'],
+				'LAST_IP_ADDRESS' => $row['lastip'],
+				'LAST_BROWSER' => $row['lastbrowser'],
+				'CURRENT_BROWSER' => $_SERVER['HTTP_USER_AGENT'],
+				'CURRENT_IP_ADDRESS' => $_SERVER['REMOTE_ADDR'],
+				'CURRENT_DATE' => date('Y-m-d G:i:s')));
+		}
+		else
+			trigger_error('/admin/index.php: '.$this->sql_conn->connect_error, E_USER_ERROR);
+
+		$result->close();
+	}
 	$template->set_filenames(array('body' => 'admin_cp.html'));
 
 	$template->display('body');

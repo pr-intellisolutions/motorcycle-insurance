@@ -21,7 +21,7 @@ class SiteConfig extends SiteDB
 	{
 		parent::__construct();
 	
-		$stmnt = sprintf("SELECT * from config WHERE id=1");
+		$stmnt = sprintf("SELECT * FROM config WHERE id=1");
 		
 		$result = $this->sql_conn->query($stmnt);
 	

@@ -222,16 +222,26 @@
 							</div>
 						  </div>
 						</div>
-					<!-- ELSEIF SIDE_CONTENT == 'create_account_status' -->
+					<!-- ELSEIF SIDE_CONTENT == 'create_account_successful' -->
 						<div class="alert alert-success" role="alert">
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							¡La cuenta ha sido creada exitosamente!
 						</div>
 						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
 						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/users/index.php';",1500);
+							setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=1';",1500);
+						</script>
+					<!-- ELSEIF SIDE_CONTENT == 'create_account_failed' -->
+						<div class="alert alert-danger" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							¡La cuenta no se pudo crear!</br><strong>Error: {ERROR_MESSAGE}</strong>
+						</div>
+						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+						<script type="text/JavaScript">
+							setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=1';",1700);
 						</script>
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
+						<!-- TODO: Data validation client side -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
@@ -239,9 +249,9 @@
 						</ol>
 						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="userRole">Tipo de cuenta:</label>
+								<label class="col-sm-3 control-label" for="role">Tipo de cuenta:</label>
 								<div class="col-sm-4">
-									<select class="form-control" name="userRole">
+									<select class="form-control" name="role">
 										<option value="user" default>usuario</option>
 										<option value="admin">administrador</option>
 									</select>
@@ -250,19 +260,56 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Nombre de usuario: </label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="username" required>
+									<input type="text" class="form-control" name="username" id="username" required>
+									<span id="check_user_status"></span>
+								</div>
+								<div class="col-sm-4">
+									<button type="button" class="btn btn-default" id="check_user">Verificar disponibilidad</button>
 								</div>
 							</div>
+							
+							<!-- JQuery script to process user availability -->
+							<script type="text/javascript">
+								$(document).ready(function() {
+									$("#check_user").click(function() {
+										var username = $("#username").val();
+										
+										if (username !== "")
+										{
+											$.ajax({
+												type: "POST",
+												url: "check_username.php",
+												data: "username="+username,
+												success: function(data){
+													if (data === "available")
+													{
+														$("#check_user_status").attr("class", "label label-success");
+														$("#check_user_status").html("'"+username+"' está disponible!");
+													}
+													else
+													{
+														$("#check_user_status").attr("class", "label label-warning");
+														$("#check_user_status").html("'"+username+"' no está disponible!");
+													}
+												}
+											})
+										}
+										else
+											$("#check_user_status").hide();
+									});
+								});
+							</script>
+
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Contraseña: </label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="password" required>
+									<input type="password" class="form-control" name="password" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Confirmar contraseña: </label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="password_confirm" required>
+									<input type="password" class="form-control" name="password_confirm" required>
 								</div>
 							</div>
 							<div class="form-group">
@@ -349,22 +396,115 @@
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar perfil de usuarios</li>
 						</ol>
-						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
-							<div class="form-group">
-								<label for="selectSearch">Buscar por: </label>
-								<select class="form-control" name="searchType">
-									<option value="username">Nombre de usuario</option>
-									<option value="id">Número de miembro</option>
-									<option value="first">Nombre del miembro</option>
-									<option value="last">Apellido del miembro</option>
-									<option value="last">Tablilla de vehículo</option>
-								</select>
+						
+						<!-- IF USERNAME_FOUND == 1 -->
+							<p class="text-info">Mostrando información personal del usuario {USER}.</p>
+							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Primer nombre:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{FIRST}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Segundo nombre:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{MIDDLE}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Apellido paterno:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{LAST}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Apellido materno:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{MAIDEN}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Dirección Línea 1:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{ADDRESS1}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Dirección Línea 2:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{ADDRESS2}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Ciudad:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{CITY}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Estado:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{STATE}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Zip:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{ZIP}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">País:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{COUNTRY}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Teléfono:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{PHONE}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Email: </label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{EMAIL}" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-4">
+										<button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
+										<button type="submit" class="btn btn-primary" name="action" value="show_profile">Guardar</button>
+									</div>
+								</div>
+							</form>
+						<!-- ELSEIF USERNAME_FOUND == 2 -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								¡El perfil para este usuario no se pudo encontrar!
 							</div>
-							<div class="form-group">
-								<input type="text" class="form-control" name="inputSearch" required>
-							</div>
-							<button type="submit" class="btn btn-primary">Mostrar</button>
-						</form>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=2';",1500);
+							</script>
+						<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label for="selectSearch">Buscar por: </label>
+									<select class="form-control" name="searchType">
+										<option value="user">Nombre de usuario</option>
+										<option value="id">Número de miembro</option>
+										<option value="first">Nombre del miembro</option>
+										<option value="last">Apellido del miembro</option>
+										<option value="plate">Tablilla de vehículo</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="inputSearch" required>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="show_profile">Mostrar</button>
+							</form>
+						<!-- ENDIF -->
 					<!-- ELSEIF SIDE_CONTENT == 3 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
@@ -451,7 +591,7 @@
 							<div class="form-group">
 								<input type="text" class="form-control" name="inputSearch" required>
 							</div>
-							<button type="submit" class="btn btn-primary">Mostrar</button>
+							<button type="submit" class="btn btn-primary" name="action" value="unlock_user">Mostrar</button>
 						</form>
 					<!-- ENDIF -->
 				</div>

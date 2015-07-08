@@ -1,6 +1,7 @@
 <?php
 
 require_once('../../common.php');
+require_once('../../includes/profile.php');
 
 $template->set_custom_template(DIR_BASE.'styles', 'default');
 
@@ -16,7 +17,176 @@ if ($user->auth() && $user->role == 'admin')
 	// Process account creation
 	if (isset($_POST['action']) && $_POST['action'] == 'create_account')
 	{
-		$template->assign_var('SIDE_CONTENT', 'create_account_status');
+		$profile = new Profile;
+		
+		if ($profile->create_account($_POST))
+			$template->assign_var('SIDE_CONTENT', 'create_account_successful');
+		else
+		{
+			$template->assign_vars(array('SIDE_CONTENT' => 'create_account_failed',
+				'ERROR_MESSAGE' => $profile->error));
+		}
+	}
+	else if (isset($_POST['action']) && $_POST['action'] == 'show_profile')
+	{
+		switch($_POST['searchType'])
+		{
+			case 'user':
+				$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE login.user = '%s'", $_POST['inputSearch']);
+
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$row = $result->fetch_assoc();
+
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+						'USER' => $row['user'],
+						'FIRST' => $row['name'],
+						'MIDDLE' => $row['middle'],
+						'LAST' => $row['last'],
+						'MAIDEN' => $row['maiden'],
+						'ADDRESS1' => $row['address1'],
+						'ADDRESS2' => $row['address2'],
+						'CITY' => $row['city'],
+						'STATE' => $row['state'],
+						'ZIP' => $row['zip'],
+						'COUNTRY' => $row['country'],
+						'PHONE' => $row['phone'],
+						'EMAIL' => $row['email']));
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();
+				break;
+			case 'id':
+				$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.id = %d", $_POST['inputSearch']);
+
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$row = $result->fetch_assoc();
+
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+						'USER' => $row['user'],
+						'FIRST' => $row['name'],
+						'MIDDLE' => $row['middle'],
+						'LAST' => $row['last'],
+						'MAIDEN' => $row['maiden'],
+						'ADDRESS1' => $row['address1'],
+						'ADDRESS2' => $row['address2'],
+						'CITY' => $row['city'],
+						'STATE' => $row['state'],
+						'ZIP' => $row['zip'],
+						'COUNTRY' => $row['country'],
+						'PHONE' => $row['phone'],
+						'EMAIL' => $row['email']));
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();
+				break;
+			case 'first':
+				$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.id = %d", $_POST['inputSearch']);
+
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$row = $result->fetch_assoc();
+
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+						'USER' => $row['user'],
+						'FIRST' => $row['name'],
+						'MIDDLE' => $row['middle'],
+						'LAST' => $row['last'],
+						'MAIDEN' => $row['maiden'],
+						'ADDRESS1' => $row['address1'],
+						'ADDRESS2' => $row['address2'],
+						'CITY' => $row['city'],
+						'STATE' => $row['state'],
+						'ZIP' => $row['zip'],
+						'COUNTRY' => $row['country'],
+						'PHONE' => $row['phone'],
+						'EMAIL' => $row['email']));
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();
+				break;
+			case 'last':
+				$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.last = '%s'", $_POST['inputSearch']);
+
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$row = $result->fetch_assoc();
+
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+						'USER' => $row['user'],
+						'FIRST' => $row['name'],
+						'MIDDLE' => $row['middle'],
+						'LAST' => $row['last'],
+						'MAIDEN' => $row['maiden'],
+						'ADDRESS1' => $row['address1'],
+						'ADDRESS2' => $row['address2'],
+						'CITY' => $row['city'],
+						'STATE' => $row['state'],
+						'ZIP' => $row['zip'],
+						'COUNTRY' => $row['country'],
+						'PHONE' => $row['phone'],
+						'EMAIL' => $row['email']));
+
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();
+				break;
+			case 'plate':
+				// TODO: We need to include the vehicle table and relate it to the user profile
+				/*$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.id = %d", $_POST['inputSearch']);
+
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$row = $result->fetch_assoc();
+
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+						'USER' => $row['user'],
+						'FIRST' => $row['name'],
+						'MIDDLE' => $row['middle'],
+						'LAST' => $row['last'],
+						'MAIDEN' => $row['maiden'],
+						'ADDRESS1' => $row['address1'],
+						'ADDRESS2' => $row['address2'],
+						'CITY' => $row['city'],
+						'STATE' => $row['state'],
+						'ZIP' => $row['zip'],
+						'COUNTRY' => $row['country'],
+						'PHONE' => $row['phone'],
+						'EMAIL' => $row['email']));
+
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();*/
+				break;
+			default:
+				break;
+		}
 	}
 	// Create an account side content
 	else if (isset($_GET['option']) && $_GET['option'] == 1)
@@ -26,7 +196,7 @@ if ($user->auth() && $user->role == 'admin')
 	// Modify profile side content
 	else if (isset($_GET['option']) && $_GET['option'] == 2)
 	{
-		$template->assign_var('SIDE_CONTENT', 2);
+		$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 0));
 	}
 	// Modify permissions side content
 	else if (isset($_GET['option']) && $_GET['option'] == 3)
@@ -162,7 +332,7 @@ if ($user->auth() && $user->role == 'admin')
 		$result->close();
 	}
 
-	$template->set_filenames(array('body' => 'admin_user.html'));
+	$template->set_filenames(array('body' => 'admin_users.html'));
 
 	$template->display('body');
 }
