@@ -15,7 +15,7 @@ if ($user->auth() && $user->role == 'admin')
 		'USERNAME' => $user->user));
 
 	// Process account creation
-	if (isset($_POST['action']) && $_POST['action'] == 'create_account')
+	if (isset($_POST['action']) && $_POST['action'] === 'create_account')
 	{
 		$profile = new Profile;
 		
@@ -27,7 +27,7 @@ if ($user->auth() && $user->role == 'admin')
 				'ERROR_MESSAGE' => $profile->error));
 		}
 	}
-	else if (isset($_POST['action']) && $_POST['action'] == 'show_profile')
+	else if (isset($_POST['action']) && $_POST['action'] === 'show_profile')
 	{
 		switch($_POST['searchType'])
 		{
@@ -91,98 +91,72 @@ if ($user->auth() && $user->role == 'admin')
 				}					
 				$result->close();
 				break;
-			case 'first':
-				$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.id = %d", $_POST['inputSearch']);
-
+			case 'plate':
+				break;
+			default:
+				break;
+		}
+	}
+	else if (isset($_POST['action']) && $_POST['action'] === 'edit_permissions')
+	{
+		switch($_POST['searchType'])
+		{
+			case 'user':
+				$stmnt = sprintf("SELECT * FROM login WHERE user = '%s'", $_POST['inputSearch']);
 				$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
 				{
 					$row = $result->fetch_assoc();
+					
+					if ($row['role'] === 'user')
+					{
+						$template->assign_vars(array('USER_CHG_PERM_ALLOW' => false, 'USER' => $row['user']));
+					}
+					else
+					{
+						$template->assign_vars(array('USER_CHG_PERM_ALLOW' => true, 'USER' => $row['user']));
 
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
-						'USER' => $row['user'],
-						'FIRST' => $row['name'],
-						'MIDDLE' => $row['middle'],
-						'LAST' => $row['last'],
-						'MAIDEN' => $row['maiden'],
-						'ADDRESS1' => $row['address1'],
-						'ADDRESS2' => $row['address2'],
-						'CITY' => $row['city'],
-						'STATE' => $row['state'],
-						'ZIP' => $row['zip'],
-						'COUNTRY' => $row['country'],
-						'PHONE' => $row['phone'],
-						'EMAIL' => $row['email']));
+						if (strstr($row['permissions'], 'all'))
+						{
+							$template->assign_vars(array('CHECK_ALL' => 'checked',
+								'CHECK_U' => 'disabled',
+								'CHECK_S' => 'disabled',
+								'CHECK_O' => 'disabled',
+								'CHECK_R' => 'disabled',
+								'CHECK_F' => 'disabled'));
+						}
+					}
+					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 1));
 				}
 				else
-				{
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
-				}					
+					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 2));
 				$result->close();
 				break;
-			case 'last':
-				$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.last = '%s'", $_POST['inputSearch']);
-
+			case 'id':
+				$stmnt = sprintf("SELECT * FROM login INNER JOIN profile ON login.id = profile.userid WHERE profile.id = %d", $_POST['inputSearch']);
 				$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
 				{
 					$row = $result->fetch_assoc();
+					
+					if ($row['role'] === 'user')
+					{
+						$template->assign_vars(array('USER_CHG_PERM_ALLOW' => false, 'USER' => $row['user']));
 
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
-						'USER' => $row['user'],
-						'FIRST' => $row['name'],
-						'MIDDLE' => $row['middle'],
-						'LAST' => $row['last'],
-						'MAIDEN' => $row['maiden'],
-						'ADDRESS1' => $row['address1'],
-						'ADDRESS2' => $row['address2'],
-						'CITY' => $row['city'],
-						'STATE' => $row['state'],
-						'ZIP' => $row['zip'],
-						'COUNTRY' => $row['country'],
-						'PHONE' => $row['phone'],
-						'EMAIL' => $row['email']));
-
+					}
+					else
+					{
+						$template->assign_vars(array('USER_CHG_PERM_ALLOW' => true, 'USER' => $row['user']));
+					}
+					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 1));
 				}
 				else
-				{
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
-				}					
+					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 2));
 				$result->close();
 				break;
 			case 'plate':
-				// TODO: We need to include the vehicle table and relate it to the user profile
-				/*$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.id = %d", $_POST['inputSearch']);
-
-				$result = $user->sql_conn->query($stmnt);
-				
-				if ($result->num_rows > 0)
-				{
-					$row = $result->fetch_assoc();
-
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
-						'USER' => $row['user'],
-						'FIRST' => $row['name'],
-						'MIDDLE' => $row['middle'],
-						'LAST' => $row['last'],
-						'MAIDEN' => $row['maiden'],
-						'ADDRESS1' => $row['address1'],
-						'ADDRESS2' => $row['address2'],
-						'CITY' => $row['city'],
-						'STATE' => $row['state'],
-						'ZIP' => $row['zip'],
-						'COUNTRY' => $row['country'],
-						'PHONE' => $row['phone'],
-						'EMAIL' => $row['email']));
-
-				}
-				else
-				{
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
-				}					
-				$result->close();*/
 				break;
 			default:
 				break;
@@ -215,7 +189,7 @@ if ($user->auth() && $user->role == 'admin')
 				
 				if ($result->num_rows > 0)
 				{
-					$stmnt = sprintf("UPDATE login SET disabled = 0 WHERE user = '%s'", $_POST['inputSearch']);
+					$stmnt = sprintf("UPDATE login INNER JOIN profile ON login.id = profile.userid SET disabled = 0 WHERE profile.id = %d", $_POST['inputSearch']);
 
 					if (!$user->sql_conn->query($stmnt))
 						trigger_error('/admin/users/index.php: '.$user->sql_conn->error, E_USER_ERROR);
@@ -225,10 +199,6 @@ if ($user->auth() && $user->role == 'admin')
 				else
 					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 2));
 				$result->close();
-				break;
-			case 'first':
-				break;
-			case 'last':
 				break;
 			case 'plate':
 				break;
