@@ -88,6 +88,13 @@ class Profile extends User
 		if (!$this->sql_conn->query($stmt))
 			trigger_error('Profile::create_account(): '.$this->sql_conn->error, E_USER_ERROR);
 
+		if ($this->role === 'provider')
+		{
+			$stmt = sprintf("INSERT INTO providers(userid) VALUES (%d)", $this->user_id);
+			
+			if (!$this->sql_conn->query($stmt))
+				trigger_error('Profile::create_account(): '.$this->sql_conn->error, E_USER_ERROR);
+		}
 		return true;
 	}
 	public function load_profile($user_id)
