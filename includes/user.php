@@ -108,6 +108,77 @@ class User extends Session
 
 		return true;
 	}
+	public function user_valid($username)
+	{
+		$isvalid;
+
+		$stmt = sprintf("SELECT user FROM login WHERE user = '%s'", $username);
+
+		$result = $this->sql_conn->query($stmt);
+
+		if ($result->num_rows > 0)
+			$isvalid = true;
+		else
+			$isvalid = false;
+		
+		$result->close();
+
+		return $isvalid;
+	}
+	public function user_locked($username)
+	{
+		$islocked;
+
+		$stmt = sprintf("SELECT disabled FROM login WHERE user = '%s'", $username);
+
+		$result = $this->sql_conn->query($stmt);
+
+		if ($result->num_rows > 0)
+		{
+			$row = $result->fetch_assoc();
+			if ($row['disabled'] == 1)
+				$islocked = true;
+			else
+				$islocked = false;
+		}
+		$result->close();
+
+		return $islocked;
+	}
+	public function user_unlock($username)
+	{
+		$stmt = sprintf("UPDATE login SET disabled = 0 WHERE user = '%s'", $username);
+
+		if (!$this->sql_conn->query($stmt))
+			trigger_error('User::change_pass(): '.$this->sql_conn->error, E_USER_ERROR);
+	}
+	public function user_inactive($username)
+	{
+		$isinactive;
+
+		$stmt = sprintf("SELECT active FROM login WHERE user = '%s'", $username);
+
+		$result = $this->sql_conn->query($stmt);
+
+		if ($result->num_rows > 0)
+		{
+			$row = $result->fetch_assoc();
+			if ($row['active'] == 0)
+				$isinactive = true;
+			else
+				$isinactive = false;
+		}
+		$result->close();
+
+		return $isinactive;
+	}
+	public function user_activate($username)
+	{
+		$stmt = sprintf("UPDATE login SET active = 1 WHERE user = '%s'", $username);
+
+		if (!$this->sql_conn->query($stmt))
+			trigger_error('User::change_pass(): '.$this->sql_conn->error, E_USER_ERROR);
+	}
 	public function logoff()
 	{
 		$this->session_close();
@@ -117,13 +188,13 @@ class User extends Session
 		switch ($errno)
 		{
 		case self::SESSION_INVALID:
-			$this->error = 'La sesi&oacute;n actual es invalida';
+			$this->error = 'La sesión actual es invalida';
 			break;
 		case self::USER_INVALID:
 			$this->error = 'La cuenta de usario es invalida';
 			break;
 		case self::PASS_INVALID:
-			$this->error = 'Su contrase&ntilde;a original no es correcta';
+			$this->error = 'Su contraseña original no es correcta';
 			break;
 		}
 	}

@@ -162,50 +162,6 @@ if ($user->auth() && $user->role == 'admin')
 				break;
 		}
 	}
-	else if (isset($_POST['action']) && $_POST['action'] === 'unlock_user')
-	{
-		switch($_POST['searchType'])
-		{
-			case 'user':
-				$stmnt = sprintf("SELECT disabled FROM login WHERE disabled = 1 and user = '%s'", $_POST['inputSearch']);
-				$result = $user->sql_conn->query($stmnt);
-				
-				if ($result->num_rows > 0)
-				{
-					$stmnt = sprintf("UPDATE login SET disabled = 0 WHERE user = '%s'", $_POST['inputSearch']);
-
-					if (!$user->sql_conn->query($stmnt))
-						trigger_error('/admin/users/index.php: '.$user->sql_conn->error, E_USER_ERROR);
-
-					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 1));
-				}
-				else
-					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 2));
-				$result->close();
-				break;
-			case 'id':
-				$stmnt = sprintf("SELECT disabled FROM login INNER JOIN profile ON login.id = profile.userid WHERE disabled = 1 and profile.id = %d", $_POST['inputSearch']);
-				$result = $user->sql_conn->query($stmnt);
-				
-				if ($result->num_rows > 0)
-				{
-					$stmnt = sprintf("UPDATE login INNER JOIN profile ON login.id = profile.userid SET disabled = 0 WHERE profile.id = %d", $_POST['inputSearch']);
-
-					if (!$user->sql_conn->query($stmnt))
-						trigger_error('/admin/users/index.php: '.$user->sql_conn->error, E_USER_ERROR);
-
-					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 1));
-				}
-				else
-					$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 2));
-				$result->close();
-				break;
-			case 'plate':
-				break;
-			default:
-				break;
-		}
-	}
 	// Create an account side content
 	else if (isset($_GET['option']) && $_GET['option'] == 1)
 	{

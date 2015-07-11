@@ -11,9 +11,6 @@
 						  <a href="index.php?option=3" class="list-group-item">Manejar privilegios de usuarios</a>
 						  <a href="index.php?option=4" class="list-group-item">Manejar planes y servicios de usuarios</a>
 						  <a href="index.php?option=5" class="list-group-item">Manejar vehículos de motor de usuarios</a>
-						  <a href="index.php?option=6" class="list-group-item">Desbloquear cuenta de usuario</a>
-						  <a href="index.php?option=7" class="list-group-item">Activar cuenta de usuario</a>
-						  <a href="index.php?option=8" class="list-group-item">Remover cuenta de usuario</a>
 						</div>
 					</div>
 				</div>
@@ -83,7 +80,13 @@
 								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
-							    
+								<script>
+									$('document').ready(function(){
+										$('#userRegModal').on('hidden.bs.modal', function() { 
+											location.reload();
+										});
+									})
+								</script>
 								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 							  </div>
 							</div>
@@ -118,6 +121,13 @@
 								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
+								<script>
+									$('document').ready(function(){
+										$('#userActiveModal').on('hidden.bs.modal', function() { 
+											location.reload();
+										});
+									})
+								</script>
 								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 							  </div>
 							</div>
@@ -152,7 +162,42 @@
 								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
-								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+								<script>
+									$(document).ready(function() {
+										$("#activate_user").click(function() {
+											var username = $("#activate_input").val();
+											
+											if (username !== "")
+											{
+												$.ajax({
+													type: "POST",
+													url: "activate_user.php",
+													data: "username="+username,
+													success: function(data){
+														if (data === "success")
+															$("#activate_status").html("'"+username+"' ha sido activado.");
+														else if (data === "failed")
+															$("#activate_status").html("'"+username+"' no está desactivado.");
+														else
+															$("#activate_status").html("'"+username+"' no existe.");
+													}
+												})
+											}
+										});
+										$('#userInactiveModal').on('hidden.bs.modal', function() { 
+											location.reload();
+										});
+									});
+								</script>
+								<form class="form-inline">
+									<div class="form-group">
+										<input type="text" class="form-control" id="activate_input">
+									</div>
+									<button type="button" class="btn btn-default" id="activate_user">Activar</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+								</form>
+								</br>
+								<p id="activate_status" class="text-info"></p>
 							  </div>
 							</div>
 						  </div>
@@ -189,19 +234,39 @@
 								<script>
 									$(document).ready(function() {
 										$("#unlock_user").click(function() {
-										})
-									})
+											var username = $("#unlock_input").val();
+											
+											if (username !== "")
+											{
+												$.ajax({
+													type: "POST",
+													url: "unlock_user.php",
+													data: "username="+username,
+													success: function(data){
+														if (data === "success")
+															$("#unlock_status").html("'"+username+"' ha sido desbloqueado.");
+														else if (data === "failed")
+															$("#unlock_status").html("'"+username+"' no está bloqueado.");
+														else
+															$("#unlock_status").html("'"+username+"' no existe.");
+													}
+												})
+											}
+										});
+										$('#userDisabledModal').on('hidden.bs.modal', function() { 
+											location.reload();
+										});
+									});
 								</script>
-								<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<form class="form-inline">
 									<div class="form-group">
-										<label class="col-sm-3 control-label">Apellido materno:</label>
-										<div class="col-sm-4">
-											<input type="text" class="form-control" value="{MAIDEN}">
-										</div>
+										<input type="text" class="form-control" id="unlock_input">
 									</div>
 									<button type="button" class="btn btn-default" id="unlock_user">Desbloquear</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 								</form>
-								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+								</br>
+								<p id="unlock_status" class="text-info"></p>
 							  </div>
 							</div>
 						  </div>
@@ -235,6 +300,13 @@
 								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
+								<script>
+									$('document').ready(function(){
+										$('#userExpiredModal').on('hidden.bs.modal', function() { 
+											location.reload();
+										});
+									})
+								</script>
 								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 							  </div>
 							</div>
@@ -297,7 +369,7 @@
 										{
 											$.ajax({
 												type: "POST",
-												url: "check_username.php",
+												url: "check_user.php",
 												data: "username="+username,
 												success: function(data){
 													if (data === "available")

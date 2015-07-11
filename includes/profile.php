@@ -121,9 +121,9 @@ class Profile extends User
 
 		return true;
 	}
-	private function user_available($username)
+	public function user_available($username)
 	{
-		$stmt = sprintf("SELECT * FROM login WHERE user = '%s'", $username);
+		$stmt = sprintf("SELECT user FROM login WHERE user = '%s'", $username);
 
 		$result = $this->sql_conn->query($stmt);
 
