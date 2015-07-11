@@ -72,8 +72,8 @@ class Profile extends User
 	
 		$this->pass = password_hash($this->pass, PASSWORD_BCRYPT, $options);
 
-		$stmt = sprintf("INSERT INTO login(id, user, pass, email, role, regdate, ip, browser, session, passdate) 
-			VALUES (%d, '%s', '%s', '%s', '%s', now(), '%s', '%s', '%s', adddate(now(), %d))",
+		$stmt = sprintf("INSERT INTO login(id, user, pass, email, role, regdate, ip, browser, active, session, passdate) 
+			VALUES (%d, '%s', '%s', '%s', '%s', now(), '%s', '%s', 1, '%s', adddate(now(), %d))",
 			$this->user_id, $this->user, $this->pass, $this->email, $this->role,
 			$_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], session_id(), $site_config->pass_expiration);
 

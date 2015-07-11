@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2015 at 04:28 AM
+-- Generation Time: Jul 11, 2015 at 03:41 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -82,19 +82,21 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisit`, `lastip`, `lastbrowser`, `ip`, `browser`, `session`, `expired`, `disabled`, `active`, `passchg`, `passdate`, `login_attempts`, `permissions`) VALUES
-(12854, 'admin', '$2y$11$putu03YGlI8t6eahu68ZOuKU1vHt./wSn7OGmlJ4VmlpVfKYQGxuG', 'q', 'admin', '2015-02-02 23:37:12', '2015-07-07 08:07:58', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', 'q93bg51qhi0fnbb62lovmeji55', 0, 0, 1, 0, '2015-07-14 23:37:12', 0, 'all'),
+(12854, 'admin', '$2y$11$putu03YGlI8t6eahu68ZOuKU1vHt./wSn7OGmlJ4VmlpVfKYQGxuG', 'q', 'admin', '2015-02-02 23:37:12', '2015-07-10 20:41:57', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-07-14 23:37:12', 0, 'all'),
+(29393, 'test', '$2y$11$ZFnL1YqHZbjbHa9j0XEKdeGRfhSj9DjyK/Z38RS53Sg7qep7.7e.2', 'test', 'user', '2015-07-10 20:56:14', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-09-08 20:56:14', 0, ''),
 (37749, 'dborrero', '$2y$11$8XD0LqIHCZ6Hh0LsQuNPbupbQQelaC91iS2FTqy9mnc6vK85F/AJa', 'g', 'admin', '2015-07-06 20:00:07', '2015-07-06 20:00:18', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '572avjprkljd8oqju2mhh73pk2', 0, 0, 0, 0, '2015-09-04 20:00:07', 0, ''),
-(41873, 'dennis', '$2y$11$eR9EV3NbYR.qnG.dRWt0eOTXgawEOQnUfnsLrz8b9T3if0jaWNSde', 'q', 'user', '2015-02-02 23:37:44', '2015-06-28 20:57:33', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'e4f9hdv38l4abe5altmqj0vdg5', 0, 1, 1, 0, '2015-07-23 00:10:30', 4, ''),
-(62074, 'test', '$2y$11$UP3uSC1vgjnVBBm3z1JkDOAOZOv3hzKssWIrnhIMC0kztt6bm7syW', 'q', 'user', '2015-02-02 23:37:30', '2015-02-20 19:53:30', '', '', '70.45.157.186', '', '9b9501e4d4697beb368faee69902c783', 0, 0, 0, 0, '2015-04-03 23:37:30', 0, '');
+(41873, 'dennis', '$2y$11$eR9EV3NbYR.qnG.dRWt0eOTXgawEOQnUfnsLrz8b9T3if0jaWNSde', 'q', 'user', '2015-02-02 23:37:44', '2015-06-28 20:57:33', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'e4f9hdv38l4abe5altmqj0vdg5', 0, 0, 1, 0, '2015-07-23 00:10:30', 4, ''),
+(43054, 'provider', '$2y$11$7Bta0ZCDr/7fy1B.fftbC.8HM9hIclpVVjFYDtykT.PNIwmPfvl9q', 'provider', '', '2015-07-10 20:49:43', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 0, 0, '2015-09-08 20:49:43', 0, '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `plan`
+-- Table structure for table `plans`
 --
 
-CREATE TABLE IF NOT EXISTS `plan` (
-  `id` int(10) unsigned NOT NULL,
+CREATE TABLE IF NOT EXISTS `plans` (
+`id` int(11) unsigned NOT NULL,
+  `title` varchar(64) NOT NULL,
   `desc` varchar(128) NOT NULL,
   `price` float NOT NULL,
   `term` int(11) NOT NULL
@@ -120,23 +122,52 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `state` varchar(64) NOT NULL,
   `zip` varchar(18) NOT NULL,
   `country` varchar(64) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1007 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `profile`
 --
 
 INSERT INTO `profile` (`id`, `userid`, `name`, `middle`, `last`, `maiden`, `phone`, `address1`, `address2`, `city`, `state`, `zip`, `country`) VALUES
-(1000, 37749, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', '6109 Calle San Claudio', '', 'Ponce', 'PR', '00730', 'Puerto Rico');
+(1000, 37749, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', '6109 Calle San Claudio', '', 'Ponce', 'PR', '00730', 'Puerto Rico'),
+(1005, 43054, '', '', '', '', '', '', '', '', '', '', ''),
+(1006, 29393, '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vehicle`
+-- Table structure for table `providers`
 --
 
-CREATE TABLE IF NOT EXISTS `vehicle` (
-  `id` int(10) unsigned NOT NULL,
+CREATE TABLE IF NOT EXISTS `providers` (
+`id` int(11) unsigned NOT NULL,
+  `userid` int(11) unsigned NOT NULL,
+  `companyName` varchar(64) NOT NULL,
+  `companyPhone` varchar(18) NOT NULL,
+  `companyEmail` varchar(128) NOT NULL,
+  `area` enum('north','south','east','west','central') NOT NULL,
+  `address1` varchar(64) NOT NULL,
+  `address2` varchar(64) NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `zip` varchar(18) NOT NULL,
+  `country` varchar(64) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `providers`
+--
+
+INSERT INTO `providers` (`id`, `userid`, `companyName`, `companyPhone`, `companyEmail`, `area`, `address1`, `address2`, `city`, `zip`, `country`) VALUES
+(1, 43054, '', '', '', 'north', '', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicles`
+--
+
+CREATE TABLE IF NOT EXISTS `vehicles` (
+`id` int(11) unsigned NOT NULL,
   `userid` int(11) NOT NULL,
   `type` varchar(64) NOT NULL,
   `model` varchar(64) NOT NULL,
@@ -163,21 +194,27 @@ ALTER TABLE `login`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `plan`
+-- Indexes for table `plans`
 --
-ALTER TABLE `plan`
+ALTER TABLE `plans`
  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `profile`
 --
 ALTER TABLE `profile`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `userid` (`userid`);
 
 --
--- Indexes for table `vehicle`
+-- Indexes for table `providers`
 --
-ALTER TABLE `vehicle`
+ALTER TABLE `providers`
+ ADD PRIMARY KEY (`id`), ADD KEY `providers_ibfk_1` (`userid`);
+
+--
+-- Indexes for table `vehicles`
+--
+ALTER TABLE `vehicles`
  ADD PRIMARY KEY (`id`);
 
 --
@@ -190,10 +227,41 @@ ALTER TABLE `vehicle`
 ALTER TABLE `config`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `plans`
+--
+ALTER TABLE `plans`
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1004;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1007;
+--
+-- AUTO_INCREMENT for table `providers`
+--
+ALTER TABLE `providers`
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `vehicles`
+--
+ALTER TABLE `vehicles`
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `profile`
+--
+ALTER TABLE `profile`
+ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`);
+
+--
+-- Constraints for table `providers`
+--
+ALTER TABLE `providers`
+ADD CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
