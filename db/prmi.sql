@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2015 at 01:43 AM
+-- Generation Time: Jul 12, 2015 at 03:05 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -97,7 +97,7 @@ INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisi
 CREATE TABLE IF NOT EXISTS `plans` (
 `id` int(11) unsigned NOT NULL,
   `title` varchar(64) NOT NULL,
-  `description` int(11) NOT NULL,
+  `description` varchar(128) NOT NULL,
   `num_occurrences` int(11) NOT NULL,
   `num_miles` int(11) NOT NULL,
   `num_vehicles` int(11) NOT NULL,
@@ -197,7 +197,7 @@ ALTER TABLE `config`
 -- Indexes for table `login`
 --
 ALTER TABLE `login`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `user` (`user`);
 
 --
 -- Indexes for table `plans`
