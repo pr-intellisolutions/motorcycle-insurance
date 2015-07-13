@@ -6,7 +6,9 @@
 							<h3 class="panel-title">Navegación</h3>
 						</div>
 						<div class="list-group">
-						  <a href="index.php?option=1" class="list-group-item">Añadir un plan nuevo</a>
+						  <a href="index.php?option=1" class="list-group-item">Añadir plan de servicio</a>
+						  <a href="index.php?option=2" class="list-group-item">Editar plan de servicio</a>
+						  <a href="index.php?option=3" class="list-group-item">Remover plan de servicio</a>
 						</div>
 					</div>
 				</div>
@@ -15,6 +17,30 @@
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Planes y servicios</li>
+						</ol>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Información general</th>
+									<th></th>
+								<tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Listado de planes activos</td>
+									<td>{ACTIVE_PLANS}0</td>
+								</tr>
+								<tr>
+									<td>Listado de planes inactivos</td>
+									<td>{INACTIVE_PLANS}0</td>
+								</tr>
+							</tbody>
+						</table>
+					<!-- ELSEIF SIDE_CONTENT == 1 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/services">Planes y servicios</a></li>
+							<li class="active">Añadir plan de servicio</li>
 						</ol>
 					<!-- ENDIF -->
 				</div>
