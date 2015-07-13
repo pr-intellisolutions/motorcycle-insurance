@@ -1,3 +1,60 @@
 		<!-- INCLUDE admin_header.html -->
-
+			<div class="row">
+				<div class="col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Navegación</h3>
+						</div>
+						<div class="list-group">
+						  <a href="index.php?option=1" class="list-group-item">Option 1</a>
+						  <a href="index.php?option=1" class="list-group-item">Option 2</a>
+						  <a href="index.php?option=1" class="list-group-item">Option 3</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<!-- IF SIDE_CONTENT == "home" -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li class="active">Proveedores de servicio</li>
+						</ol>
+						<form class="form-inline">
+							<div class="form-group">
+								<label class="control-label">Ordenar por:</label>
+								<select class="form-control" name="role">
+									<option value="area" default>Área de covertura</option>
+								</select>
+								<input type="text" class="form-control"/>
+							</div>
+							<button type="button" class="btn btn-primary">Ordenar</button>
+						</form>
+						<hr>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nombre del proveedor</th>
+									<th>Área de covertura</th>
+									<th>Número de teléfono</th>
+									<th>Email</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- This section as to be dynamic. Use Begin and end blocks to create a loop
+									 look at the admin_users.html file and search the already defined tables for
+									 examples. Look at the /admin/users/index.php to see how the being and end block
+									 matches with $template->assign_block_vars instruction.
+								-->
+								<tr>
+									<td>1</td>
+									<td>Dennis</td>
+									<td>Ponce</td>
+									<td>(123) 456-7890</td>
+									<td>my@email.com</td>
+								<tr>
+							</tbody>
+						</table>
+					<!-- ENDIF -->
+				</div>
+			</div>
 		<!-- INCLUDE admin_footer.html -->

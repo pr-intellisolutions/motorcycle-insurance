@@ -13,6 +13,10 @@ if ($user->auth() && $user->role == 'admin')
 		'FORM_METHOD' => 'POST',
 		'USERNAME' => $user->user));
 
+	/*
+		Add dynamic content here. Example decisions, loops, queries, etc.
+	*/
+
 	$template->set_filenames(array('body' => 'admin_providers.html'));
 
 	$template->display('body');
