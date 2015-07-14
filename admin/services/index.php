@@ -29,7 +29,8 @@ if ($user->auth() && $user->role == 'admin')
 */
 	$template->assign_vars(array('SITE_URL' => SITE_URL,
 		'FORM_ACTION' => $_SERVER['PHP_SELF'],
-		'FORM_METHOD' => 'POST'));
+		'FORM_METHOD' => 'POST',
+		'USERNAME' => $user->user));
 
 	//# add plan content
 	if (isset($_GET['option']) && $_GET['option'] == 1)
@@ -71,8 +72,7 @@ if ($user->auth() && $user->role == 'admin')
 	//# home
 	else
 	{
-		$template->assign_vars(array('USERNAME' => $user->user,
-		'SIDE_CONTENT' => 'home'));
+		$template->assign_vars(array('SIDE_CONTENT' => 'home'));
 	}
 
 	$template->set_filenames(array('body' => 'admin_services.html'));
