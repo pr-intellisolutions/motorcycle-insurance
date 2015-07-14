@@ -6,55 +6,322 @@
 							<h3 class="panel-title">Navegación</h3>
 						</div>
 						<div class="list-group">
-						  <a href="index.php?option=1" class="list-group-item">Option 1</a>
-						  <a href="index.php?option=1" class="list-group-item">Option 2</a>
-						  <a href="index.php?option=1" class="list-group-item">Option 3</a>
+						  <a href="index.php?option=1" class="list-group-item">Buscar proveedor de servicio</a>
+						  <a href="index.php?option=2" class="list-group-item">Modificar proveedor de servicio</a>
+						  <a href="index.php?option=3" class="list-group-item">Añadir proveedor</a>
+						  <a href="index.php?option=4" class="list-group-item">Generar estadísticas de proveedor</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-8">
+				
 					<!-- IF SIDE_CONTENT == "home" -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Proveedores de servicio</li>
 						</ol>
+						
 						<form class="form-inline">
 							<div class="form-group">
 								<label class="control-label">Ordenar por:</label>
 								<select class="form-control" name="role">
-									<option value="area" default>Área de covertura</option>
+									<option value="area" default>Área de cobertura</option>
+									<option value="area" default>Nombre del proveedor</option>
 								</select>
-								<input type="text" class="form-control"/>
 							</div>
 							<button type="button" class="btn btn-primary">Ordenar</button>
 						</form>
-						<hr>
 						<table class="table table-striped">
 							<thead>
 								<tr>
 									<th>#</th>
 									<th>Nombre del proveedor</th>
-									<th>Área de covertura</th>
+									<th>Área de cobertura</th>
 									<th>Número de teléfono</th>
 									<th>Email</th>
 								</tr>
 							</thead>
 							<tbody>
-								<!-- This section as to be dynamic. Use Begin and end blocks to create a loop
-									 look at the admin_users.html file and search the already defined tables for
-									 examples. Look at the /admin/users/index.php to see how the being and end block
-									 matches with $template->assign_block_vars instruction.
-								-->
-								<tr>
-									<td>1</td>
-									<td>Dennis</td>
-									<td>Ponce</td>
-									<td>(123) 456-7890</td>
-									<td>my@email.com</td>
-								<tr>
+										<!-- BEGIN user_reg_list -->
+										  <tr>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
+										  </tr>
+										<!-- END user_reg_list -->
 							</tbody>
 						</table>
+						
+					<!-- ELSEIF SIDE_CONTENT == 1 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
+							<li class="active">Buscar proveedor</li>
+						</ol>
+							
+						<!-- IF USERNAME_FOUND == 1 -->
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nombre del proveedor</th>
+									<th>Área de cobertura</th>
+									<th>Número de teléfono</th>
+									<th>Email</th>
+									<th>Nombre del usuario</th>
+								</tr>
+							</thead>
+							<tbody>
+										<!-- BEGIN user_reg_list -->
+										  <tr>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td><td>{user_reg_list.USER}</td>
+										  </tr>
+										<!-- END user_reg_list -->
+							</tbody>
+						</table>
+						<!-- ELSEIF USERNAME_FOUND == 2 -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								Proveedor no se pudo encontrar.
+							</div>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=1';",1500);
+							</script>
+						<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label for="selectSearch">Buscar por: </label>
+									<select class="form-control" name="searchType">
+									<option value="area">Área de cobertura</option>
+									<option value="companyName">Nombre del proveedor</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="inputSearch" required>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="search_provider">Buscar</button>
+							</form>	
+						<!-- ENDIF -->					
+					
+					<!-- ELSEIF SIDE_CONTENT == 2 -->
+					<ol class="breadcrumb">
+						<li><a href="{SITE_URL}admin">Inicio</a></li>
+						<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
+						<li class="active">Modificar proveedor</li>
+					</ol>
+						<!-- IF USERNAME_FOUND == 1 -->
+							<p class="text-info">Información del proveedor.</p>
+							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Nombre del proveedor:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{COMPANYNAME}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Teléfono:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{COMPANYPHONE}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Email:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{COMPANYEMAIL}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="role">Área de cobertura:</label>
+									<div class="col-sm-4">
+										<select class="form-control" name="role">
+											<option value="north" default>Norte</option>
+											<option value="south">Sur</option>
+											<option value="east">Este</option>
+											<option value="west">Oeste</option>
+											<option value="central">Centro</option>
+										</select>
+									</div>
+								</div>		
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Dirección Línea 1:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{ADDRESS1}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Dirección Línea 2:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{ADDRESS2}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Cuidad:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{CITY}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Zip:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{ZIP}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">País:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{COUNTRY}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-4">
+										<button type="submit" class="btn btn-primary">Guardar información</button>
+									</div>
+								</div>
+							</form>
+						<!-- ELSEIF USERNAME_FOUND == 2 -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								Proveedor no se pudo encontrar.
+							</div>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=2';",1500);
+							</script>
+						<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label for="selectSearch">Buscar por: </label>
+									<select class="form-control" name="searchType">
+										<option value="user">Nombre del usuario</option>
+										<option value="companyName">Nombre del proveedor</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="inputSearch" required>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="modify_provider">Mostrar</button>
+							</form>
+						
+								
+						<!-- ENDIF -->
+						
+					<!-- ELSEIF SIDE_CONTENT == 3 -->
+					<!-- TODO: Data validation client side -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
+							<li class="active">Añadir proveedor</li>
+						</ol>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+						
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Nombre de usuario: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="username" id="username" required>
+									<span id="check_user_status"></span>
+								</div>
+								<div class="col-sm-4">
+									<button type="button" class="btn btn-default" id="check_user">Verificar registro de usuario</button>
+								</div>
+							</div>
+							
+							
+							<!-- JQuery script to process user availability -->
+							<script type="text/javascript">
+								$(document).ready(function() {
+									$("#check_user").click(function() {
+										var username = $("#username").val();
+										
+										if (username !== "")
+										{
+											$.ajax({
+												type: "POST",
+												url: "check_user.php",
+												data: "username="+username,
+												success: function(data){
+													if (data === "available")
+													{
+														$("#check_user_status").attr("class", "label label-success");
+														$("#check_user_status").html("'"+username+"' está disponible!");
+													}
+													else
+													{
+														$("#check_user_status").attr("class", "label label-warning");
+														$("#check_user_status").html("'"+username+"' no está disponible!");
+													}
+												}
+											})
+										}
+									});
+								});
+							</script>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Nombre del proveedor: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="companyName" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Teléfono: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="companyPhone" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Email: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="companyEmail" required>
+								</div>
+							</div>							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="role">Área de cobertura:</label>
+								<div class="col-sm-4">
+									<select class="form-control" name="role">
+										<option value="north" default>Norte</option>
+										<option value="south">Sur</option>
+										<option value="east">Este</option>
+										<option value="west">Oeste</option>
+										<option value="central">Centro</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Dirección Línea 1:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="address1">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Dirección Línea 2:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="address2">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Ciudad:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="city">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Zip:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="zip">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">País:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="country">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-4">
+									<button type="submit" class="btn btn-primary" name="action" value="add_provider">Guardar información</button>
+								</div>
+							</div>
+						</form>
+				
 					<!-- ENDIF -->
+					
 				</div>
 			</div>
 		<!-- INCLUDE admin_footer.html -->
