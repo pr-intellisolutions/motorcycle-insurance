@@ -36,12 +36,103 @@
 								</tr>
 							</tbody>
 						</table>
+					<!-- ELSEIF SIDE_CONTENT == 'create_plan_result' -->
+						<!-- IF CREATE_PLAN == 'success' -->
+						<p>Success</p>
+						<!-- ELSEIF CREATE_PLAN == 'failed' -->
+						<p>Failed</p>
+						<!-- ENDIF -->
+					<!-- ELSEIF SIDE_CONTENT == 'cancel_process_request' -->
+						<p>Cancel</p>
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/services">Planes y servicios</a></li>
 							<li class="active">Añadir plan de servicio</li>
 						</ol>
+						<div class="alert alert-info" role="alert">
+							<strong>Nota:</strong>
+							El plan se activará automaticamente y se publicará si existe espacio en la sección de publicación (Máximo de 3). De lo
+							contrario el plan se creará y se colocará en la sección de planes inactivos. Para activarlo tendrá que inactivar algún
+							plan activo y activar el que plan inactivo que desee.
+						</div>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Nombre del plan:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Título:</label>
+								<div class="col-sm-4">
+									<textarea class="form-control" rows="3" name="title"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Descripción:</label>
+								<div class="col-sm-4">
+									<textarea class="form-control" rows="3" name="description"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Cantidad de ocurrencias:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="occurrences">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Cantidad de millas:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="miles">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Cantidad de vehículos:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="vehicles">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Precio del plan:</label>
+								<div class="col-sm-4">
+									<div class="input-group">
+										<div class="input-group-addon">$</div>
+										<input type="text" class="form-control" name="plan_price">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Precio de millas:</label>
+								<div class="col-sm-4">
+									<div class="input-group">
+										<div class="input-group-addon">$</div>
+										<input type="text" class="form-control" name="mile_price">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Precio de renovación:</label>
+								<div class="col-sm-4">
+									<div class="input-group">
+										<div class="input-group-addon">$</div>
+										<input type="text" class="form-control" name="extend_price">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Término del contrato:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="term">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-4">
+									<button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
+									<button type="submit" class="btn btn-primary" name="action" value="create_plan">Crear plan</button>
+								</div>
+							</div>
+						</form>
 					<!-- ENDIF -->
 				</div>
 			</div>
