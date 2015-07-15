@@ -8,6 +8,7 @@ class Session extends SiteDB
 	public $email;
 	public $role;
 	public $passchg;
+	public $perms;
 
 	function __construct()
 	{
@@ -25,6 +26,8 @@ class Session extends SiteDB
 		$this->email		= (isset($_SESSION['email'])) ? $this->sanitize_input($_SESSION['email']) : "";
 		$this->role			= (isset($_SESSION['role'])) ? $this->sanitize_input($_SESSION['role']) : "";
 		$this->passchg		= (isset($_SESSION['passchg'])) ? $this->sanitize_input($_SESSION['passchg']) : 0;
+		$this->perms		= (isset($_SESSION['perms'])) ? $this->sanitize_input($_SESSION['perms']) : "";
+
 	}
 	public function session_init($val)
 	{
@@ -36,6 +39,7 @@ class Session extends SiteDB
 		$_SESSION['email']		= $val['email'];
 		$_SESSION['role']		= $val['role'];
 		$_SESSION['passchg']	= $val['passchg'];
+		$_SESSION['perms']		= $val['permissions'];
 	}
 	public function session_update($key, $val)
 	{

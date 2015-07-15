@@ -6,8 +6,6 @@ class Login extends User
 	const LOGIN_DISABLED	= 1;
 	const LOGIN_INVALID		= 2;
 
-	public $error;
-
 	function __construct()
 	{
 		// Start a new session

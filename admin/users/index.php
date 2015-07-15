@@ -1,32 +1,79 @@
 <?php
 
 require_once('../../common.php');
-require_once('../../includes/profile.php');
 
 $template->set_custom_template(DIR_BASE.'styles', 'default');
 
-$template->assign_var('SITE_URL', SITE_URL);
-
 if ($user->auth() && $user->role == 'admin')
 {
-	$template->assign_vars(array('SIDE_CONTENT' => 'home',
+	/*
+	Order of execution on page load:
+
+		-- GET method --
+		No conditions:			# home content
+		Account creation:		# create account content
+		Modify profile:			# modify profile content
+		Modify permissions:		# modify permissions content
+		Modify plans/services:	# modify plans and services content
+		Modify vehicles:		# modify vehicles content
+
+		-- POST method --
+		Process account creation:	# process account creation
+		Process show profile:		# process show profile
+		Process edit permissions:	# process edit permissions
+		Process edit plans:			# process edit plans
+		Process edit vehicles:		# process edit vehicles
+
+	Note 1: This only controls what parts of the front-end are visible to the user at a time using
+		    the back-end template engine.
+
+	Note 2: The reason for having GET and POST methods is because GET method controls the presentation sequence
+			and the POST method controls what is been processed in the background.
+		  
+	*/
+
+	$template->assign_vars(array('SITE_URL' => SITE_URL,
 		'FORM_ACTION' => $_SERVER['PHP_SELF'],
 		'FORM_METHOD' => 'POST',
 		'USERNAME' => $user->user));
 
-	// Process account creation
-	if (isset($_POST['action']) && $_POST['action'] === 'create_account')
+	//# create account content
+	if (isset($_GET['option']) && $_GET['option'] == 1)
 	{
-		$profile = new Profile;
-		
-		if ($profile->create_account($_POST))
+		$template->assign_var('SIDE_CONTENT', 1);
+	}
+	//# modify profile content
+	else if (isset($_GET['option']) && $_GET['option'] == 2)
+	{
+		$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 0));
+	}
+	//# modify permissions content
+	else if (isset($_GET['option']) && $_GET['option'] == 3)
+	{
+		$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 0));
+	}
+	//# modify plans and services content
+	else if (isset($_GET['option']) && $_GET['option'] == 4)
+	{
+		$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 0));
+	}
+	//# modify vehicles content
+	else if (isset($_GET['option']) && $_GET['option'] == 5)
+	{
+		$template->assign_vars(array('SIDE_CONTENT' => 5, 'USERNAME_FOUND' => 0));
+	}
+	//# process account creation
+	else if (isset($_POST['action']) && $_POST['action'] === 'create_account')
+	{
+		if ($user->create_account($_POST))
 			$template->assign_var('SIDE_CONTENT', 'create_account_successful');
 		else
 		{
 			$template->assign_vars(array('SIDE_CONTENT' => 'create_account_failed',
-				'ERROR_MESSAGE' => $profile->error));
+				'ERROR_MESSAGE' => $user->error));
 		}
 	}
+	//# process show profile
 	else if (isset($_POST['action']) && $_POST['action'] === 'show_profile')
 	{
 		switch($_POST['searchType'])
@@ -97,6 +144,7 @@ if ($user->auth() && $user->role == 'admin')
 				break;
 		}
 	}
+	//# process edit permissions
 	else if (isset($_POST['action']) && $_POST['action'] === 'edit_permissions')
 	{
 		switch($_POST['searchType'])
@@ -162,39 +210,21 @@ if ($user->auth() && $user->role == 'admin')
 				break;
 		}
 	}
-	// Create an account side content
-	else if (isset($_GET['option']) && $_GET['option'] == 1)
+	//# process edit plans
+	else if (isset($_POST['action']) && $_POST['action'] === 'edit_plans')
 	{
-		$template->assign_var('SIDE_CONTENT', 1);
+		
 	}
-	// Modify profile side content
-	else if (isset($_GET['option']) && $_GET['option'] == 2)
+	//# process edit vehicles
+	else if (isset($_POST['action']) && $_POST['action'] === 'edit_vehicles')
 	{
-		$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 0));
+		
 	}
-	// Modify permissions side content
-	else if (isset($_GET['option']) && $_GET['option'] == 3)
-	{
-		$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 0));
-	}
-	// Modify plans and services side content
-	else if (isset($_GET['option']) && $_GET['option'] == 4)
-	{
-		$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 0));
-	}
-	// Modify vehicles side content
-	else if (isset($_GET['option']) && $_GET['option'] == 5)
-	{
-		$template->assign_vars(array('SIDE_CONTENT' => 5, 'USERNAME_FOUND' => 0));
-	}
-	// Unlock user account side content
-	else if (isset($_GET['option']) && $_GET['option'] == 6)
-	{
-		$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 0));
-	}
-	// Information for home content
+	//# home content
 	else
 	{
+		$template->assign_var('SIDE_CONTENT', 'home');
+
 		/* Fetch all registered users to show on the modal box */
 		$stmnt = sprintf("SELECT id, user, regdate, lastvisit FROM login");
 
@@ -307,7 +337,6 @@ if ($user->auth() && $user->role == 'admin')
 	}
 
 	$template->set_filenames(array('body' => 'admin_users.html'));
-
 	$template->display('body');
 }
 else

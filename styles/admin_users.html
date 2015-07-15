@@ -15,6 +15,16 @@
 					</div>
 				</div>
 				<div class="col-md-8">
+					<script>
+						$(document).ready(function()
+						{
+							$('#cancel_button').click(function()
+							{
+								// When user clicks cancel button the page is reloaded and home content is displayed
+								window.location.href = 'index.php';
+							});
+						});
+					</script>
 					<!-- IF SIDE_CONTENT == "home" -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
@@ -331,7 +341,6 @@
 							setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=1';",1700);
 						</script>
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
-						<!-- TODO: Data validation client side -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
@@ -343,7 +352,6 @@
 								<div class="col-sm-4">
 									<select class="form-control" name="role">
 										<option value="user" default>usuario</option>
-										<option value="provider">proveedor</option>
 										<option value="admin">administrador</option>
 									</select>
 								</div>
@@ -357,38 +365,35 @@
 								<div class="col-sm-4">
 									<button type="button" class="btn btn-default" id="check_user">Verificar disponibilidad</button>
 								</div>
-							</div>
-							
-							<!-- JQuery script to process user availability -->
-							<script type="text/javascript">
-								$(document).ready(function() {
-									$("#check_user").click(function() {
-										var username = $("#username").val();
-										
-										if (username !== "")
-										{
-											$.ajax({
-												type: "POST",
-												url: "check_user.php",
-												data: "username="+username,
-												success: function(data){
-													if (data === "available")
-													{
-														$("#check_user_status").attr("class", "label label-success");
-														$("#check_user_status").html("'"+username+"' está disponible!");
+								<script>
+									$(document).ready(function() {
+										$("#check_user").click(function() {
+											var username = $("#username").val();
+											
+											if (username !== "")
+											{
+												$.ajax({
+													type: "POST",
+													url: "check_user.php",
+													data: "username="+username,
+													success: function(data){
+														if (data === "available")
+														{
+															$("#check_user_status").attr("class", "label label-success");
+															$("#check_user_status").html("'"+username+"' está disponible!");
+														}
+														else
+														{
+															$("#check_user_status").attr("class", "label label-warning");
+															$("#check_user_status").html("'"+username+"' no está disponible!");
+														}
 													}
-													else
-													{
-														$("#check_user_status").attr("class", "label label-warning");
-														$("#check_user_status").html("'"+username+"' no está disponible!");
-													}
-												}
-											})
-										}
+												})
+											}
+										});
 									});
-								});
-							</script>
-
+								</script>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Contraseña: </label>
 								<div class="col-sm-4">
@@ -475,6 +480,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-4">
+									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 									<button type="submit" class="btn btn-primary" name="action" value="create_account">Crear cuenta</button>
 								</div>
 							</div>
@@ -485,7 +491,6 @@
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar perfil de usuarios</li>
 						</ol>
-						
 						<!-- IF USERNAME_FOUND == 1 -->
 							<p class="text-info">Mostrando información personal del usuario {USER}.</p>
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
@@ -563,6 +568,7 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-4">
+										<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 										<button type="submit" class="btn btn-primary">Guardar</button>
 									</div>
 								</div>
@@ -640,27 +646,28 @@
 											  </label>
 											</div>
 										</div>
-									<script>
-										$(document).ready(function() {
-											 $('.check_parent').click(function(event) {  //on click 
-												 if(this.checked) { // check select status
-													 $('.check_child').each(function() { //loop through each checkbox
-														 this.disabled = true;  //disable all checkboxes with class "checkbox1"  
-														 this.checked = false;              														 
-													 });
-												 }else{
-													 $('.check_child').each(function() { //loop through each checkbox
-														 this.disabled = false; //deselect all checkboxes with class "checkbox1"  
-														 this.checked = false;              														 
-													 });         
-												 }
-											 });
-											 
-										});
-									</script>
+										<script>
+											$(document).ready(function() {
+												 $('.check_parent').click(function(event) {  //on click 
+													 if(this.checked) { // check select status
+														 $('.check_child').each(function() { //loop through each checkbox
+															 this.disabled = true;  //disable all checkboxes with class "checkbox1"  
+															 this.checked = false;              														 
+														 });
+													 }else{
+														 $('.check_child').each(function() { //loop through each checkbox
+															 this.disabled = false; //deselect all checkboxes with class "checkbox1"  
+															 this.checked = false;              														 
+														 });         
+													 }
+												 });
+												 
+											});
+										</script>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-1 col-sm-4">
+											<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 											<button type="submit" class="btn btn-primary">Guardar</button>
 										</div>
 									</div>
@@ -704,7 +711,7 @@
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar planes y servicios de usuarios</li>
 						</ol>
-						<form class="form-inline" action="{FORM_ACTION}" method="FORM_METHOD">
+						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 							<div class="form-group">
 								<label for="selectSearch">Buscar por: </label>
 								<select class="form-control" name="searchType">
@@ -724,7 +731,7 @@
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar vehiculos de motor de usuarios</li>
 						</ol>
-						<form class="form-inline" action="{FORM_ACTION}" method="FORM_METHOD">
+						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 							<div class="form-group">
 								<label for="selectSearch">Buscar por: </label>
 								<select class="form-control" name="searchType">
@@ -738,44 +745,6 @@
 							</div>
 							<button type="submit" class="btn btn-primary">Mostrar</button>
 						</form>
-					<!-- ELSEIF SIDE_CONTENT == 6 -->
-						<ol class="breadcrumb">
-							<li><a href="{SITE_URL}admin">Inicio</a></li>
-							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
-							<li class="active">Desbloquear cuenta de usuario</li>
-						</ol>
-						<!-- IF USERNAME_FOUND == 1 -->
-							<div class="alert alert-info" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								¡La cuenta de usuario ha sido desbloqueada!
-							</div>
-							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=6';",1500);
-							</script>
-						<!-- ELSEIF USERNAME_FOUND == 2 -->
-							<div class="alert alert-danger" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								¡La cuenta de usuario no se pudo encontrar o la cuenta no está bloqueada!
-							</div>
-							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=6';",1500);
-							</script>
-						<!-- ELSE -->
-							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
-								<div class="form-group">
-									<label for="selectSearch">Buscar por: </label>
-									<select class="form-control" name="searchType">
-										<option value="user">Nombre de usuario</option>
-										<option value="id">Número de miembro</option>
-										<option value="plate">Tablilla de vehículo</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" name="inputSearch" required>
-								</div>
-								<button type="submit" class="btn btn-primary" name="action" value="unlock_user">Mostrar</button>
-							</form>
-						<!-- ENDIF -->
 					<!-- ENDIF -->
 				</div>
 			</div>
