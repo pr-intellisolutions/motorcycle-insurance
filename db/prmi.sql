@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2015 at 03:14 PM
+-- Generation Time: Jul 15, 2015 at 03:14 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisit`, `lastip`, `lastbrowser`, `ip`, `browser`, `session`, `expired`, `disabled`, `active`, `passchg`, `passdate`, `login_attempts`, `permissions`) VALUES
-(12854, 'admin', '$2y$11$putu03YGlI8t6eahu68ZOuKU1vHt./wSn7OGmlJ4VmlpVfKYQGxuG', 'q', 'admin', '2015-02-02 23:37:12', '2015-07-14 07:43:15', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'ckrf4lj2e01o452sqkv9uh5vr2', 0, 0, 1, 0, '2015-07-14 23:37:12', 0, 'all'),
-(29393, 'test', '$2y$11$ZFnL1YqHZbjbHa9j0XEKdeGRfhSj9DjyK/Z38RS53Sg7qep7.7e.2', 'test', 'user', '2015-07-10 20:56:14', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-09-08 20:56:14', 0, ''),
+(6576, 'test', '$2y$11$AOZvGqD2hlYVl8BVuC4Tc.FRIV/nSS7x1mIZU9oXHbHMiEi3Lxb/m', 'test', 'user', '2015-07-15 08:41:56', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'coa3e9djvcmesknvs3tto6bk14', 0, 0, 1, 0, '2015-09-13 08:41:56', 0, 'none'),
+(12854, 'admin', '$2y$11$putu03YGlI8t6eahu68ZOuKU1vHt./wSn7OGmlJ4VmlpVfKYQGxuG', 'q', 'admin', '2015-02-02 23:37:12', '2015-07-15 09:07:58', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'coa3e9djvcmesknvs3tto6bk14', 0, 0, 1, 0, '2015-10-15 23:37:12', 0, 'all'),
 (37749, 'dborrero', '$2y$11$8XD0LqIHCZ6Hh0LsQuNPbupbQQelaC91iS2FTqy9mnc6vK85F/AJa', 'g', 'admin', '2015-07-06 20:00:07', '2015-07-10 23:46:54', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-09-04 20:00:07', 0, ''),
 (41873, 'dennis', '$2y$11$eR9EV3NbYR.qnG.dRWt0eOTXgawEOQnUfnsLrz8b9T3if0jaWNSde', 'q', 'user', '2015-02-02 23:37:44', '2015-06-28 20:57:33', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'e4f9hdv38l4abe5altmqj0vdg5', 0, 0, 1, 0, '2015-07-23 00:10:30', 4, ''),
 (43054, 'provider', '$2y$11$7Bta0ZCDr/7fy1B.fftbC.8HM9hIclpVVjFYDtykT.PNIwmPfvl9q', 'provider', '', '2015-07-10 20:49:43', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-09-08 20:49:43', 0, '');
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `plans` (
   `extend_price` float NOT NULL,
   `term` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `plans`
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `state` varchar(64) NOT NULL,
   `zip` varchar(18) NOT NULL,
   `country` varchar(64) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1007 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1010 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `profile`
@@ -144,8 +144,7 @@ CREATE TABLE IF NOT EXISTS `profile` (
 
 INSERT INTO `profile` (`id`, `userid`, `name`, `middle`, `last`, `maiden`, `phone`, `address1`, `address2`, `city`, `state`, `zip`, `country`) VALUES
 (1000, 37749, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', '6109 Calle San Claudio', '', 'Ponce', 'PR', '00730', 'Puerto Rico'),
-(1005, 43054, '', '', '', '', '', '', '', '', '', '', ''),
-(1006, 29393, '', '', '', '', '', '', '', '', '', '', '');
+(1009, 6576, 'test', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -244,12 +243,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1007;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1010;
 --
 -- AUTO_INCREMENT for table `providers`
 --
