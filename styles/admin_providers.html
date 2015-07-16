@@ -21,16 +21,17 @@
 							<li class="active">Proveedores de servicio</li>
 						</ol>
 						
-						<form class="form-inline">
-							<div class="form-group">
+						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+							<div class="form-group" >
 								<label class="control-label">Ordenar por:</label>
-								<select class="form-control" name="role">
+								<select class="form-control" name="searchType">
 									<option value="area" default>Área de cobertura</option>
-									<option value="area" default>Nombre del proveedor</option>
+									<option value="companyName">Nombre del proveedor</option>
 								</select>
 							</div>
-							<button type="button" class="btn btn-primary">Ordenar</button>
+							<button type="submit" class="btn btn-primary">Ordenar</button>
 						</form>
+
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -238,13 +239,13 @@
 												success: function(data){
 													if (data === "available")
 													{
-														$("#check_user_status").attr("class", "label label-success");
-														$("#check_user_status").html("'"+username+"' está disponible!");
+														$("#check_user_status").attr("class", "label label-warning");
+														$("#check_user_status").html("'"+username+"' no es un usuario registrado.");
 													}
 													else
 													{
-														$("#check_user_status").attr("class", "label label-warning");
-														$("#check_user_status").html("'"+username+"' no está disponible!");
+														$("#check_user_status").attr("class", "label label-success");
+														$("#check_user_status").html("'"+username+"' es un usuario registrado.");
 													}
 												}
 											})

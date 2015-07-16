@@ -40,7 +40,7 @@ if ($user->auth() && $user->role == 'admin')
 		switch($_POST['searchType'])
 		{
 			case 'area':
-				$stmnt = sprintf("SELECT login.user, providers.companyName, providers.area, providers.companyPhone, providers.companyEmail FROM providers, login WHERE login.id = providers.userid AND providers.area='%s'", $_POST['inputSearch']);
+				$stmnt = sprintf("SELECT login.user, providers.companyName, providers.area, providers.companyPhone, providers.companyEmail FROM providers, login WHERE login.id = providers.userid AND providers.area='%s' ORDER BY providers.companyName", $_POST['inputSearch']);
 				$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
@@ -61,7 +61,7 @@ if ($user->auth() && $user->role == 'admin')
 				$result->close();
 			break;
 			case 'companyName':
-				$stmnt = sprintf("SELECT login.user, providers.companyName, providers.area, providers.companyPhone, providers.companyEmail FROM providers, login WHERE login.id = providers.userid AND providers.companyName = '%s'", $_POST['inputSearch']);
+				$stmnt = sprintf("SELECT login.user, providers.companyName, providers.area, providers.companyPhone, providers.companyEmail FROM providers, login WHERE login.id = providers.userid AND providers.companyName = '%s' ORDER BY providers.area", $_POST['inputSearch']);
 				$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
@@ -149,7 +149,7 @@ if ($user->auth() && $user->role == 'admin')
 		}
 	}
 	
-	// ADD PROVIDER PROCESS
+	// PROVIDER CREATION PROCESS
 	else if (isset($_POST['action']) && $_POST['action'] === 'add_provider')
 	{
 		$profile = new Profile;
@@ -163,29 +163,44 @@ if ($user->auth() && $user->role == 'admin')
 		}
 	}
 	
-
 	//PROVIDERS HOME 
 	else 
 	{
 		$template->assign_vars(array('SIDE_CONTENT' => 'home'));
 
-		/* Fetch all registered providers */
-		$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers");
-
-		$result = $user->sql_conn->query($stmnt);
-		
-		if ($result->num_rows > 0)
+		if (($_POST['searchType'])=='companyName')
 		{
-			$index = 0;
-			while ($row = $result->fetch_assoc())
+			$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY companyName ASC, area ASC");
+			$result = $user->sql_conn->query($stmnt);
+			if ($result->num_rows > 0)
 			{
-				$index++;
-			
-				$template->assign_block_vars('user_reg_list',
+				$index = 0;
+				while ($row = $result->fetch_assoc())
+				{
+					$index++;
+					$template->assign_block_vars('user_reg_list',
 					array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+				}
 			}
+			$result->close();
+		} 	
+		else 
+		{
+			$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY area ASC, companyName ASC");
+			$result = $user->sql_conn->query($stmnt);
+			if ($result->num_rows > 0)
+			{
+				$index = 0;
+				while ($row = $result->fetch_assoc())
+				{
+					$index++;
+					$template->assign_block_vars('user_reg_list',
+					array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+				}
+			}
+			$result->close();
 		}
-		$result->close();
+				
 	}
 
 	$template->set_filenames(array('body' => 'admin_providers.html'));
