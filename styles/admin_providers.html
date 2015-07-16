@@ -15,42 +15,83 @@
 				</div>
 				<div class="col-md-8">
 				
-					<!-- IF SIDE_CONTENT == "home" -->
+						
+						<!-- IF SIDE_CONTENT == "home" -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Proveedores de servicio</li>
 						</ol>
 						
-						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
-							<div class="form-group" >
-								<label class="control-label">Ordenar por:</label>
-								<select class="form-control" name="searchType">
-									<option value="area" default>Área de cobertura</option>
-									<option value="companyName">Nombre del proveedor</option>
-								</select>
-							</div>
-							<button type="submit" class="btn btn-primary">Ordenar</button>
-						</form>
-
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Nombre del proveedor</th>
-									<th>Área de cobertura</th>
-									<th>Número de teléfono</th>
-									<th>Email</th>
-								</tr>
-							</thead>
-							<tbody>
+							<!-- IF USERNAME_FOUND == 1 -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+								<div class="form-group" >
+									<label class="control-label">Ordenar por:</label>
+									<select class="form-control" name="searchType">
+										<option value="area" default>Área de cobertura</option>
+										<option value="companyName">Nombre del proveedor</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
+							</form>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre del proveedor</th>
+										<th>Área de cobertura</th>
+										<th>Número de teléfono</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
 											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
 										  </tr>
 										<!-- END user_reg_list -->
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+							<!-- ELSEIF USERNAME_FOUND == 2 -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								No existen proveedores.
+							</div>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin/providers/index.php';",1500);
+							</script>
 						
+							<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+								<div class="form-group" >
+									<label class="control-label">Ordenar por:</label>
+									<select class="form-control" name="searchType">
+										<option value="area" default>Área de cobertura</option>
+										<option value="companyName">Nombre del proveedor</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
+							</form>
+						
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre del proveedor</th>
+										<th>Área de cobertura</th>
+										<th>Número de teléfono</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+										<!-- BEGIN user_reg_list -->
+										  <tr>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
+										  </tr>
+										<!-- END user_reg_list -->
+								</tbody>
+							</table>
+							<!-- ENDIF -->	
+					
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>

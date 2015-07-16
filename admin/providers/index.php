@@ -163,43 +163,76 @@ if ($user->auth() && $user->role == 'admin')
 		}
 	}
 	
+	else if (isset($_POST['action']) && $_POST['action'] === 'order_by')
+	{
+			switch($_POST['searchType'])
+		{
+			case 'companyName':
+				$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY companyName ASC, area ASC");
+				$result = $user->sql_conn->query($stmnt);
+				if ($result->num_rows > 0)
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 'home', 'USERNAME_FOUND' => 1));
+					$index = 0;
+					while ($row = $result->fetch_assoc())
+					{
+						$index++;
+						$template->assign_block_vars('user_reg_list',
+						array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+					}
+				}
+				else 
+				{
+				$template->assign_vars(array('SIDE_CONTENT' => 'home', 'USERNAME_FOUND' => 2));
+				}
+				$result->close();
+				break;	
+			case 'area': 	
+				$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY area ASC, companyName ASC");
+				$result = $user->sql_conn->query($stmnt);
+				if ($result->num_rows > 0)
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 'home', 'USERNAME_FOUND' => 1));
+					$index = 0;
+					while ($row = $result->fetch_assoc())
+					{
+						$index++;
+						$template->assign_block_vars('user_reg_list',
+						array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+					}
+				}
+				else 
+				{
+				$template->assign_vars(array('SIDE_CONTENT' => 'home', 'USERNAME_FOUND' => 2));
+				}
+				$result->close();
+				break; 
+			default:
+				break;
+		}
+	}
+	
 	//PROVIDERS HOME 
 	else 
 	{
-		$template->assign_vars(array('SIDE_CONTENT' => 'home'));
-
-		if (($_POST['searchType'])=='companyName')
-		{
-			$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY companyName ASC, area ASC");
-			$result = $user->sql_conn->query($stmnt);
+		$template->assign_vars(array('SIDE_CONTENT' => 'home', 'USERNAME_FOUND' => 0));
+		$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY area ASC, companyName ASC");
+		$result = $user->sql_conn->query($stmnt);
 			if ($result->num_rows > 0)
-			{
-				$index = 0;
-				while ($row = $result->fetch_assoc())
 				{
-					$index++;
-					$template->assign_block_vars('user_reg_list',
-					array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+					$index = 0;
+					while ($row = $result->fetch_assoc())
+					{
+						$index++;
+						$template->assign_block_vars('user_reg_list',
+						array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+					}
 				}
-			}
-			$result->close();
-		} 	
-		else 
-		{
-			$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY area ASC, companyName ASC");
-			$result = $user->sql_conn->query($stmnt);
-			if ($result->num_rows > 0)
-			{
-				$index = 0;
-				while ($row = $result->fetch_assoc())
+				else 
 				{
-					$index++;
-					$template->assign_block_vars('user_reg_list',
-					array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+				$template->assign_vars(array('SIDE_CONTENT' => 'home', 'USERNAME_FOUND' => 2));
 				}
-			}
-			$result->close();
-		}
+				$result->close();
 				
 	}
 
