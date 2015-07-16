@@ -13,6 +13,7 @@ class Session extends SiteDB
 	const LOGIN_EXPIRED		= 8;
 	const LOGIN_DISABLED	= 9;
 	const LOGIN_INVALID		= 10;
+	const UNREGISTERED_USER		= 11;
 
 	public $session_id;
 	public $user_id;
@@ -98,6 +99,9 @@ class Session extends SiteDB
 			break;
 		case self::LOGIN_INVALID:
 			$this->error = 'La combinación de usuario y contraseña es incorrecto.';
+			break;
+		case self::UNREGISTERED_USER:
+			$this->error = 'Usuario no registrado.';
 			break;
 		}
 	}
