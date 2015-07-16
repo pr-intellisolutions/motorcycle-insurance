@@ -1,4 +1,15 @@
 <?php
-//dummy test value
-echo "available"
+
+require_once('../../common.php');
+require_once('./plan.php');
+
+$name = isset($_POST['name']) ? $_POST['name'] : "";
+
+$plan = New Plan;
+
+if ($plan->name_available($name))
+	echo "available";
+else
+	echo "not available";
+
 ?>

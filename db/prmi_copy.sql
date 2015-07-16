@@ -182,9 +182,6 @@ CREATE TABLE IF NOT EXISTS `providers` (
 
 INSERT INTO `providers` (`id`, `userid`, `companyName`, `companyPhone`, `companyEmail`, `area`, `companyAddress1`, `companyAddress2`, `city`, `zip`, `country`) VALUES
 (NULL, 43054, 'La compania', '888-8888', 'lacompania@email.com', 'north', '123', 'probando', 'san juan', '000911', 'PR');
-(NULL, 43054, 'El pon', '123-4567', 'elpon@email.com', 'south', '456', 'probando', 'san lorenzo', '00754', 'PR');
-(NULL, 43054, 'Auxilio', '555-5555', 'auxilio@email.com', 'west', 'en el fin del mundo', 'muy lejos', 'san german', '12345', 'PR');
-(NULL, 43054, ' ', ' ', ' ', 'north', 'queque@email.com', 'no se', '', '06789', 'PR');
 
 -- --------------------------------------------------------
 

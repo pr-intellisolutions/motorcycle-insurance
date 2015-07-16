@@ -19,7 +19,11 @@ class Plan extends User
 	}
 	public function create_plan($plan)
 	{
-		$this->name = $this->sanitize_input($plan['name']);
+		if (!isset($plan['name']))
+		{
+			$this->set_error(self::BAD_INPUT);
+			return false;
+		}
 		
 		/*$stmnt = sprintf("INSERT INTO plans(name, title, description, num_occurrences, num_miles, num_vehicles,
 			plan_price, mile_price, extend_price, term) VALUES ('%s', '%s', '%s', %d, %d, %d, %f, %f, %f, %d)",
@@ -29,6 +33,24 @@ class Plan extends User
 		if (!$user->sql_conn->query($stmnt))
 			trigger_error('/admin/services/index.php::create_plan(): '.$user->sql_conn->error, E_USER_ERROR);*/
 
+	}
+	public function name_available($name)
+	{
+		$name = $this->sanitize_input($name);
+		$is_available;
+		
+		$stmnt = sprintf("SELECT name FROM plans WHERE name='%s'", $name);
+		
+		$result = $this->sql_conn->query($stmnt);
+		
+		if ($result->num_rows > 0)
+			$is_available = false;
+		else
+			$is_available = true;
+		
+		$result->close();
+
+		return $is_available;
 	}
 }
 

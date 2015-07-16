@@ -2,15 +2,6 @@
 
 class User extends Session
 {
-	// Error constants
-	const BAD_INPUT 		= 0;
-	const SESSION_INVALID	= 1;
-	const USER_INVALID		= 2;
-	const PASS_INVALID		= 3;
-	const NEWPASS_REQUEST	= 4;
-	const OLDPASS_EXPIRED	= 5;
-	const USER_TAKEN		= 6;
-
 	public $id;
 	public $first;
 	public $middle;
@@ -23,8 +14,6 @@ class User extends Session
 	public $state;
 	public $zip;
 	public $country;
-
-	public $error;
 
 	function __construct()
 	{
@@ -125,6 +114,7 @@ class User extends Session
 	}
 	public function user_valid($username)
 	{
+		$username = $this->sanitize_input($username);
 		$isvalid;
 
 		$stmt = sprintf("SELECT user FROM login WHERE user = '%s'", $username);
@@ -142,6 +132,7 @@ class User extends Session
 	}
 	public function user_locked($username)
 	{
+		$username = $this->sanitize_input($username);
 		$islocked;
 
 		$stmt = sprintf("SELECT disabled FROM login WHERE user = '%s'", $username);
@@ -162,6 +153,8 @@ class User extends Session
 	}
 	public function user_unlock($username)
 	{
+		$username = $this->sanitize_input($username);
+
 		$stmt = sprintf("UPDATE login SET disabled = 0 WHERE user = '%s'", $username);
 
 		if (!$this->sql_conn->query($stmt))
@@ -169,6 +162,7 @@ class User extends Session
 	}
 	public function user_inactive($username)
 	{
+		$username = $this->sanitize_input($username);
 		$isinactive;
 
 		$stmt = sprintf("SELECT active FROM login WHERE user = '%s'", $username);
@@ -189,6 +183,8 @@ class User extends Session
 	}
 	public function user_activate($username)
 	{
+		$username = $this->sanitize_input($username);
+
 		$stmt = sprintf("UPDATE login SET active = 1 WHERE user = '%s'", $username);
 
 		if (!$this->sql_conn->query($stmt))
@@ -213,17 +209,17 @@ class User extends Session
 		$this->email	= $this->sanitize_input($account['email']);
 		$this->role		= $this->sanitize_input($account['role']);
 
-		$this->first	= $this->sanitize_input($account['first']);
-		$this->middle	= $this->sanitize_input($account['middle']);
-		$this->last		= $this->sanitize_input($account['last']);
-		$this->maiden	= $this->sanitize_input($account['maiden']);
-		$this->address1	= $this->sanitize_input($account['address1']);
-		$this->address2	= $this->sanitize_input($account['address2']);
-		$this->city		= $this->sanitize_input($account['city']);
-		$this->state	= $this->sanitize_input($account['state']);
-		$this->zip		= $this->sanitize_input($account['zip']);
-		$this->country	= $this->sanitize_input($account['country']);
-		$this->phone	= $this->sanitize_input($account['telephone']);
+		$this->first	= isset($account['first']) ? $this->sanitize_input($account['first']) : "";
+		$this->middle	= isset($account['middle']) ? $this->sanitize_input($account['middle']) : "";
+		$this->last		= isset($account['last']) ? $this->sanitize_input($account['last']) : "";
+		$this->maiden	= isset($account['maiden']) ? $this->sanitize_input($account['maiden']) : "";
+		$this->address1	= isset($account['address1']) ? $this->sanitize_input($account['address1']) : "";
+		$this->address2	= isset($account['address2']) ? $this->sanitize_input($account['address2']) : "";
+		$this->city		= isset($account['city']) ? $this->sanitize_input($account['city']) : "";
+		$this->state	= isset($account['state']) ? $this->sanitize_input($account['state']) : "";
+		$this->zip		= isset($account['zip']) ? $this->sanitize_input($account['zip']) : "";
+		$this->country	= isset($account['country']) ? $this->sanitize_input($account['country']) : "";
+		$this->phone	= isset($account['telephone']) ? $this->sanitize_input($account['telephone']) : "";
 		$this->perms	= $this->role === 'admin' ? 'all' : 'none';
 
 		// Check if user is available
@@ -249,7 +245,7 @@ class User extends Session
 	
 		$this->pass = password_hash($this->pass, PASSWORD_BCRYPT, $options);
 
-		// Create profile
+		// Populate login table with user info
 		$stmt = sprintf("INSERT INTO login(id, user, pass, email, role, regdate, ip, browser, active, session, passdate, permissions) 
 			VALUES (%d, '%s', '%s', '%s', '%s', now(), '%s', '%s', 1, '%s', adddate(now(), %d), '%s')",
 			$this->user_id, $this->user, $this->pass, $this->email, $this->role, $_SERVER['REMOTE_ADDR'],
@@ -258,6 +254,7 @@ class User extends Session
 		if (!$this->sql_conn->query($stmt))
 			trigger_error('Profile::create_account(): '.$this->sql_conn->error, E_USER_ERROR);
 
+		// Populate profile table with user info
 		$stmt = sprintf("INSERT INTO profile(userid, name, middle, last, maiden, phone, address1, address2, city, state, zip, country)
 			VALUES (%d,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",
 			$this->user_id, $this->first, $this->middle, $this->last, $this->maiden, $this->phone, $this->address1, $this->address2,
@@ -274,6 +271,8 @@ class User extends Session
 	}
 	public function uid_available($user_id)
 	{
+		$user_id = $this->sanitize_input($user_id);
+
 		$stmt = sprintf("SELECT * FROM login WHERE id = %d", $user_id);
 
 		$result = $this->sql_conn->query($stmt);
@@ -290,6 +289,8 @@ class User extends Session
 	}
 	public function user_available($username)
 	{
+		$username = $this->sanitize_input($username);
+
 		$stmt = sprintf("SELECT user FROM login WHERE user = '%s'", $username);
 
 		$result = $this->sql_conn->query($stmt);
@@ -303,26 +304,5 @@ class User extends Session
 		$result->close();
 
 		return true;
-	}
-	private function set_error($errno)
-	{
-		switch ($errno)
-		{
-		case self::BAD_INPUT:
-			$this->error = 'La información de entrada no se pudo leer correctamente';
-			break;	
-		case self::SESSION_INVALID:
-			$this->error = 'La sesión actual es invalida';
-			break;
-		case self::USER_INVALID:
-			$this->error = 'La cuenta de usario es invalida';
-			break;
-		case self::PASS_INVALID:
-			$this->error = 'Su contraseña original no es correcta';
-			break;			
-		case self::USER_TAKEN:
-			$this->error = 'El usuario que escogió ya está registrado.';
-			break;
-		}
 	}
 }

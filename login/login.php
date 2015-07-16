@@ -1,11 +1,6 @@
 <?php
 class Login extends User
 {
-	// Error constants
-	const LOGIN_EXPIRED		= 0;
-	const LOGIN_DISABLED	= 1;
-	const LOGIN_INVALID		= 2;
-
 	function __construct()
 	{
 		// Start a new session
@@ -90,21 +85,6 @@ class Login extends User
 			return true;
 		else
 			return false;
-	}
-	private function set_error($errno)
-	{
-		switch ($errno)
-		{
-		case self::LOGIN_EXPIRED:
-			$this->error = 'Su cuenta ha expirado contacte a su administrador para renovaci&oacute;n';
-			break;
-		case self::LOGIN_DISABLED:
-			$this->error = 'Su cuenta ha sido desabilitada contacte a su administrador para reactivaci&oacute;n';
-			break;
-		case self::LOGIN_INVALID:
-			$this->error = 'La combinaci&oacute;n de usuario y contrase&ntilde;a es incorrecto';
-			break;
-		}
 	}
 }
 ?>

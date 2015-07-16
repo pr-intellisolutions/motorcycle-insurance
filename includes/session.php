@@ -1,6 +1,18 @@
 <?php
 class Session extends SiteDB
 {
+	// Error constants
+	const BAD_INPUT 		= 0;
+	const SESSION_INVALID	= 1;
+	const USER_INVALID		= 2;
+	const PASS_INVALID		= 3;
+	const NEWPASS_REQUEST	= 4;
+	const OLDPASS_EXPIRED	= 5;
+	const USER_TAKEN		= 6;
+	const LOGIN_EXPIRED		= 7;
+	const LOGIN_DISABLED	= 8;
+	const LOGIN_INVALID		= 9;
+
 	public $session_id;
 	public $user_id;
 	public $user;
@@ -9,6 +21,8 @@ class Session extends SiteDB
 	public $role;
 	public $passchg;
 	public $perms;
+
+	public $error;
 
 	function __construct()
 	{
@@ -51,6 +65,36 @@ class Session extends SiteDB
 		{
 			session_unset();
 			session_destroy();
+		}
+	}
+	public function set_error($errno)
+	{
+		switch ($errno)
+		{
+		case self::BAD_INPUT:
+			$this->error = 'La información de entrada no se pudo leer correctamente';
+			break;	
+		case self::SESSION_INVALID:
+			$this->error = 'La sesión actual es invalida';
+			break;
+		case self::USER_INVALID:
+			$this->error = 'La cuenta de usario es invalida';
+			break;
+		case self::PASS_INVALID:
+			$this->error = 'Su contraseña original no es correcta';
+			break;			
+		case self::USER_TAKEN:
+			$this->error = 'El usuario que escogió ya está registrado.';
+			break;
+		case self::LOGIN_EXPIRED:
+			$this->error = 'Su cuenta ha expirado contacte a su administrador para renovación';
+			break;
+		case self::LOGIN_DISABLED:
+			$this->error = 'Su cuenta ha sido desabilitada contacte a su administrador para reactivación';
+			break;
+		case self::LOGIN_INVALID:
+			$this->error = 'La combinación de usuario y contraseña es incorrecto';
+			break;
 		}
 	}
 }
