@@ -112,7 +112,6 @@ CREATE TABLE IF NOT EXISTS `plans` (
   `site_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY (`name`), 
-  CONSTRAINT `plans_ibfk_1` FOREIGN KEY (`site_id`) REFERENCES `config` (`id`) ON DELETE CASCADE 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
