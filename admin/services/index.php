@@ -15,17 +15,9 @@ if ($user->auth() && $user->role == 'admin')
 		Plan creation: # add plan content
 		Plan edit:	   # edit plan content
 		Plan removal:  # remove plan content
-
-		-- POST method --
-		Process plan creation: # process plan creation
-		Process plan edit:	   # process plan edit
-		Process plan removal:  # process plan removal
 		
 	Note 1: This only controls what parts of the front-end are visible to the user at a time using
 		    the back-end template engine.
-
-	Note 2: The reason for having GET and POST methods is because GET method controls the presentation sequence
-			and the POST method controls what is been processed in the background.
 		  
 	*/
 	$template->assign_vars(array('SITE_URL' => SITE_URL,
@@ -47,23 +39,16 @@ if ($user->auth() && $user->role == 'admin')
 	else if (isset($_GET['option']) && $_GET['option'] == 3)
 	{
 		$template->assign_var('SIDE_CONTENT', '3');
-	}
-	//# process plan creation
-	else if (isset($_POST['action']) && $_POST['action'] == 'create_plan')
-	{
-		$plan = new Plan;
 		
-		$plan->create_plan($_POST);
-	}
-	//# process plan edit
-	else if (isset($_POST['action']) && $_POST['action'] == 'edit_plan')
-	{
+		$stmnt = sprintf("SELECT name FROM plans");
 		
-	}
-	//# process plan removal
-	else if (isset($_POST['action']) && $_POST['action'] == 'remove_plan')
-	{
+		$result = $user->sql_conn->query($stmnt);
 		
+		if ($result->num_rows > 0)
+			while ($row = $result->fetch_assoc())
+				$template->assign_block_vars('plan_list', array('PLAN_NAME' => $row['name']));
+
+		$result->close();
 	}
 	//# home content
 	else

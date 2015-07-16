@@ -9,9 +9,10 @@ class Session extends SiteDB
 	const NEWPASS_REQUEST	= 4;
 	const OLDPASS_EXPIRED	= 5;
 	const USER_TAKEN		= 6;
-	const LOGIN_EXPIRED		= 7;
-	const LOGIN_DISABLED	= 8;
-	const LOGIN_INVALID		= 9;
+	const PLAN_TAKEN		= 7;
+	const LOGIN_EXPIRED		= 8;
+	const LOGIN_DISABLED	= 9;
+	const LOGIN_INVALID		= 10;
 
 	public $session_id;
 	public $user_id;
@@ -72,28 +73,31 @@ class Session extends SiteDB
 		switch ($errno)
 		{
 		case self::BAD_INPUT:
-			$this->error = 'La información de entrada no se pudo leer correctamente';
+			$this->error = 'La información de entrada no se pudo leer correctamente.';
 			break;	
 		case self::SESSION_INVALID:
-			$this->error = 'La sesión actual es invalida';
+			$this->error = 'La sesión actual es invalida.';
 			break;
 		case self::USER_INVALID:
-			$this->error = 'La cuenta de usario es invalida';
+			$this->error = 'La cuenta de usario es invalida.';
 			break;
 		case self::PASS_INVALID:
-			$this->error = 'Su contraseña original no es correcta';
+			$this->error = 'Su contraseña original no es correcta.';
 			break;			
 		case self::USER_TAKEN:
-			$this->error = 'El usuario que escogió ya está registrado.';
+			$this->error = 'Este usuario ya está registrado.';
+			break;
+		case self::PLAN_TAKEN:
+			$this->error = 'Este plan ya está registrado.';
 			break;
 		case self::LOGIN_EXPIRED:
-			$this->error = 'Su cuenta ha expirado contacte a su administrador para renovación';
+			$this->error = 'Su cuenta ha expirado contacte a su administrador para renovación.';
 			break;
 		case self::LOGIN_DISABLED:
-			$this->error = 'Su cuenta ha sido desabilitada contacte a su administrador para reactivación';
+			$this->error = 'Su cuenta ha sido desabilitada contacte a su administrador para reactivación.';
 			break;
 		case self::LOGIN_INVALID:
-			$this->error = 'La combinación de usuario y contraseña es incorrecto';
+			$this->error = 'La combinación de usuario y contraseña es incorrecto.';
 			break;
 		}
 	}

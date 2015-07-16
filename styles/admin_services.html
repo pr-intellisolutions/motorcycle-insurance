@@ -13,12 +13,103 @@
 					</div>
 				</div>
 				<div class="col-md-8">
+					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel"></h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
 					<script>
-						$(document).ready(function()
-						{
-							$('#cancel_button').click(function()
+						$(document).ready(function() {
+							$("#check_name").click(function() {
+								var plan_name = $("#plan_name").val();
+								
+								if (plan_name !== "")
+								{
+									$.ajax({
+										type: "POST",
+										url: "check_name.php",
+										data: "name="+plan_name,
+										success: function(data){
+											if (data === "available")
+											{
+												$("#check_name_status").attr("class", "label label-success");
+												$("#check_name_status").html("'"+plan_name+"' está disponible!");
+											}
+											else
+											{
+												$("#check_name_status").attr("class", "label label-warning");
+												$("#check_name_status").html("'"+plan_name+"' no está disponible!");
+											}
+										}
+									})
+								}
+							});
+							$('#create_plan').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "create_plan.php",
+									data: {'plan_name': $('#plan_name').val(),
+										'plan_title': $('#plan_title').val(),
+										'plan_desc': $('#plan_desc').val(),
+										'plan_occur': $('#plan_occur').val(),
+										'plan_mile': $('#plan_mile').val(),
+										'plan_vehicle': $('#plan_vehicle').val(),
+										'plan_price': $('#plan_price').val(),
+										'mile_price': $('#mile_price').val(),
+										'extend_price': $('#extend_price').val(),
+										'plan_term': $('#plan_term').val()},
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El plan de servicio ha sido creado exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$('#delete_plan').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "remove_plan.php",
+									data: "name="+$("#plan_list option:selected").text(),
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El plan de servicio ha sido removido exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$('#modal').on('hidden.bs.modal', function() { 
+								location.reload();
+							});
+							$('#cancel').click(function()
 							{
-								// When user clicks cancel button the page is reloaded and home content is displayed
 								window.location.href = 'index.php';
 							});
 						});
@@ -46,14 +137,6 @@
 								</tr>
 							</tbody>
 						</table>
-					<!-- ELSEIF SIDE_CONTENT == 'create_plan_result' -->
-						<!-- IF CREATE_PLAN == 'success' -->
-						<p>Success</p>
-						<!-- ELSEIF CREATE_PLAN == 'failed' -->
-						<p>Failed</p>
-						<!-- ENDIF -->
-					<!-- ELSEIF SIDE_CONTENT == 'cancel_process_request' -->
-						<p>Cancel</p>
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
@@ -70,69 +153,41 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Nombre del plan:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="name" id="plan_name" required>
+									<input type="text" class="form-control" id="plan_name" required>
 									<span id="check_name_status"></span>
 								</div>
 								<div class="col-sm-4">
 									<button type="button" class="btn btn-default" id="check_name">Verificar disponibilidad</button>
 								</div>
-								<script>
-									$(document).ready(function() {
-										$("#check_name").click(function() {
-											var plan_name = $("#plan_name").val();
-											
-											if (plan_name !== "")
-											{
-												$.ajax({
-													type: "POST",
-													url: "check_name.php",
-													data: "name="+plan_name,
-													success: function(data){
-														if (data === "available")
-														{
-															$("#check_name_status").attr("class", "label label-success");
-															$("#check_name_status").html("'"+plan_name+"' está disponible!");
-														}
-														else
-														{
-															$("#check_name_status").attr("class", "label label-warning");
-															$("#check_name_status").html("'"+plan_name+"' no está disponible!");
-														}
-													}
-												})
-											}
-										});
-									});
-								</script>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Título:</label>
 								<div class="col-sm-4">
-									<textarea class="form-control" rows="3" name="title"></textarea>
+									<textarea class="form-control" rows="3" id="plan_title"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Descripción:</label>
 								<div class="col-sm-4">
-									<textarea class="form-control" rows="3" name="description"></textarea>
+									<textarea class="form-control" rows="3" id="plan_desc"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Cantidad de ocurrencias:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="occurrences">
+									<input type="text" class="form-control" id="plan_occur">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Cantidad de millas:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="miles">
+									<input type="text" class="form-control" id="plan_mile">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Cantidad de vehículos:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="vehicles">
+									<input type="text" class="form-control" id="plan_vehicle">
 								</div>
 							</div>
 							<div class="form-group">
@@ -140,7 +195,7 @@
 								<div class="col-sm-4">
 									<div class="input-group">
 										<div class="input-group-addon">$</div>
-										<input type="text" class="form-control" name="plan_price">
+										<input type="text" class="form-control" id="plan_price">
 									</div>
 								</div>
 							</div>
@@ -149,7 +204,7 @@
 								<div class="col-sm-4">
 									<div class="input-group">
 										<div class="input-group-addon">$</div>
-										<input type="text" class="form-control" name="mile_price">
+										<input type="text" class="form-control" id="mile_price">
 									</div>
 								</div>
 							</div>
@@ -158,22 +213,45 @@
 								<div class="col-sm-4">
 									<div class="input-group">
 										<div class="input-group-addon">$</div>
-										<input type="text" class="form-control" name="extend_price">
+										<input type="text" class="form-control" id="extend_price">
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Término del contrato:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="term">
+									<input type="text" class="form-control" id="plan_term">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-4">
-									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-									<button type="submit" class="btn btn-primary" name="action" value="create_plan">Crear plan</button>
+									<button type="button" class="btn btn-default" id="cancel">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="create_plan">Crear plan</button>
 								</div>
 							</div>
+						</form>
+					<!-- ELSEIF SIDE_CONTENT == 2 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/services">Planes y servicios</a></li>
+							<li class="active">Editar plan de servicio</li>
+						</ol>
+					<!-- ELSEIF SIDE_CONTENT == 3 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/services">Planes y servicios</a></li>
+							<li class="active">Remover plan de servicio</li>
+						</ol>
+						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<div class="form-group">
+								<label>Plan de servicio: </label>
+								<select class="form-control" id="plan_list">
+									<!-- BEGIN plan_list -->
+										<option>{plan_list.PLAN_NAME}</option>
+									<!-- END -->
+								</select>
+							</div>
+							<button type="button" class="btn btn-primary" id="delete_plan">Remover</button>
 						</form>
 					<!-- ENDIF -->
 				</div>
