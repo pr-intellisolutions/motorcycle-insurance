@@ -109,7 +109,6 @@ CREATE TABLE IF NOT EXISTS `plans` (
   `extend_price` float NOT NULL,
   `term` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL, 
-  `site_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY (`name`), 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -118,8 +117,8 @@ CREATE TABLE IF NOT EXISTS `plans` (
 -- Dumping data for table `plans`
 --
 
-INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `num_miles`, `num_vehicles`, `plan_price`, `mile_price`, `extend_price`, `term`, `active`, `site_id`) VALUES
-(NULL, 'test', 'test', 'test', 1, 1, 1, 1, 1, 1, 1, 0, 1);
+INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `num_miles`, `num_vehicles`, `plan_price`, `mile_price`, `extend_price`, `term`, `active`) VALUES
+(NULL, 'test', 'test', 'test', 1, 1, 1, 1, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
