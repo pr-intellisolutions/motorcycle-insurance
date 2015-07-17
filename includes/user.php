@@ -267,22 +267,28 @@ class User extends Session
 	}
 	public function delete_account($username)
 	{
-		$username = $this->sanitize_input($username);
-
-		$stmt = sprintf("DELETE FROM login WHERE user = '%s'", $username);
-
-		$result = $this->sql_conn->query($stmt);
-
-		if ($result->num_rows == 0)
+		$username = $this->sanitize_input($username);			
+		if (user_available($username)==false)
 		{
-			$this->set_error(self::USER_INVALID);
-			return false;
+			$stmt = sprintf("DELETE FROM login WHERE user = '%s'", $username);
+			$this->sql_conn->query($stmt);
+			$result->close();
+			
+			if (user_available($username)==true)
+			{	
+					return true;
+			}
+			else 
+			{
+					$this->set_error(self::BAD_INPUT);
+					return false;
+			}
 		}
-
-		$result->close();
-
-		return true;
+		$this->set_error(self::UNREGISTERED_USER);
+		return false;
 	}
+	
+	
 	public function uid_available($user_id)
 	{
 		$user_id = $this->sanitize_input($user_id);
