@@ -105,6 +105,9 @@
 									}
 								})
 							});
+							$('#edit_plan').click(function(){
+								window.location.href = 'index.php?option=2&modify=true&plan='+$("#plan_list option:selected").text();
+							});
 							$('#modal').on('hidden.bs.modal', function() { 
 								location.reload();
 							});
@@ -134,6 +137,10 @@
 								<tr>
 									<td>Listado de planes inactivos</td>
 									<td>{INACTIVE_PLANS}0</td>
+								</tr>
+								<tr>
+									<td>Slots</td>
+									<td>3</td>
 								</tr>
 							</tbody>
 						</table>
@@ -236,6 +243,91 @@
 							<li><a href="{SITE_URL}admin/services">Planes y servicios</a></li>
 							<li class="active">Editar plan de servicio</li>
 						</ol>
+						<!-- IF MODIFY == true -->
+							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Título:</label>
+									<div class="col-sm-4">
+										<textarea class="form-control" rows="3" id="plan_title"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Descripción:</label>
+									<div class="col-sm-4">
+										<textarea class="form-control" rows="3" id="plan_desc"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Cantidad de ocurrencias:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" id="plan_occur">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Cantidad de millas:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" id="plan_mile">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Cantidad de vehículos:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" id="plan_vehicle">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Precio del plan:</label>
+									<div class="col-sm-4">
+										<div class="input-group">
+											<div class="input-group-addon">$</div>
+											<input type="text" class="form-control" id="plan_price">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Precio de millas:</label>
+									<div class="col-sm-4">
+										<div class="input-group">
+											<div class="input-group-addon">$</div>
+											<input type="text" class="form-control" id="mile_price">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Precio de renovación:</label>
+									<div class="col-sm-4">
+										<div class="input-group">
+											<div class="input-group-addon">$</div>
+											<input type="text" class="form-control" id="extend_price">
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Término del contrato:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" id="plan_term">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-4">
+										<button type="button" class="btn btn-default" id="cancel">Cancelar</button>
+										<button type="button" class="btn btn-primary" id="save_plan">Guardar</button>
+									</div>
+								</div>
+							</form>
+						<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label>Plan de servicio: </label>
+									<select class="form-control" id="plan_list">
+										<!-- BEGIN plan_list -->
+											<option>{plan_list.PLAN_NAME}</option>
+										<!-- END -->
+									</select>
+								</div>
+								<button type="button" class="btn btn-primary" id="edit_plan">Editar</button>
+							</form>
+						<!-- ENDIF -->
 					<!-- ELSEIF SIDE_CONTENT == 3 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>

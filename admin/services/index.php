@@ -33,7 +33,32 @@ if ($user->auth() && $user->role == 'admin')
 	//# edit plan content
 	else if (isset($_GET['option']) && $_GET['option'] == 2)
 	{
-		$template->assign_var('SIDE_CONTENT', '2');
+		if (isset($_GET['modify']))
+		{
+			$template->assign_vars(array('SIDE_CONTENT' => '2', 'MODIFY' => true));
+			
+			//$_GET['plan'] holds the name of the plan to match with the database
+			
+			/* To do:
+				1. Query the database
+				2. Load the values into template variables
+				3. Add the template variables into admin_services
+			*/
+		}
+		else
+		{
+			$template->assign_vars(array('SIDE_CONTENT' => '2', 'MODIFY' => false));
+
+			$stmnt = sprintf("SELECT name FROM plans");
+			
+			$result = $user->sql_conn->query($stmnt);
+			
+			if ($result->num_rows > 0)
+				while ($row = $result->fetch_assoc())
+					$template->assign_block_vars('plan_list', array('PLAN_NAME' => $row['name']));
+
+			$result->close();
+		}
 	}
 	//# remove plan content
 	else if (isset($_GET['option']) && $_GET['option'] == 3)

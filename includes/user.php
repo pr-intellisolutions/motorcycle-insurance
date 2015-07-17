@@ -265,11 +265,11 @@ class User extends Session
 
 		return true;
 	}
-	public function delete_account($user_id)
+	public function delete_account($username)
 	{
-		$user_id = $this->sanitize_input($user_id);
+		$username = $this->sanitize_input($username);
 
-		$stmt = sprintf("DELETE FROM login WHERE id = %d", $user_id);
+		$stmt = sprintf("DELETE FROM login WHERE user = '%s'", $username);
 
 		$result = $this->sql_conn->query($stmt);
 

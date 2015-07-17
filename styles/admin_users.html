@@ -92,13 +92,38 @@
 							  <div class="modal-footer">
 								<script>
 									$('document').ready(function(){
+										$("#remove_user").click(function() {
+											var username = $("#remove_input").val();
+											
+											if (username !== "")
+											{
+												$.ajax({
+													type: "POST",
+													url: "remove_user.php",
+													data: "username="+username,
+													success: function(data){
+														if (data === "success")
+															$("#activate_status").html("'"+username+"' ha sido removido.");
+														else
+															$("#activate_status").html(data);
+													}
+												})
+											}
+										});
 										$('#userRegModal').on('hidden.bs.modal', function() { 
 											location.reload();
 										});
 									})
 								</script>
-								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-							  </div>
+								<form class="form-inline">
+									<div class="form-group">
+										<input type="text" class="form-control" id="remove_input">
+									</div>
+									<button type="button" class="btn btn-default" id="remove_user">Remover</button>
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+								</form>
+								</br>
+								<p id="activate_status" class="text-info"></p>
 							</div>
 						  </div>
 						</div>
