@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `plans` (
   `term` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL, 
   PRIMARY KEY (`id`),
-  UNIQUE KEY (`name`), 
+  UNIQUE KEY (`name`) 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --

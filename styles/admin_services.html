@@ -13,110 +13,6 @@
 					</div>
 				</div>
 				<div class="col-md-8">
-					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
-					  <div class="modal-dialog" role="document">
-						<div class="modal-content">
-						  <div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="ModalLabel"></h4>
-						  </div>
-						  <div class="modal-body" id="ModalBody">
-						  </div>
-						  <div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-						  </div>
-						</div>
-					  </div>
-					</div>
-					<script>
-						$(document).ready(function() {
-							$("#check_name").click(function() {
-								var plan_name = $("#plan_name").val();
-								
-								if (plan_name !== "")
-								{
-									$.ajax({
-										type: "POST",
-										url: "check_name.php",
-										data: "name="+plan_name,
-										success: function(data){
-											if (data === "available")
-											{
-												$("#check_name_status").attr("class", "label label-success");
-												$("#check_name_status").html("'"+plan_name+"' está disponible!");
-											}
-											else
-											{
-												$("#check_name_status").attr("class", "label label-warning");
-												$("#check_name_status").html("'"+plan_name+"' no está disponible!");
-											}
-										}
-									})
-								}
-							});
-							$('#create_plan').click(function(){
-								$.ajax({
-									type: "POST",
-									url: "create_plan.php",
-									data: {'plan_name': $('#plan_name').val(),
-										'plan_title': $('#plan_title').val(),
-										'plan_desc': $('#plan_desc').val(),
-										'plan_occur': $('#plan_occur').val(),
-										'plan_mile': $('#plan_mile').val(),
-										'plan_vehicle': $('#plan_vehicle').val(),
-										'plan_price': $('#plan_price').val(),
-										'mile_price': $('#mile_price').val(),
-										'extend_price': $('#extend_price').val(),
-										'plan_term': $('#plan_term').val()},
-									success: function(data){
-										if (data === "success")
-										{
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Información</strong>');
-											$("#ModalBody").html('¡El plan de servicio ha sido creado exitosamente!');
-										}
-										else
-										{
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Error</strong>');
-											$("#ModalBody").html(data);
-										}
-									}
-								})
-							});
-							$('#delete_plan').click(function(){
-								$.ajax({
-									type: "POST",
-									url: "remove_plan.php",
-									data: "name="+$("#plan_list option:selected").text(),
-									success: function(data){
-										if (data === "success")
-										{
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Información</strong>');
-											$("#ModalBody").html('¡El plan de servicio ha sido removido exitosamente!');
-										}
-										else
-										{
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Error</strong>');
-											$("#ModalBody").html(data);
-										}
-									}
-								})
-							});
-							$('#edit_plan').click(function(){
-								window.location.href = 'index.php?option=2&modify=true&plan='+$("#plan_list option:selected").text();
-							});
-							$('#modal').on('hidden.bs.modal', function() { 
-								location.reload();
-							});
-							$('#cancel').click(function()
-							{
-								window.location.href = 'index.php';
-							});
-						});
-					</script>
 					<!-- IF SIDE_CONTENT == "home" -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
@@ -131,12 +27,12 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>Listado de planes activos</td>
-									<td>{ACTIVE_PLANS}0</td>
+									<td><a href="#" data-toggle="modal" data-target="#active_plan_modal">Listado de planes activos</td>
+									<td>{ACTIVE_PLANS}</td>
 								</tr>
 								<tr>
-									<td>Listado de planes inactivos</td>
-									<td>{INACTIVE_PLANS}0</td>
+									<td><a href="#" data-toggle="modal" data-target="#inactive_plan_modal">Listado de planes inactivos</td>
+									<td>{INACTIVE_PLANS}</td>
 								</tr>
 								<tr>
 									<td>Slots</td>
@@ -244,35 +140,36 @@
 							<li class="active">Editar plan de servicio</li>
 						</ol>
 						<!-- IF MODIFY == true -->
+							<p class="text-info">Mostrando información del plan de servicio <span id="plan_mod_name">{PLAN_NAME}</span>.</p>
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Título:</label>
 									<div class="col-sm-4">
-										<textarea class="form-control" rows="3" id="plan_title"></textarea>
+										<textarea class="form-control" rows="3" id="plan_title">{PLAN_TITLE}</textarea>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Descripción:</label>
 									<div class="col-sm-4">
-										<textarea class="form-control" rows="3" id="plan_desc"></textarea>
+										<textarea class="form-control" rows="3" id="plan_desc">{PLAN_DESC}</textarea>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Cantidad de ocurrencias:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="plan_occur">
+										<input type="text" class="form-control" id="plan_occur" value="{PLAN_OCCUR}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Cantidad de millas:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="plan_mile">
+										<input type="text" class="form-control" id="plan_mile" value="{PLAN_MILE}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Cantidad de vehículos:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="plan_vehicle">
+										<input type="text" class="form-control" id="plan_vehicle" value="{PLAN_VEHICLE}">
 									</div>
 								</div>
 								<div class="form-group">
@@ -280,7 +177,7 @@
 									<div class="col-sm-4">
 										<div class="input-group">
 											<div class="input-group-addon">$</div>
-											<input type="text" class="form-control" id="plan_price">
+											<input type="text" class="form-control" id="plan_price" value="{PLAN_PRICE}">
 										</div>
 									</div>
 								</div>
@@ -289,7 +186,7 @@
 									<div class="col-sm-4">
 										<div class="input-group">
 											<div class="input-group-addon">$</div>
-											<input type="text" class="form-control" id="mile_price">
+											<input type="text" class="form-control" id="mile_price" value="{MILE_PRICE}">
 										</div>
 									</div>
 								</div>
@@ -298,14 +195,14 @@
 									<div class="col-sm-4">
 										<div class="input-group">
 											<div class="input-group-addon">$</div>
-											<input type="text" class="form-control" id="extend_price">
+											<input type="text" class="form-control" id="extend_price" value="{EXTEND_PRICE}">
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Término del contrato:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="plan_term">
+										<input type="text" class="form-control" id="plan_term" value="{PLAN_TERM}">
 									</div>
 								</div>
 								<div class="form-group">
@@ -346,6 +243,240 @@
 							<button type="button" class="btn btn-primary" id="delete_plan">Remover</button>
 						</form>
 					<!-- ENDIF -->
+					<!-- Status modal -->
+					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel"></h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<!-- Active plans modal -->
+					<div class="modal fade" id="active_plan_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel">Planes activos</h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre</th>
+										<th>Título</th>
+										<th>Descripción</th>
+										<th></th>
+									<tr>
+								</thead>
+								<tbody>
+									<tr>
+										<!-- BEGIN active_plan_list -->
+										<td>{active_plan_list.PLAN_INDEX}</th>
+										<td>{active_plan_list.PLAN_NAME}</td>
+										<td>{active_plan_list.PLAN_TITLE}</td>
+										<td>{active_plan_list.PLAN_DESC}</td>
+										<td>
+											<a href="index.php?option=2&modify=true&plan={active_plan_list.PLAN_NAME}"
+											data-container="body"
+											data-toggle="popover"
+											data-placement="right"
+											data-trigger="hover"
+											title="Ver más"
+											data-content="Haga click en el enlace para ver más información.">
+												...
+											</a>
+										</td>
+										<!-- END -->
+									</tr>
+								</tbody>
+							</table>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default">Inactivar plan</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<!-- Inactive plans modal -->
+					<div class="modal fade" id="inactive_plan_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel">Planes activos</h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre</th>
+										<th>Título</th>
+										<th>Descripción</th>
+										<th></th>
+									<tr>
+								</thead>
+								<tbody>
+									<tr>
+										<!-- BEGIN inactive_plan_list -->
+										<td>{inactive_plan_list.PLAN_INDEX}</th>
+										<td>{inactive_plan_list.PLAN_NAME}</td>
+										<td>{inactive_plan_list.PLAN_TITLE}</td>
+										<td>{inactive_plan_list.PLAN_DESC}</td>
+										<td>
+											<a href="index.php?option=2&modify=true&plan={inactive_plan_list.PLAN_NAME}"
+											data-container="body"
+											data-toggle="popover"
+											data-placement="right"
+											data-trigger="hover"
+											title="Ver más"
+											data-content="Haga click en el enlace para ver más información.">
+												...
+											</a>
+										</td>
+										<!-- END -->
+									</tr>
+								</tbody>
+							</table>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default">Activar plan</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<script>
+						$(document).ready(function() {
+							$("#check_name").click(function() {
+								var plan_name = $("#plan_name").val();
+								
+								if (plan_name !== "")
+								{
+									$.ajax({
+										type: "POST",
+										url: "check_name.php",
+										data: "name="+plan_name,
+										success: function(data){
+											if (data === "available")
+											{
+												$("#check_name_status").attr("class", "label label-success");
+												$("#check_name_status").html("'"+plan_name+"' está disponible!");
+											}
+											else
+											{
+												$("#check_name_status").attr("class", "label label-warning");
+												$("#check_name_status").html("'"+plan_name+"' no está disponible!");
+											}
+										}
+									})
+								}
+							});
+							$('#create_plan').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "create_plan.php",
+									data: {'plan_name': $('#plan_name').val(),
+										'plan_title': $('#plan_title').val(),
+										'plan_desc': $('#plan_desc').val(),
+										'plan_occur': $('#plan_occur').val(),
+										'plan_mile': $('#plan_mile').val(),
+										'plan_vehicle': $('#plan_vehicle').val(),
+										'plan_price': $('#plan_price').val(),
+										'mile_price': $('#mile_price').val(),
+										'extend_price': $('#extend_price').val(),
+										'plan_term': $('#plan_term').val()},
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El plan de servicio ha sido creado exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$('#delete_plan').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "remove_plan.php",
+									data: "name="+$("#plan_list option:selected").text(),
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El plan de servicio ha sido removido exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$('#edit_plan').click(function(){
+								window.location.href = 'index.php?option=2&modify=true&plan='+$("#plan_list option:selected").text();
+							});
+							$('#modal').on('hidden.bs.modal', function() { 
+								//location.reload();
+								window.location.href = 'index.php';
+							});
+							$('#save_plan').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "save_plan.php",
+									data: {'plan_name': $('#plan_mod_name').text(),
+										'plan_title': $('#plan_title').val(),
+										'plan_desc': $('#plan_desc').val(),
+										'plan_occur': $('#plan_occur').val(),
+										'plan_mile': $('#plan_mile').val(),
+										'plan_vehicle': $('#plan_vehicle').val(),
+										'plan_price': $('#plan_price').val(),
+										'mile_price': $('#mile_price').val(),
+										'extend_price': $('#extend_price').val(),
+										'plan_term': $('#plan_term').val()},
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El plan de servicio ha sido guardado exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$('#cancel').click(function()
+							{
+								window.location.href = 'index.php';
+							});
+						});
+					</script>
 				</div>
 			</div>
 		<!-- INCLUDE admin_footer.html -->

@@ -37,7 +37,21 @@ if ($user->auth() && $user->role == 'admin')
 		{
 			$template->assign_vars(array('SIDE_CONTENT' => '2', 'MODIFY' => true));
 			
-			//$_GET['plan'] holds the name of the plan to match with the database
+			$plan = New Plan;
+			
+			if ($plan_data = $plan->load_plan($_GET['plan']))
+			{
+				$template->assign_vars(array('PLAN_NAME' => $plan_data['name'],
+					'PLAN_TITLE' => $plan_data['title'],
+					'PLAN_DESC' => $plan_data['description'],
+					'PLAN_OCCUR' => $plan_data['num_occurrences'],
+					'PLAN_MILE' => $plan_data['num_miles'],
+					'PLAN_VEHICLE' => $plan_data['num_vehicles'],
+					'PLAN_PRICE' => $plan_data['plan_price'],
+					'MILE_PRICE' => $plan_data['mile_price'],
+					'EXTEND_PRICE' => $plan_data['extend_price'],
+					'PLAN_TERM' => $plan_data['term']));
+			}
 			
 			/* To do:
 				1. Query the database
@@ -77,7 +91,53 @@ if ($user->auth() && $user->role == 'admin')
 	}
 	//# home content
 	else
-	{
+	{	
+		// Load active plans
+		$stmnt = sprintf("SELECT * FROM plans WHERE active=1");
+		$result = $user->sql_conn->query($stmnt);
+		
+		if ($result->num_rows > 0)
+		{
+			$index = 0;
+
+			while ($row = $result->fetch_assoc())
+			{
+				$index++;
+
+				$template->assign_block_vars('active_plan_list',
+					array('PLAN_INDEX' => $index,
+						  'PLAN_NAME' => $row['name'],
+						  'PLAN_TITLE' => $row['title'],
+						  'PLAN_DESC' => $row['description']));
+			}
+			$template->assign_var('ACTIVE_PLANS', $index);
+		}
+		
+		$result->close();
+
+		// Load inactive plans
+		$stmnt = sprintf("SELECT * FROM plans WHERE active=0");
+		$result = $user->sql_conn->query($stmnt);
+		
+		if ($result->num_rows > 0)
+		{
+			$index = 0;
+
+			while ($row = $result->fetch_assoc())
+			{
+				$index++;
+
+				$template->assign_block_vars('inactive_plan_list',
+					array('PLAN_INDEX' => $index,
+						  'PLAN_NAME' => $row['name'],
+						  'PLAN_TITLE' => $row['title'],
+						  'PLAN_DESC' => $row['description']));
+			}
+			$template->assign_var('INACTIVE_PLANS', $index);
+		}
+		
+		$result->close();
+	
 		$template->assign_vars(array('SIDE_CONTENT' => 'home'));
 	}
 

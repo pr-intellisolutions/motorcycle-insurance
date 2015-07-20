@@ -13,7 +13,8 @@ class Session extends SiteDB
 	const LOGIN_EXPIRED		= 8;
 	const LOGIN_DISABLED	= 9;
 	const LOGIN_INVALID		= 10;
-	const UNREGISTERED_USER		= 11;
+	const UNREGISTERED_USER	= 11;
+	const UNREGISTERED_PLAN	= 12;
 
 	public $session_id;
 	public $user_id;
@@ -102,6 +103,9 @@ class Session extends SiteDB
 			break;
 		case self::UNREGISTERED_USER:
 			$this->error = 'Usuario no registrado.';
+			break;
+		case self::UNREGISTERED_PLAN:
+			$this->error = 'Plan no registrado.';
 			break;
 		}
 	}

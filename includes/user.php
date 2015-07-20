@@ -268,13 +268,12 @@ class User extends Session
 	public function delete_account($username)
 	{
 		$username = $this->sanitize_input($username);			
-		if (user_available($username)==false)
+		if ($this->user_available($username)==false)
 		{
 			$stmt = sprintf("DELETE FROM login WHERE user = '%s'", $username);
 			$this->sql_conn->query($stmt);
-			$result->close();
 			
-			if (user_available($username)==true)
+			if ($this->user_available($username)==true)
 			{	
 					return true;
 			}
