@@ -19,6 +19,8 @@ class Plan extends User
 	}
 	public function create_plan($plan)
 	{
+		$active = 1;
+	
 		if (!isset($plan['plan_name']) || $plan['plan_name'] === "")
 		{
 			$this->set_error(self::BAD_INPUT);
@@ -33,6 +35,9 @@ class Plan extends User
 			return false;
 		}
 
+		if ($this->slot_available() >= 3)
+			$active = 0;
+	
 		$this->title		= isset($plan['plan_title']) ? $this->sanitize_input($plan['plan_title']) : "";
 		$this->desc			= isset($plan['plan_desc']) ? $this->sanitize_input($plan['plan_desc']) : "";
 		$this->occurrences	= isset($plan['plan_occur']) ? $this->sanitize_input($plan['plan_occur']) : 0;
@@ -44,9 +49,9 @@ class Plan extends User
 		$this->term			= isset($plan['plan_term']) ? $this->sanitize_input($plan['plan_term']) : 0;
 		
 		$stmnt = sprintf("INSERT INTO plans(name, title, description, num_occurrences, num_miles, num_vehicles,
-			plan_price, mile_price, extend_price, term, date_entered) VALUES ('%s', '%s', '%s', %d, %d, %d, %f, %f, %f, %d, now())",
+			plan_price, mile_price, extend_price, term, active, date_entered) VALUES ('%s', '%s', '%s', %d, %d, %d, %f, %f, %f, %d, %d, now())",
 			$this->name, $this->title, $this->desc, $this->occurrences, $this->miles, $this->vehicles,
-			$this->plan_price, $this->mile_price, $this->extend_price, $this->term);
+			$this->plan_price, $this->mile_price, $this->extend_price, $this->term, $active);
 			
 		if (!$this->sql_conn->query($stmnt))
 			trigger_error('/admin/services/index.php::create_plan(): '.$this->sql_conn->error, E_USER_ERROR);
@@ -112,26 +117,14 @@ class Plan extends User
 	{
 		$plan_name = $this->sanitize_input($plan_name);
 
-		if ($this->name_available($plan_name) == false)
-		{
-			$stmnt = sprintf("DELETE FROM plans WHERE name='%s'", $plan_name);
-			$this->sql_conn->query($stmnt);
+		$stmnt = sprintf("DELETE FROM plans WHERE name='%s'", $plan_name);
 
-			if ($this->name_available($plan_name) == true)
-			{	
-					return true;
-			}
-			else 
-			{
-					$this->set_error(self::BAD_INPUT);
-					return false;
-			}
-		}
-		else
-		{
-			$this->set_error(self::UNREGISTERED_PLAN);
-			return NULL;
-		}
+		$this->sql_conn->query($stmnt);
+
+		if (!$this->sql_conn->query($stmnt))
+			trigger_error('/admin/services/index.php::delete_plan(): '.$this->sql_conn->error, E_USER_ERROR);
+
+		return true;
 	}
 	public function name_available($name)
 	{
@@ -150,6 +143,46 @@ class Plan extends User
 		$result->close();
 
 		return $is_available;
+	}
+	public function activate_plan($name, $active)
+	{
+		$name = $this->sanitize_input($name);
+
+		if ($active)
+		{
+			if ($this->slot_available() >= 3)
+			{
+				$this->set_error(self::NO_SLOTS_AVAILABLE);
+				return false;
+			}
+			$stmnt = sprintf("UPDATE plans SET active=1 WHERE name='%s'", $name);
+
+			if (!$this->sql_conn->query($stmnt))
+				trigger_error('/admin/services/index.php::activate_plan(): '.$this->sql_conn->error, E_USER_ERROR);
+		}
+		else
+		{
+			$stmnt = sprintf("UPDATE plans SET active=0 WHERE name='%s'", $name);
+
+			if (!$this->sql_conn->query($stmnt))
+				trigger_error('/admin/services/index.php::activate_plan(): '.$this->sql_conn->error, E_USER_ERROR);
+		}
+		return true;
+	}
+	public function slot_available()
+	{
+		$count = 0;
+	
+		$stmnt = sprintf("SELECT active FROM plans WHERE active=1");
+	
+		$result = $this->sql_conn->query($stmnt);
+		
+		if ($result->num_rows > 0)
+		{
+			while ($row = $result->fetch_assoc())
+				$count++;
+		}
+		return $count;
 	}
 }
 

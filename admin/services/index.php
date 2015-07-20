@@ -112,6 +112,9 @@ if ($user->auth() && $user->role == 'admin')
 			}
 			$template->assign_var('ACTIVE_PLANS', $index);
 		}
+		else
+			$template->assign_var('ACTIVE_PLANS', 0);
+
 		
 		$result->close();
 
@@ -135,7 +138,9 @@ if ($user->auth() && $user->role == 'admin')
 			}
 			$template->assign_var('INACTIVE_PLANS', $index);
 		}
-		
+		else
+			$template->assign_var('INACTIVE_PLANS', 0);
+
 		$result->close();
 	
 		$template->assign_vars(array('SIDE_CONTENT' => 'home'));

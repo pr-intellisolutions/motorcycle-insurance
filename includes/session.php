@@ -14,7 +14,7 @@ class Session extends SiteDB
 	const LOGIN_DISABLED	= 9;
 	const LOGIN_INVALID		= 10;
 	const UNREGISTERED_USER	= 11;
-	const UNREGISTERED_PLAN	= 12;
+	const NO_SLOTS_AVAILABLE = 12;
 
 	public $session_id;
 	public $user_id;
@@ -104,8 +104,8 @@ class Session extends SiteDB
 		case self::UNREGISTERED_USER:
 			$this->error = 'Usuario no registrado.';
 			break;
-		case self::UNREGISTERED_PLAN:
-			$this->error = 'Plan no registrado.';
+		case self::NO_SLOTS_AVAILABLE:
+			$this->error = 'Se ha excedido del máximo de planes activos.';
 			break;
 		}
 	}

@@ -279,8 +279,8 @@
 									<tr>
 								</thead>
 								<tbody>
+									<!-- BEGIN active_plan_list -->
 									<tr>
-										<!-- BEGIN active_plan_list -->
 										<td>{active_plan_list.PLAN_INDEX}</th>
 										<td>{active_plan_list.PLAN_NAME}</td>
 										<td>{active_plan_list.PLAN_TITLE}</td>
@@ -296,14 +296,24 @@
 												...
 											</a>
 										</td>
-										<!-- END -->
 									</tr>
+									<!-- END -->
 								</tbody>
 							</table>
 						  </div>
 						  <div class="modal-footer">
-							<button type="button" class="btn btn-default">Inactivar plan</button>
-							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+							<form class="form-inline">
+								<div class="form-group">
+									<label>Plan de servicio: </label>
+									<select class="form-control" id="deactivate_plan_name">
+										<!-- BEGIN active_plan_list -->
+											<option>{active_plan_list.PLAN_NAME}</option>
+										<!-- END -->
+									</select>
+								</div>
+								<button type="button" class="btn btn-default" id="deactivate_plan">Desactivar</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+							</form>
 						  </div>
 						</div>
 					  </div>
@@ -328,8 +338,8 @@
 									<tr>
 								</thead>
 								<tbody>
+									<!-- BEGIN inactive_plan_list -->
 									<tr>
-										<!-- BEGIN inactive_plan_list -->
 										<td>{inactive_plan_list.PLAN_INDEX}</th>
 										<td>{inactive_plan_list.PLAN_NAME}</td>
 										<td>{inactive_plan_list.PLAN_TITLE}</td>
@@ -345,14 +355,24 @@
 												...
 											</a>
 										</td>
-										<!-- END -->
 									</tr>
+									<!-- END -->
 								</tbody>
 							</table>
 						  </div>
 						  <div class="modal-footer">
-							<button type="button" class="btn btn-default">Activar plan</button>
-							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+							<form class="form-inline">
+								<div class="form-group">
+									<label>Plan de servicio: </label>
+									<select class="form-control" id="activate_plan_name">
+										<!-- BEGIN inactive_plan_list -->
+											<option>{inactive_plan_list.PLAN_NAME}</option>
+										<!-- END -->
+									</select>
+								</div>
+								<button type="button" class="btn btn-default" id="activate_plan">Activar</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+							</form>
 						  </div>
 						</div>
 					  </div>
@@ -437,10 +457,6 @@
 							$('#edit_plan').click(function(){
 								window.location.href = 'index.php?option=2&modify=true&plan='+$("#plan_list option:selected").text();
 							});
-							$('#modal').on('hidden.bs.modal', function() { 
-								//location.reload();
-								window.location.href = 'index.php';
-							});
 							$('#save_plan').click(function(){
 								$.ajax({
 									type: "POST",
@@ -471,8 +487,58 @@
 									}
 								})
 							});
+							$('#deactivate_plan').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "deactivate_plan.php",
+									data: 'plan_name='+$('#deactivate_plan_name option:selected').text(),
+									success: function(data){
+										$('#active_plan_modal').modal('hide');
+										
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El plan de servicio ha sido desactivado exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$('#activate_plan').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "activate_plan.php",
+									data: 'plan_name='+$('#activate_plan_name option:selected').text(),
+									success: function(data){
+										$('#inactive_plan_modal').modal('hide');
+										
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El plan de servicio ha sido activado exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
 							$('#cancel').click(function()
 							{
+								window.location.href = 'index.php';
+							});
+							$('#modal').on('hidden.bs.modal', function() { 
+								//location.reload();
 								window.location.href = 'index.php';
 							});
 						});
