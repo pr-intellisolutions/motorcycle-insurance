@@ -16,6 +16,7 @@ class Session extends SiteDB
 	const UNREGISTERED_USER	= 11;
 	const NO_SLOTS_AVAILABLE = 12;
 	const INCOMPLETE_TRANSACTION=13;
+	const UNREGISTERED_PROVIDER=14;
 
 	public $session_id;
 	public $user_id;
@@ -110,6 +111,9 @@ class Session extends SiteDB
 			break;
 		case self::INCOMPLETE_TRANSACTION:
 			$this->error = 'Transacción no se pudo completar exitosamente.';
+			break;
+		case self::UNREGISTERED_PROVIDER:
+			$this->error = 'Proveedor no registrado.';
 			break;
 		}
 	}

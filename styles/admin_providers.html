@@ -9,7 +9,8 @@
 						  <a href="index.php?option=1" class="list-group-item">Buscar proveedor de servicio</a>
 						  <a href="index.php?option=2" class="list-group-item">Modificar proveedor de servicio</a>
 						  <a href="index.php?option=3" class="list-group-item">Añadir proveedor</a>
-						  <a href="index.php?option=4" class="list-group-item">Generar estadísticas de proveedor</a>
+						  <a href="index.php?option=4" class="list-group-item">Borrar proveedor</a>
+						  <a href="index.php?option=5" class="list-group-item">Generar estadísticas de proveedor</a>
 						</div>
 					</div>
 				</div>
@@ -41,12 +42,13 @@
 										<th>Área de cobertura</th>
 										<th>Número de teléfono</th>
 										<th>Email</th>
+										<th>Número de cuenta de proveedor</th>
 									</tr>
 								</thead>
 								<tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td><td>{user_reg_list.ID}</td>
 										  </tr>
 										<!-- END user_reg_list -->
 								</tbody>
@@ -109,12 +111,13 @@
 									<th>Número de teléfono</th>
 									<th>Email</th>
 									<th>Nombre del usuario</th>
+									<th>Número de la compañía</th>
 								</tr>
 							</thead>
 							<tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td><td>{user_reg_list.USER}</td>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td><td>{user_reg_list.USER}</td><td>{user_reg_list.ID}</td>
 										  </tr>
 										<!-- END user_reg_list -->
 							</tbody>
@@ -133,7 +136,7 @@
 									<label for="selectSearch">Buscar por: </label>
 									<select class="form-control" name="searchType">
 									<option value="area">Área de cobertura</option>
-									<option value="companyName">Nombre del proveedor</option>
+									<option value="companyName">Nombre de la compañía</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -153,7 +156,13 @@
 							<p class="text-info">Información del proveedor.</p>
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Nombre del proveedor:</label>
+									<label class="col-sm-3 control-label">Nombre del usuario:</label>
+									<div class="col-sm-4">
+										<input type="text" class="form-control" value="{USERNAME}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Nombre de la compañía:</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" value="{COMPANYNAME}">
 									</div>
@@ -174,11 +183,15 @@
 									<label class="col-sm-3 control-label" for="role">Área de cobertura:</label>
 									<div class="col-sm-4">
 										<select class="form-control" name="role">
-											<option value="north" default>Norte</option>
-											<option value="south">Sur</option>
-											<option value="east">Este</option>
-											<option value="west">Oeste</option>
+											<option value="norte" default>Norte</option>
+											<option value="sur">Sur</option>
+											<option value="este">Este</option>
+											<option value="oeste">Oeste</option>
 											<option value="central">Centro</option>
+											<option value="sureste">Sureste</option>
+											<option value="suroeste">Suroeste</option>
+											<option value="noreste">Noreste</option>
+											<option value="noroeste">Noroeste</option>
 										</select>
 									</div>
 								</div>		
@@ -215,6 +228,7 @@
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-4">
 										<button type="submit" class="btn btn-primary">Guardar información</button>
+										<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 									</div>
 								</div>
 							</form>
@@ -229,16 +243,12 @@
 						<!-- ELSE -->
 							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label for="selectSearch">Buscar por: </label>
-									<select class="form-control" name="searchType">
-										<option value="user">Nombre del usuario</option>
-										<option value="companyName">Nombre del proveedor</option>
-									</select>
+									<label for="selectSearch">Inserte número de compañía </label>
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" name="inputSearch" required>
 								</div>
-								<button type="submit" class="btn btn-primary" name="action" value="modify_provider">Mostrar</button>
+								<button type="submit" class="btn btn-primary" name="action" value="show_provider">Mostrar</button>
 							</form>
 						
 								
@@ -248,7 +258,7 @@
 					<!-- TODO: Data validation client side -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
-							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
+							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
 							<li class="active">Añadir proveedor</li>
 						</ol>
 						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
@@ -317,11 +327,15 @@
 								<label class="col-sm-3 control-label" for="role">Área de cobertura:</label>
 								<div class="col-sm-4">
 									<select class="form-control" name="role">
-										<option value="north" default>Norte</option>
-										<option value="south">Sur</option>
-										<option value="east">Este</option>
-										<option value="west">Oeste</option>
+										<option value="norte" default>Norte</option>
+										<option value="sur">Sur</option>
+										<option value="este">Este</option>
+										<option value="oeste">Oeste</option>
 										<option value="central">Centro</option>
+										<option value="noreste" default>Noreste</option>
+										<option value="sureste">Sureste</option>
+										<option value="noroeste">Noroeste</option>
+										<option value="suroeste">Suroeste</option>
 									</select>
 								</div>
 							</div>
@@ -361,8 +375,105 @@
 								</div>
 							</div>
 						</form>
-				
-					<!-- ENDIF -->
+						
+						<!-- ELSEIF SIDE_CONTENT == 'create_account_successful' -->
+						<div class="alert alert-success" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							El proveedor ha sido creado exitosamente.
+						</div>
+						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+						<script type="text/JavaScript">
+							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",1500);
+						</script>
+						
+						<!-- ELSEIF SIDE_CONTENT == 'create_account_failed' -->
+						<div class="alert alert-danger" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							Proveedor no se pudo crear.</br><strong>Error: {ERROR_MESSAGE}</strong>
+						</div>
+						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
+						<script type="text/JavaScript">
+							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",1700);
+						</script>				
+					
+						<!-- ELSEIF SIDE_CONTENT == 4 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
+							<li class="active">Eliminar proveedor</li>
+						</ol>
+						
+							<!-- IF USERNAME_FOUND == 1 -->
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th># de proveedor</th>
+										<th>Nombre del proveedor</th>
+										<th>Área de cobertura</th>
+										<th>Número de teléfono</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+										<!-- BEGIN user_reg_list -->
+										  <tr>
+											  <td>{user_reg_list.ID}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
+										  </tr>
+										<!-- END user_reg_list -->
+								</tbody>
+							</table>
+		
+							<div class="col-sm-offset-3 col-sm-4">
+									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
+									<button type="submit" class="btn btn-primary" name="action" value="remove_provider">Eliminar proveedor</button>
+							button type="button" class="btn btn-default" id="check_user">Verificar registro de usuario</button>
+							</div>						
+							
+							
+							<!-- ELSEIF USERNAME_FOUND == 2 -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								Proveedor no se pudo encontrar.
+							</div>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=4';",1500);
+							</script>
+						
+							<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label for="selectSearch">Inserte número de compañía </label>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="inputSearch" required>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="show_provider2">Mostrar</button>
+							</form>
+		
+							<!-- ENDIF -->	
+							
+						<!-- ELSEIF SIDE_CONTENT == 'delete_account_successful' -->
+						<div class="alert alert-success" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							El proveedor ha sido eliminado exitosamente.
+						</div>
+						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+						<script type="text/JavaScript">
+							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=4';",1500);
+						</script>
+						
+						<!-- ELSEIF SIDE_CONTENT == 'delete_account_failed' -->
+						<div class="alert alert-danger" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							El proveedor no se pudo ser eliminado.</br><strong>Error: {ERROR_MESSAGE}</strong>
+						</div>
+						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
+						<script type="text/JavaScript">
+							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=4';",1700);
+						</script>
+		
+		
+						<!-- ENDIF -->			
 					
 				</div>
 			</div>
