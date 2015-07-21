@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2015 at 03:14 PM
+-- Generation Time: Jul 21, 2015 at 02:52 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -19,6 +19,23 @@ SET time_zone = "+00:00";
 --
 -- Database: `prmi`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assist`
+--
+
+CREATE TABLE IF NOT EXISTS `assist` (
+`id` int(11) unsigned NOT NULL,
+  `customer_id` int(11) unsigned NOT NULL,
+  `provider_id` int(11) unsigned NOT NULL,
+  `assist_desc` varchar(128) NOT NULL,
+  `assist_area` varchar(64) NOT NULL,
+  `assist_city` varchar(64) NOT NULL,
+  `assist_date` date NOT NULL,
+  `assist_time` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -82,8 +99,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisit`, `lastip`, `lastbrowser`, `ip`, `browser`, `session`, `expired`, `disabled`, `active`, `passchg`, `passdate`, `login_attempts`, `permissions`) VALUES
-(6576, 'test', '$2y$11$AOZvGqD2hlYVl8BVuC4Tc.FRIV/nSS7x1mIZU9oXHbHMiEi3Lxb/m', 'test', 'user', '2015-07-15 08:41:56', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'coa3e9djvcmesknvs3tto6bk14', 0, 0, 1, 0, '2015-09-13 08:41:56', 0, 'none'),
-(12854, 'admin', '$2y$11$putu03YGlI8t6eahu68ZOuKU1vHt./wSn7OGmlJ4VmlpVfKYQGxuG', 'q', 'admin', '2015-02-02 23:37:12', '2015-07-15 09:07:58', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'coa3e9djvcmesknvs3tto6bk14', 0, 0, 1, 0, '2015-10-15 23:37:12', 0, 'all'),
+(12854, 'admin', '$2y$11$putu03YGlI8t6eahu68ZOuKU1vHt./wSn7OGmlJ4VmlpVfKYQGxuG', 'q', 'admin', '2015-02-02 23:37:12', '2015-07-20 08:06:40', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '7dk9rghd6sgg8vac64n1h97bh2', 0, 0, 1, 0, '2015-10-15 23:37:12', 0, 'all'),
 (37749, 'dborrero', '$2y$11$8XD0LqIHCZ6Hh0LsQuNPbupbQQelaC91iS2FTqy9mnc6vK85F/AJa', 'g', 'admin', '2015-07-06 20:00:07', '2015-07-10 23:46:54', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-09-04 20:00:07', 0, ''),
 (41873, 'dennis', '$2y$11$eR9EV3NbYR.qnG.dRWt0eOTXgawEOQnUfnsLrz8b9T3if0jaWNSde', 'q', 'user', '2015-02-02 23:37:44', '2015-06-28 20:57:33', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'e4f9hdv38l4abe5altmqj0vdg5', 0, 0, 1, 0, '2015-07-23 00:10:30', 4, ''),
 (43054, 'provider', '$2y$11$7Bta0ZCDr/7fy1B.fftbC.8HM9hIclpVVjFYDtykT.PNIwmPfvl9q', 'provider', '', '2015-07-10 20:49:43', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-09-08 20:49:43', 0, '');
@@ -106,15 +122,17 @@ CREATE TABLE IF NOT EXISTS `plans` (
   `mile_price` float NOT NULL,
   `extend_price` float NOT NULL,
   `term` int(11) NOT NULL,
-  `active` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `active` tinyint(1) NOT NULL,
+  `date_entered` datetime NOT NULL,
+  `last_modify` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `plans`
 --
 
-INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `num_miles`, `num_vehicles`, `plan_price`, `mile_price`, `extend_price`, `term`, `active`) VALUES
-(2, 'test', 'test', 'test', 1, 1, 1, 1, 1, 1, 1, 0);
+INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `num_miles`, `num_vehicles`, `plan_price`, `mile_price`, `extend_price`, `term`, `active`, `date_entered`, `last_modify`) VALUES
+(11, 'test2', '', '', 0, 0, 0, 0, 0, 0, 0, 1, '2015-07-19 23:09:50', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -136,15 +154,14 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `state` varchar(64) NOT NULL,
   `zip` varchar(18) NOT NULL,
   `country` varchar(64) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1010 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1013 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `profile`
 --
 
 INSERT INTO `profile` (`id`, `userid`, `name`, `middle`, `last`, `maiden`, `phone`, `address1`, `address2`, `city`, `state`, `zip`, `country`) VALUES
-(1000, 37749, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', '6109 Calle San Claudio', '', 'Ponce', 'PR', '00730', 'Puerto Rico'),
-(1009, 6576, 'test', '', '', '', '', '', '', '', '', '', '');
+(1010, 37749, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', '6109 Calle San Claudio', '', 'Ponce', 'PR', '00730', 'Puerto Rico');
 
 -- --------------------------------------------------------
 
@@ -158,9 +175,9 @@ CREATE TABLE IF NOT EXISTS `providers` (
   `companyName` varchar(64) NOT NULL,
   `companyPhone` varchar(18) NOT NULL,
   `companyEmail` varchar(128) NOT NULL,
-  `area` enum('north','south','east','west','central') NOT NULL,
-  `address1` varchar(64) NOT NULL,
-  `address2` varchar(64) NOT NULL,
+  `area` enum('north','south','east','west','central','northeast','northwest','southeast','southwest') NOT NULL,
+  `companyAddress1` varchar(64) NOT NULL,
+  `companyAddress2` varchar(64) NOT NULL,
   `city` varchar(64) NOT NULL,
   `zip` varchar(18) NOT NULL,
   `country` varchar(64) NOT NULL
@@ -170,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `providers` (
 -- Dumping data for table `providers`
 --
 
-INSERT INTO `providers` (`id`, `userid`, `companyName`, `companyPhone`, `companyEmail`, `area`, `address1`, `address2`, `city`, `zip`, `country`) VALUES
-(1, 43054, '', '', '', 'north', '', '', '', '', '');
+INSERT INTO `providers` (`id`, `userid`, `companyName`, `companyPhone`, `companyEmail`, `area`, `companyAddress1`, `companyAddress2`, `city`, `zip`, `country`) VALUES
+(1, 43054, 'La compania', '888-8888', 'lacompania@email.com', 'north', '123', 'probando', 'san juan', '000911', 'PR');
 
 -- --------------------------------------------------------
 
@@ -181,7 +198,7 @@ INSERT INTO `providers` (`id`, `userid`, `companyName`, `companyPhone`, `company
 
 CREATE TABLE IF NOT EXISTS `vehicles` (
 `id` int(11) unsigned NOT NULL,
-  `userid` int(11) NOT NULL,
+  `userid` int(11) unsigned NOT NULL,
   `type` varchar(64) NOT NULL,
   `model` varchar(64) NOT NULL,
   `brand` varchar(64) NOT NULL,
@@ -193,6 +210,12 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `assist`
+--
+ALTER TABLE `assist`
+ ADD PRIMARY KEY (`id`), ADD KEY `customer_id` (`customer_id`,`provider_id`), ADD KEY `provider_id` (`provider_id`);
 
 --
 -- Indexes for table `config`
@@ -216,7 +239,7 @@ ALTER TABLE `plans`
 -- Indexes for table `profile`
 --
 ALTER TABLE `profile`
- ADD PRIMARY KEY (`id`), ADD KEY `userid` (`userid`);
+ ADD PRIMARY KEY (`id`), ADD KEY `profile_ibfk_1` (`userid`);
 
 --
 -- Indexes for table `providers`
@@ -228,12 +251,17 @@ ALTER TABLE `providers`
 -- Indexes for table `vehicles`
 --
 ALTER TABLE `vehicles`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `vehicles_ibfk_1` (`userid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `assist`
+--
+ALTER TABLE `assist`
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `config`
 --
@@ -243,12 +271,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1010;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1013;
 --
 -- AUTO_INCREMENT for table `providers`
 --
@@ -264,16 +292,29 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 --
 
 --
+-- Constraints for table `assist`
+--
+ALTER TABLE `assist`
+ADD CONSTRAINT `assist_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `assist_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `profile`
 --
 ALTER TABLE `profile`
-ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`);
+ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `providers`
 --
 ALTER TABLE `providers`
-ADD CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`);
+ADD CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `vehicles`
+--
+ALTER TABLE `vehicles`
+ADD CONSTRAINT `vehicles_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
