@@ -15,6 +15,7 @@ class Session extends SiteDB
 	const LOGIN_INVALID		= 10;
 	const UNREGISTERED_USER	= 11;
 	const NO_SLOTS_AVAILABLE = 12;
+	const INCOMPLETE_TRANSACTION=13;
 
 	public $session_id;
 	public $user_id;
@@ -106,6 +107,9 @@ class Session extends SiteDB
 			break;
 		case self::NO_SLOTS_AVAILABLE:
 			$this->error = 'Se ha excedido del máximo de planes activos.';
+			break;
+		case self::INCOMPLETE_TRANSACTION:
+			$this->error = 'Transacción no se pudo completar exitosamente.';
 			break;
 		}
 	}
