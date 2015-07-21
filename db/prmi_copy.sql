@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `user` varchar(32) NOT NULL,
   `pass` varchar(256) NOT NULL,
   `email` varchar(128) NOT NULL,
-  `role` enum('user','admin') DEFAULT 'user',
+  `role` enum('user','admin', 'provider') DEFAULT 'user',
   `regdate` datetime NOT NULL,
   `lastvisit` datetime NOT NULL,
   `lastip` varchar(32) NOT NULL,
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `providers` (
   `companyName` varchar(64) NOT NULL,
   `companyPhone` varchar(18) NOT NULL,
   `companyEmail` varchar(128) NOT NULL,
-  `area` enum('north','south','east','west','central', 'northeast', 'northwest', 'southeast', 'southwest' ) NOT NULL,
+  `area` enum('norte','sur','este','oeste','central', 'noreste', 'noroeste', 'sureste', 'suroeste' ) NOT NULL,
   `companyAddress1` varchar(64) NOT NULL,
   `companyAddress2` varchar(64) NOT NULL,
   `city` varchar(64) NOT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `providers` (
 --
 
 INSERT INTO `providers` (`id`, `userid`, `companyName`, `companyPhone`, `companyEmail`, `area`, `companyAddress1`, `companyAddress2`, `city`, `zip`, `country`) VALUES
-(NULL, 43054, 'La compania', '888-8888', 'lacompania@email.com', 'north', '123', 'probando', 'san juan', '000911', 'PR');
+(NULL, 43054, 'La compania', '888-8888', 'lacompania@email.com', 'norte', '123', 'probando', 'san juan', '000911', 'PR');
 
 -- --------------------------------------------------------
 
