@@ -124,12 +124,14 @@ if ($user->auth() && $user->role == 'admin')
 	// PROVIDER CREATION PROCESS
 	else if (isset($_POST['action']) && $_POST['action'] === 'add_provider')
 	{	
-		if ($user->add_provider($_POST))
+		$provider = new Provider;
+	
+		if ($provider->add_provider($_POST))
 			$template->assign_var('SIDE_CONTENT', 'create_account_successful');
 		else
 		{
 			$template->assign_vars(array('SIDE_CONTENT' => 'create_account_failed',
-				'ERROR_MESSAGE' => $user->error));
+				'ERROR_MESSAGE' => $provider->error));
 		}
 		
 	}
