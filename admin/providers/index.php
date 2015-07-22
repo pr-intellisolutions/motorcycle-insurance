@@ -95,23 +95,33 @@ if ($user->auth() && $user->role == 'admin')
 	else if (isset($_POST['action']) && $_POST['action'] == 'show_provider')
 	{
 			
-			$stmnt = sprintf("SELECT * FROM providers WHERE id = '%d'", $_POST['inputSearch']);
+			$stmnt = sprintf("SELECT * FROM providers, login WHERE providers.userid=login.id and providers.id = '%d'", $_POST['inputSearch']);
 			$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
 				{
 					$row = $result->fetch_assoc();
 					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
-						'USERID' => $row['userid'],
+						'USERNAME' => $row['user'],
+						'USERID'=> $row['userid'],
 						'COMPANYNAME' => $row['companyName'],
 						'COMPANYPHONE' => $row['companyPhone'],
 						'COMPANYEMAIL' => $row['companyEmail'],
 						'AREA' => $row['area'],
-						'ADDRESS1' => $row['address1'],
-						'ADDRESS2' => $row['address2'],
+						'COMPANYADDRESS1' => $row['companyAddress1'],
+						'COMPANYADDRESS2' => $row['companyAddress2'],
 						'CITY' => $row['city'],
 						'ZIP' => $row['zip'],
 						'COUNTRY' => $row['country']));
+						
+						
+						// MODIFY PROVIDER PROCESS
+						if (isset($_POST['action']) && $_POST['action'] === 'modify_provider')
+						{	
+							
+							$provider = new Provider;
+							$provider->modify_provider($_POST, $_POST['inputSearch']);
+						}
 				}
 				else
 				{
@@ -135,6 +145,7 @@ if ($user->auth() && $user->role == 'admin')
 		}
 		
 	}
+	
 	
 	// SHOW PROVIDER 2 
 	else if (isset($_POST['action']) && $_POST['action'] === 'show_provider2')

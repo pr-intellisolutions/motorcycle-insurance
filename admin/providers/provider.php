@@ -5,6 +5,7 @@ class Provider extends User
 	
 	public $id;
 	public $userid;
+	public $username;
 	public $companyName;
 	public $companyPhone;
 	public $companyEmail;
@@ -25,34 +26,35 @@ class Provider extends User
 	
 	public function add_provider($account)
 	{
-		if (!isset($account['companyName']) || $account['companyName'] === "" || !isset($account['username']) || account['username'] === "")
+		if (!isset($account['companyName']) || $account['companyName'] === "" || !isset($account['username']) || $account['username'] === "")
 		{
 			$this->set_error(self::BAD_INPUT);
 			return false;
 		}
 		
-		$this->user = $this->sanitize_input($account['username']);
-		$this->companyName = $this->sanitize_input($account['companyName']);
-		
-		if ($this->user_available($this->user))
+		$this->username 		= $this->sanitize_input($account['username']);
+		$this->companyName 		= $this->sanitize_input($account['companyName']);
+		$this->area				= $this->sanitize_input($account['area']);
+	
+		if ($this->user_available($this->username))
 		{
 			$this->set_error(self::UNREGISTERED_USER);
 			return false;
 		}
 		
-		$this->CompanyPhone		= isset($account['CompanyPhone']) 		? $this->sanitize_input($account['CompanyPhone']) : "";
-		$this->CompanyEmail		= isset($account['CompanyEmail']) 		? $this->sanitize_input($account['CompanyEmail']) : "";
-		$this->area				= isset($account['area']) 				? $this->sanitize_input($account['area']) : "";
+
+		$this->companyPhone		= isset($account['companyPhone']) 		? $this->sanitize_input($account['companyPhone']) : "";
+		$this->companyEmail		= isset($account['companyEmail']) 		? $this->sanitize_input($account['companyEmail']) : "";
 		$this->companyAddress1	= isset($account['companyAddress1']) 	? $this->sanitize_input($account['companyAddress1']) : "";
 		$this->companyAddress2	= isset($account['companyAddress2']) 	? $this->sanitize_input($account['companyAddress2']) : "";
 		$this->city		= isset($account['city']) 						? $this->sanitize_input($account['city']) : "";
 		$this->zip		= isset($account['zip']) 						? $this->sanitize_input($account['zip']) : "";
 		$this->country	= isset($account['country']) 					? $this->sanitize_input($account['country']) : "";
-		
+
 		
 		// Populate providers table 
-		$stmt = sprintf("INSERT INTO providers VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-			$this->user_id, $this->companyName, $this->companyPhone, $this->companyEmail, $this->area, $this->companyAddress1, $this->companyAddress2, $this->city, $this->zip, $this->country);
+		$stmt = sprintf("INSERT INTO providers VALUES (NULL, (SELECT id FROM login WHERE user = '%s'), '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+			$this->username, $this->companyName, $this->companyPhone, $this->companyEmail, $this->area, $this->companyAddress1, $this->companyAddress2, $this->city, $this->zip, $this->country);
 
 		
 		//
@@ -60,7 +62,7 @@ class Provider extends User
 			trigger_error('/admin/providers/index.php::add_provider(): '.$this->sql_conn->error, E_USER_ERROR);
 			
 			
-		if ($this->update_role($this->user)==FALSE)
+		if (!$this->update_role($this->username))
 		{
 			$this->set_error(self::INCOMPLETE_TRANSACTION);
 			return false;
@@ -97,21 +99,28 @@ class Provider extends User
 		}
 	}
 	
-	public function modify_provider($account)
+	public function modify_provider($account, $id)
 	{
-		if (!isset($account['id']) || $account['id'])
+		
+		
+		if (!isset($account['CompanyName']) || $account['CompanyName'] === "")
 		{
 			$this->set_error(self::BAD_INPUT);
 			return false;
 		}
 		
-		$this->username		= $this->sanitize_input($account['username']);
-		$this->id			= $this->sanitize_input($plan['id']);
+		$this->username			= $this->sanitize_input($account['username']);
+		$this->companyName		= $this->sanitize_input($account['companyName']);
+		$this->area				= $this->sanitize_input($account['area']);
+		
+		if ($this->user_available($this->username))
+		{
+			$this->set_error(self::UNREGISTERED_USER);
+			return false;
+		}
 
-		$this->CompanyName		= isset($account['CompanyName']) 		? $this->sanitize_input($account['CompanyName']) : "";
-		$this->CompanyPhone		= isset($account['CompanyPhone']) 		? $this->sanitize_input($account['CompanyPhone']) : "";
-		$this->CompanyEmail		= isset($account['CompanyEmail']) 		? $this->sanitize_input($account['CompanyEmail']) : "";
-		$this->area				= isset($account['area']) 				? $this->sanitize_input($account['area']) : "";
+		$this->companyPhone		= isset($account['CompanyPhone']) 		? $this->sanitize_input($account['companyPhone']) : "";
+		$this->companyEmail		= isset($account['CompanyEmail']) 		? $this->sanitize_input($account['companyEmail']) : "";
 		$this->companyAddress1	= isset($account['companyAddress1']) 	? $this->sanitize_input($account['companyAddress1']) : "";
 		$this->companyAddress2	= isset($account['companyAddress2']) 	? $this->sanitize_input($account['companyAddress2']) : "";
 		$this->city		= isset($account['city']) 						? $this->sanitize_input($account['city']) : "";

@@ -15,7 +15,16 @@
 					</div>
 				</div>
 				<div class="col-md-8">
-				
+					<script>
+						$(document).ready(function()
+						{
+							$('#cancel_button').click(function()
+							{
+								// When user clicks cancel button the page is reloaded and home content is displayed
+								window.location.href = 'index.php';
+							});
+						});
+					</script>
 						
 						<!-- IF SIDE_CONTENT == "home" -->
 						<ol class="breadcrumb">
@@ -143,6 +152,7 @@
 									<input type="text" class="form-control" name="inputSearch" required>
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="search_provider">Buscar</button>
+								<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 							</form>	
 						<!-- ENDIF -->					
 					
@@ -180,10 +190,11 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label" for="role">Área de cobertura:</label>
+									<label class="col-sm-3 control-label" for="area">Área de cobertura:</label>
 									<div class="col-sm-4">
-										<select class="form-control" name="role">
-											<option value="norte" default>Norte</option>
+										<select class="form-control" name="area">
+											<option value="{AREA}" default>{AREA}</option>
+											<option value="norte">Norte</option>
 											<option value="sur">Sur</option>
 											<option value="este">Este</option>
 											<option value="oeste">Oeste</option>
@@ -194,17 +205,17 @@
 											<option value="noroeste">Noroeste</option>
 										</select>
 									</div>
-								</div>		
+								</div>										
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección Línea 1:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{ADDRESS1}">
+										<input type="text" class="form-control" value="{COMPANYADDRESS1}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección Línea 2:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{ADDRESS2}">
+										<input type="text" class="form-control" value="{COMPANYADDRESS2}">
 									</div>
 								</div>
 								<div class="form-group">
@@ -227,7 +238,7 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-4">
-										<button type="submit" class="btn btn-primary">Guardar información</button>
+										<button type="submit" class="btn btn-primary" name="action" value="modify_provider">Guardar información</button>
 										<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 									</div>
 								</div>
@@ -324,15 +335,15 @@
 								</div>
 							</div>							
 							<div class="form-group">
-								<label class="col-sm-3 control-label" for="role">Área de cobertura:</label>
+								<label class="col-sm-3 control-label" for="area">Área de cobertura:</label>
 								<div class="col-sm-4">
-									<select class="form-control" name="role">
+									<select class="form-control" name="area">
 										<option value="norte" default>Norte</option>
 										<option value="sur">Sur</option>
 										<option value="este">Este</option>
 										<option value="oeste">Oeste</option>
 										<option value="central">Centro</option>
-										<option value="noreste" default>Noreste</option>
+										<option value="noreste">Noreste</option>
 										<option value="sureste">Sureste</option>
 										<option value="noroeste">Noroeste</option>
 										<option value="suroeste">Suroeste</option>
@@ -342,13 +353,13 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Dirección Línea 1:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="address1">
+									<input type="text" class="form-control" name="companyAddress1">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Dirección Línea 2:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="address2">
+									<input type="text" class="form-control" name="companyAddress2">
 								</div>
 							</div>
 							<div class="form-group">
@@ -371,7 +382,9 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-4">
-									<button type="submit" class="btn btn-primary" name="action" value="add_provider">Guardar información</button>
+									<button type="submit" class="btn btn-primary" name="action" value="add_provider">Añadir proveedor</button>
+									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
+									
 								</div>
 							</div>
 						</form>
@@ -383,7 +396,7 @@
 						</div>
 						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
 						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",1500);
+							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",2500);
 						</script>
 						
 						<!-- ELSEIF SIDE_CONTENT == 'create_account_failed' -->
@@ -393,7 +406,7 @@
 						</div>
 						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
 						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",1700);
+							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",2500);
 						</script>				
 					
 						<!-- ELSEIF SIDE_CONTENT == 4 -->
@@ -424,8 +437,8 @@
 							</table>
 		
 							<div class="col-sm-offset-3 col-sm-4">
-									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 									<button type="submit" class="btn btn-primary" name="action" value="remove_provider">Eliminar proveedor</button>
+									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 							button type="button" class="btn btn-default" id="check_user">Verificar registro de usuario</button>
 							</div>						
 							
