@@ -9,7 +9,7 @@
 						  <a href="index.php?option=1" class="list-group-item">Buscar proveedor de servicio</a>
 						  <a href="index.php?option=2" class="list-group-item">Modificar proveedor de servicio</a>
 						  <a href="index.php?option=3" class="list-group-item">Añadir proveedor</a>
-						  <a href="index.php?option=4" class="list-group-item">Borrar proveedor</a>
+						  <a href="index.php?option=4" class="list-group-item">Eliminar proveedor</a>
 						  <a href="index.php?option=5" class="list-group-item">Generar estadísticas de proveedor</a>
 						</div>
 					</div>
@@ -164,35 +164,40 @@
 					</ol>
 						<!-- IF USERNAME_FOUND == 1 -->
 							<p class="text-info">Información del proveedor.</p>
+							
+							
+							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+							<input type="hidden" class="form-control" value="{ID}" name="ID">
+							
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Nombre del usuario:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{USERNAME}">
+										<input type="text" class="form-control" value="{USERNAME}" name="USERNAME" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Nombre de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYNAME}">
+										<input type="text" class="form-control" value="{COMPANYNAME}" name="COMPANYNAME" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Teléfono:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYPHONE}">
+										<input type="text" class="form-control" value="{COMPANYPHONE}" name="COMPANYPHONE" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Email:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYEMAIL}">
+										<input type="text" class="form-control" value="{COMPANYEMAIL}" name="COMPANYEMAIL" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label" for="area">Área de cobertura:</label>
+									<label class="col-sm-3 control-label" for="AREA">Área de cobertura:</label>
 									<div class="col-sm-4">
-										<select class="form-control" name="area">
+										<select class="form-control" name="AREA">
 											<option value="{AREA}" default>{AREA}</option>
 											<option value="norte">Norte</option>
 											<option value="sur">Sur</option>
@@ -209,31 +214,31 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección Línea 1:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYADDRESS1}">
+										<input type="text" class="form-control" value="{COMPANYADDRESS1}" name="COMPANYADDRESS1" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección Línea 2:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYADDRESS2}">
+										<input type="text" class="form-control" value="{COMPANYADDRESS2}" name="COMPANYADDRESS2" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Cuidad:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{CITY}">
+										<input type="text" class="form-control" value="{CITY}" name="CITY" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Zip:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{ZIP}">
+										<input type="text" class="form-control" value="{ZIP}" name="ZIP" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">País:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COUNTRY}">
+										<input type="text" class="form-control" value="{COUNTRY}" name="COUNTRY" required>
 									</div>
 								</div>
 								<div class="form-group">
@@ -259,11 +264,31 @@
 								<div class="form-group">
 									<input type="text" class="form-control" name="inputSearch" required>
 								</div>
-								<button type="submit" class="btn btn-primary" name="action" value="show_provider">Mostrar</button>
+								<button type="submit" class="btn btn-primary" name="action" value="show_modify_provider">Mostrar</button>
 							</form>
 						
 								
 						<!-- ENDIF -->
+						
+						<!-- ELSEIF SIDE_CONTENT == 'modify_account_successful' -->
+						<div class="alert alert-success" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							El proveedor ha sido modificado exitosamente.
+						</div>
+						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
+						<script type="text/JavaScript">
+							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=2';",2500);
+						</script>
+						
+						<!-- ELSEIF SIDE_CONTENT == 'modify_account_failed' -->
+						<div class="alert alert-danger" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							Proveedor no se pudo modificar.</br><strong>Error: {ERROR_MESSAGE}</strong>
+						</div>
+						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
+						<script type="text/JavaScript">
+							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=2';",2500);
+						</script>	
 						
 					<!-- ELSEIF SIDE_CONTENT == 3 -->
 					<!-- TODO: Data validation client side -->
@@ -435,12 +460,14 @@
 										<!-- END user_reg_list -->
 								</tbody>
 							</table>
-		
-							<div class="col-sm-offset-3 col-sm-4">
-									<button type="submit" class="btn btn-primary" name="action" value="remove_provider">Eliminar proveedor</button>
+							
+							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+							<input type="hidden" class="form-control" value="{ID}" name="ID">
+								<div class="col-sm-offset-3 col-sm-4">
+									<button type="submit" class="btn btn-primary" name="action" value="delete_provider">Eliminar proveedor</button>
 									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-							button type="button" class="btn btn-default" id="check_user">Verificar registro de usuario</button>
-							</div>						
+								</div>	
+							</form>					
 							
 							
 							<!-- ELSEIF USERNAME_FOUND == 2 -->
@@ -460,7 +487,7 @@
 								<div class="form-group">
 									<input type="text" class="form-control" name="inputSearch" required>
 								</div>
-								<button type="submit" class="btn btn-primary" name="action" value="show_provider2">Mostrar</button>
+								<button type="submit" class="btn btn-primary" name="action" value="show_delete_provider">Mostrar</button>
 							</form>
 		
 							<!-- ENDIF -->	
@@ -478,7 +505,7 @@
 						<!-- ELSEIF SIDE_CONTENT == 'delete_account_failed' -->
 						<div class="alert alert-danger" role="alert">
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							El proveedor no se pudo ser eliminado.</br><strong>Error: {ERROR_MESSAGE}</strong>
+							El proveedor no pudo ser eliminado.</br><strong>Error: {ERROR_MESSAGE}</strong>
 						</div>
 						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
 						<script type="text/JavaScript">

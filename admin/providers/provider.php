@@ -99,19 +99,19 @@ class Provider extends User
 		}
 	}
 	
-	public function modify_provider($account, $id)
+	public function modify_provider($account)
 	{
-		
-		
-		if (!isset($account['CompanyName']) || $account['CompanyName'] === "")
+			
+		if (!isset($account['COMPANYNAME']) || $account['COMPANYNAME'] === "" || !isset($account['ID']) || $account['ID'] === "" )
 		{
 			$this->set_error(self::BAD_INPUT);
 			return false;
 		}
+		$this->id				= $this->sanitize_input($account['ID']);
+		$this->username			= $this->sanitize_input($account['USERNAME']);
+		$this->companyName		= $this->sanitize_input($account['COMPANYNAME']);
+		$this->area				= $this->sanitize_input($account['AREA']);
 		
-		$this->username			= $this->sanitize_input($account['username']);
-		$this->companyName		= $this->sanitize_input($account['companyName']);
-		$this->area				= $this->sanitize_input($account['area']);
 		
 		if ($this->user_available($this->username))
 		{
@@ -119,20 +119,19 @@ class Provider extends User
 			return false;
 		}
 
-		$this->companyPhone		= isset($account['CompanyPhone']) 		? $this->sanitize_input($account['companyPhone']) : "";
-		$this->companyEmail		= isset($account['CompanyEmail']) 		? $this->sanitize_input($account['companyEmail']) : "";
-		$this->companyAddress1	= isset($account['companyAddress1']) 	? $this->sanitize_input($account['companyAddress1']) : "";
-		$this->companyAddress2	= isset($account['companyAddress2']) 	? $this->sanitize_input($account['companyAddress2']) : "";
-		$this->city		= isset($account['city']) 						? $this->sanitize_input($account['city']) : "";
-		$this->zip		= isset($account['zip']) 						? $this->sanitize_input($account['zip']) : "";
-		$this->country	= isset($account['country']) 					? $this->sanitize_input($account['country']) : "";
+		$this->companyPhone		= isset($account['COMPANYPHONE']) 		? $this->sanitize_input($account['COMPANYPHONE']) : "";
+		$this->companyEmail		= isset($account['COMPANYEMAIL']) 		? $this->sanitize_input($account['COMPANYEMAIL']) : "";
+		$this->companyAddress1	= isset($account['COMPANYADDRESS1']) 	? $this->sanitize_input($account['COMPANYADDRESS1']) : "";
+		$this->companyAddress2	= isset($account['COMPANYADDRESS2']) 	? $this->sanitize_input($account['COMPANYADDRESS2']) : "";
+		$this->city		= isset($account['CITY']) 						? $this->sanitize_input($account['CITY']) : "";
+		$this->zip		= isset($account['ZIP']) 						? $this->sanitize_input($account['ZIP']) : "";
+		$this->country	= isset($account['COUNTRY']) 					? $this->sanitize_input($account['COUNTRY']) : "";
 		
 			
-		$stmnt = sprintf("UPDATE providers SET companyName='%s', companyPhone='%s', area='%s', companyAddress1='%s', companyAddress2='%s',
-			city='%s', zip='%s', country='%s', userid=(
-			SELECT id FROM login WHERE user = '%s') WHERE id=%d",
-			$this->companyName, $this->companyPhone, $this->companyEmail, $this->are, $this->companyAddress1,
-			$this->companyAddress2, $this->city, $this->zip, $this->term, $this->country, $this->username, $this->id);
+		$stmnt = sprintf("UPDATE providers SET userid=(SELECT id FROM login WHERE USER='%s'),companyName='%s', companyPhone='%s', companyEmail='%s', area='%s', companyAddress1='%s', companyAddress2='%s',
+			city='%s', zip='%s', country='%s' WHERE id=%d",
+			$this->username, $this->companyName, $this->companyPhone, $this->companyEmail, $this->area, $this->companyAddress1,
+			$this->companyAddress2, $this->city, $this->zip, $this->country, $this->id);
 			
 		if (!$this->sql_conn->query($stmnt))
 			trigger_error('/admin/providers/index.php::modify_provider(): '.$this->sql_conn->error, E_USER_ERROR);
@@ -146,23 +145,23 @@ class Provider extends User
 		return true;
 	}
 	
-	public function delete_provider($id)
+	public function delete_provider($account)
 	{
-		$id = $this->sanitize_input($id);
+		$this->id= $this->sanitize_input($account['ID']);
 		$confirm_delete;
 
-		if ($this->id_available($id) == false)
+		if ($this->id_available($this->id) == false)
 		{
-			if ($this->check_other_accounts($id) == false)
+			if ($this->check_other_accounts($this->id) == false)
 			{
-				$stmnt = sprintf("UPDATE login SET role='user' WHERE id=(SELECT userid FROM providers WHERE id=%d", $id);
+				$stmnt = sprintf("UPDATE login SET role='user' WHERE id=(SELECT userid FROM providers WHERE id=%d", $this->id);
 				$this->sql_conn->query($stmnt);
 			}
 			
 			$stmnt = sprintf("DELETE FROM providers WHERE id='%d'", $this->id);
 			$this->sql_conn->query($stmnt);
 
-			if ($this->id_available($id) == true)
+			if ($this->id_available($this->id) == true)
 			{						
 					return true;
 			}
@@ -221,7 +220,7 @@ class Provider extends User
 				$confirm_role = false;
 		}
 
-		return $confirm_role;;
+		return $confirm_role;
 	}
 	
 	

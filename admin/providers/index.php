@@ -91,8 +91,8 @@ if ($user->auth() && $user->role == 'admin')
 		}
 	}
 	
-	// SHOW PROVIDER PROCESS BY ID
-	else if (isset($_POST['action']) && $_POST['action'] == 'show_provider')
+	// DISPLAY/CHANGE PROVIDER 
+	else if (isset($_POST['action']) && $_POST['action'] == 'show_modify_provider')
 	{
 			
 			$stmnt = sprintf("SELECT * FROM providers, login WHERE providers.userid=login.id and providers.id = '%d'", $_POST['inputSearch']);
@@ -102,8 +102,8 @@ if ($user->auth() && $user->role == 'admin')
 				{
 					$row = $result->fetch_assoc();
 					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+						'ID' => $_POST['inputSearch'],
 						'USERNAME' => $row['user'],
-						'USERID'=> $row['userid'],
 						'COMPANYNAME' => $row['companyName'],
 						'COMPANYPHONE' => $row['companyPhone'],
 						'COMPANYEMAIL' => $row['companyEmail'],
@@ -113,21 +113,27 @@ if ($user->auth() && $user->role == 'admin')
 						'CITY' => $row['city'],
 						'ZIP' => $row['zip'],
 						'COUNTRY' => $row['country']));
-						
-						
-						// MODIFY PROVIDER PROCESS
-						if (isset($_POST['action']) && $_POST['action'] === 'modify_provider')
-						{	
-							
-							$provider = new Provider;
-							$provider->modify_provider($_POST, $_POST['inputSearch']);
-						}
 				}
 				else
 				{
 					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
 				}					
 				$result->close();
+		
+	}
+	
+	// PROVIDER MODIFY PROCESS
+	else if (isset($_POST['action']) && $_POST['action'] === 'modify_provider')
+	{	
+		$provider = new Provider;
+	
+		if ($provider->modify_provider($_POST))
+			$template->assign_var('SIDE_CONTENT', 'modify_account_successful');
+		else
+		{
+			$template->assign_vars(array('SIDE_CONTENT' => 'modify_account_failed',
+				'ERROR_MESSAGE' => $provider->error));
+		}
 		
 	}
 	
@@ -147,8 +153,8 @@ if ($user->auth() && $user->role == 'admin')
 	}
 	
 	
-	// SHOW PROVIDER 2 
-	else if (isset($_POST['action']) && $_POST['action'] === 'show_provider2')
+	// DISPLAY PROVIDER 
+	else if (isset($_POST['action']) && $_POST['action'] === 'show_delete_provider')
 	{	
 			$stmnt = sprintf("SELECT * FROM providers WHERE id = '%d'", $_POST['inputSearch']);
 			$result = $user->sql_conn->query($stmnt);
@@ -156,7 +162,7 @@ if ($user->auth() && $user->role == 'admin')
 				if ($result->num_rows > 0)
 				{
 					$row = $result->fetch_assoc();
-					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 1));
+					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 1, 'ID' => $row['id']));
 					
 					$template->assign_block_vars('user_reg_list',
 					array('ID' => $row['id'], 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
@@ -171,12 +177,14 @@ if ($user->auth() && $user->role == 'admin')
 	// PROVIDER DELETE PROCESS 
 	else if (isset($_POST['action']) && $_POST['action'] === 'delete_provider')
 	{	
-		if ($user->delete_provider($_POST))
+		$provider = new Provider;
+		
+		if ($provider->delete_provider($_POST))
 			$template->assign_var('SIDE_CONTENT', 'delete_account_successful');
 		else
 		{
 			$template->assign_vars(array('SIDE_CONTENT' => 'delete_account_failed',
-				'ERROR_MESSAGE' => $user->error));
+				'ERROR_MESSAGE' => $provider->error));
 		}
 		
 
