@@ -6,9 +6,8 @@
 							<h3 class="panel-title">Navegación</h3>
 						</div>
 						<div class="list-group">
-						  <a href="index.php?option=1" class="list-group-item">Opción 1</a>
-						  <a href="index.php?option=2" class="list-group-item">Opción 2</a>
-						  <a href="index.php?option=3" class="list-group-item">Opción 3</a>
+						  <a href="index.php?option=1" class="list-group-item">Crear orden de servicio</a>
+						  <a href="index.php?option=2" class="list-group-item">Ver reportes de servicio</a>
 						</div>
 					</div>
 				</div>
@@ -17,6 +16,114 @@
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Asistencia en la carretera</li>
+						</ol>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Información general</th>
+									<th></th>
+								<tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><a href="#" data-toggle="modal" data-target="#">Ordenes abiertas</td>
+									<td>{ACTIVE_ORDERS}0</td>
+								</tr>
+								<tr>
+									<td><a href="#" data-toggle="modal" data-target="#">Ordenes archivadas</td>
+									<td>{ARCHIVED_ORDERS}0</td>
+								</tr>
+							</tbody>
+						</table>
+					<!-- ELSEIF SIDE_CONTENT == 1 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/assistance">Asistencia en la carretera</a></li>
+							<li class="active">Crear orden de servicio</li>
+						</ol>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<p class="text-info">Información del usuario</p>
+							<div class="form-group">
+								<div class="col-sm-3">
+									<select class="form-control">
+											<option default>Nombre de usuario</option>
+											<option>Número de socio</option>
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control">
+								</div>
+								<div class="col-sm-3">
+										<button type="button" class="btn btn-default">Verificar</button>
+								</div>
+							</div>
+							<hr>
+							<p class="text-info">Información del incidente</p>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Descripción del incidente</label>
+								<div class="col-sm-4">
+									<textarea class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Lugar del incidente:</label>
+								<div class="col-sm-4">
+									<textarea class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Ciudad o pueblo:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Lugar de destino:</label>
+								<div class="col-sm-4">
+									<textarea class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Ciudad o pueblo:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control">
+								</div>
+							</div>
+							<hr>
+							<p class="text-info">Información del proveedor</p>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Proveedor asignado:</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control">
+								</div>
+								<div class="col-sm-3">
+										<button type="button" class="btn btn-default">Asignar</button>
+								</div>
+							</div>
+							<hr>
+							<p class="text-info">Información del vehículo</p>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Tablilla:</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control">
+								</div>
+								<div class="col-sm-3">
+										<button type="button" class="btn btn-default">Verificar</button>
+								</div>
+							</div>
+							<hr>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-4">
+									<button type="button" class="btn btn-default">Cancelar</button>
+									<button type="button" class="btn btn-primary">Generar orden</button>
+								</div>
+							</div>
+						</form>
+					<!-- ELSEIF SIDE_CONTENT == 2 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/assistance">Asistencia en la carretera</a></li>
+							<li class="active">Ver reportes de servicio</li>
 						</ol>
 					<!-- ENDIF -->
 				</div>
