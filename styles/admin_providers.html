@@ -10,7 +10,6 @@
 						  <a href="index.php?option=2" class="list-group-item">Modificar proveedor de servicio</a>
 						  <a href="index.php?option=3" class="list-group-item">Añadir proveedor</a>
 						  <a href="index.php?option=4" class="list-group-item">Eliminar proveedor</a>
-						  <a href="index.php?option=5" class="list-group-item">Generar estadísticas de proveedor</a>
 						</div>
 					</div>
 				</div>
@@ -38,7 +37,7 @@
 									<label class="control-label">Ordenar por:</label>
 									<select class="form-control" name="searchType">
 										<option value="area" default>Área de cobertura</option>
-										<option value="companyName">Nombre del proveedor</option>
+										<option value="nameLast">Nombre del proveedor</option>
 									</select>
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
@@ -49,15 +48,15 @@
 										<th>#</th>
 										<th>Nombre del proveedor</th>
 										<th>Área de cobertura</th>
-										<th>Número de teléfono</th>
-										<th>Email</th>
-										<th>Número de cuenta de proveedor</th>
+										<th>Pueblo</th>
+										<th>Teléfono de la compañía</th>
+										<th>Email de la compañía</th>
 									</tr>
 								</thead>
 								<tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td><td>{user_reg_list.ID}</td>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.CITY}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
 										  </tr>
 										<!-- END user_reg_list -->
 								</tbody>
@@ -77,7 +76,7 @@
 									<label class="control-label">Ordenar por:</label>
 									<select class="form-control" name="searchType">
 										<option value="area" default>Área de cobertura</option>
-										<option value="companyName">Nombre del proveedor</option>
+										<option value="nameLast">Nombre del proveedor</option>
 									</select>
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
@@ -89,14 +88,15 @@
 										<th>#</th>
 										<th>Nombre del proveedor</th>
 										<th>Área de cobertura</th>
-										<th>Número de teléfono</th>
-										<th>Email</th>
+										<th>Pueblo</th>
+										<th>Teléfono de la compañía</th>
+										<th>Email de la compañía</th>
 									</tr>
 								</thead>
 								<tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.CITY}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
 										  </tr>
 										<!-- END user_reg_list -->
 								</tbody>
@@ -115,18 +115,19 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Nombre del proveedor</th>
+									<th>Nombre de la compañía</th>
 									<th>Área de cobertura</th>
-									<th>Número de teléfono</th>
-									<th>Email</th>
-									<th>Nombre del usuario</th>
+									<th>Teléfono de la compañía</th>
+									<th>Email de la compañía</th>
 									<th>Número de la compañía</th>
+									<th>Nombre del proveedor</th>
+									<th>Número de miembro</th>
 								</tr>
 							</thead>
 							<tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td><td>{user_reg_list.USER}</td><td>{user_reg_list.ID}</td>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td><td>{user_reg_list.ID}</td><td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.USERID}</td>
 										  </tr>
 										<!-- END user_reg_list -->
 							</tbody>
@@ -146,6 +147,8 @@
 									<select class="form-control" name="searchType">
 									<option value="area">Área de cobertura</option>
 									<option value="companyName">Nombre de la compañía</option>
+									<option value="nameLast">Nombre del proveedor</option>
+									<option value="userid">Número de miembro</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -163,7 +166,7 @@
 						<li class="active">Modificar proveedor</li>
 					</ol>
 						<!-- IF USERNAME_FOUND == 1 -->
-							<p class="text-info">Información del proveedor.</p>
+							<p class="text-info">Información del proveedor</p>
 							
 							
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}" >
@@ -171,9 +174,9 @@
 							
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Nombre del usuario:</label>
+									<label class="col-sm-3 control-label">Número de miembro del proveedor:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{USERNAME}" name="USERNAME" required>
+										<input type="text" class="form-control" value="{USERID}" name="USERID" required>
 									</div>
 								</div>
 								<div class="form-group">
@@ -183,13 +186,13 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Teléfono:</label>
+									<label class="col-sm-3 control-label">Teléfono de la compañía:</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" value="{COMPANYPHONE}" name="COMPANYPHONE" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Email:</label>
+									<label class="col-sm-3 control-label">Email de la compañía:</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" value="{COMPANYEMAIL}" name="COMPANYEMAIL" required>
 									</div>
@@ -212,31 +215,31 @@
 									</div>
 								</div>										
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Dirección Línea 1:</label>
+									<label class="col-sm-3 control-label">Dirección de la compañía línea 1:</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" value="{COMPANYADDRESS1}" name="COMPANYADDRESS1" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Dirección Línea 2:</label>
+									<label class="col-sm-3 control-label">Dirección de la compañía línea 2:</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" value="{COMPANYADDRESS2}" name="COMPANYADDRESS2" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Cuidad:</label>
+									<label class="col-sm-3 control-label">Cuidad de la compañía::</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" value="{CITY}" name="CITY" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Zip:</label>
+									<label class="col-sm-3 control-label">Código postal de la compañía::</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" value="{ZIP}" name="ZIP" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">País:</label>
+									<label class="col-sm-3 control-label">País de la compañía::</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" value="{COUNTRY}" name="COUNTRY" required>
 									</div>
@@ -297,64 +300,106 @@
 							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
 							<li class="active">Añadir proveedor</li>
 						</ol>
+											
 						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
-						
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Nombre de usuario: </label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="username" id="username" required>
-									<span id="check_user_status"></span>
-								</div>
-								<div class="col-sm-4">
-									<button type="button" class="btn btn-default" id="check_user">Verificar registro de usuario</button>
-								</div>
+							
+							<div class="form-group" >
+								<label class="col-sm-3 control-label">Añadir por:</label>
+									<div class="col-sm-4">
+										<select class="form-control" name="searchType" id="searchType">
+											<option value="userid" default>Número de miembro</option>
+											<option value="username">Nombre de usuario</option>
+										</select>
+									</div>
+									<br><br>
+									<div class="col-sm-3">
+									</div>
+									<div class="col-sm-4">
+									
+										<input type="text" class="form-control" name="user" id="user" required>
+										<span id="check_user_status"></span>
+									</div>
+									<div class="col-sm-3">
+										<button type="button" class="btn btn-default"  id="check_user">Verificar registro de usuario</button>
+									</div>
 							</div>
 							
 							
+														
 							<!-- JQuery script to process user availability -->
 							<script type="text/javascript">
 								$(document).ready(function() {
 									$("#check_user").click(function() {
-										var username = $("#username").val();
+										var username = $("#user").val();
+										var searchType = $("#searchType").val();
 										
-										if (username !== "")
+										if (searchType == "username")
 										{
-											$.ajax({
-												type: "POST",
-												url: "check_user.php",
-												data: "username="+username,
-												success: function(data){
-													if (data === "available")
-													{
-														$("#check_user_status").attr("class", "label label-warning");
-														$("#check_user_status").html("'"+username+"' no es un usuario registrado.");
+										
+											if (username !== "")
+											{
+												$.ajax({
+													type: "POST",
+													url: "check_user.php",
+													data: "username="+username,
+													success: function(data){
+														if (data === "available")
+														{
+															$("#check_user_status").attr("class", "label label-warning");
+															$("#check_user_status").html("'"+username+"' no es un usuario registrado.");
+														}
+														else
+														{
+															$("#check_user_status").attr("class", "label label-success");
+															$("#check_user_status").html("'"+username+"' es un usuario registrado.");
+														}
 													}
-													else
-													{
-														$("#check_user_status").attr("class", "label label-success");
-														$("#check_user_status").html("'"+username+"' es un usuario registrado.");
-													}
-												}
-											})
+												})
+											}
 										}
+										else if (searchType == "userid")
+										{
+										
+											if (username !== "")
+											{
+												$.ajax({
+													type: "POST",
+													url: "check_userid.php",
+													data: "username="+username,
+													success: function(data){
+														if (data === "available")
+														{
+															$("#check_user_status").attr("class", "label label-warning");
+															$("#check_user_status").html("'"+username+"' no es un usuario registrado.");
+														}
+														else
+														{
+															$("#check_user_status").attr("class", "label label-success");
+															$("#check_user_status").html("'"+username+"' es un usuario registrado.");
+														}
+													}
+												})
+											}
+										}
+										
 									});
 								});
 							</script>
-							
+													
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Nombre del proveedor: </label>
+								<label class="col-sm-3 control-label">Nombre de la compañía: </label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="companyName" required>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Teléfono: </label>
+								<label class="col-sm-3 control-label">Teléfono de la compañía: </label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="companyPhone" required>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Email: </label>
+								<label class="col-sm-3 control-label">Email de la compañía: </label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="companyEmail" required>
 								</div>
@@ -376,31 +421,31 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Dirección Línea 1:</label>
+								<label class="col-sm-3 control-label">Dirección de la compañía Línea 1:</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="companyAddress1">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Dirección Línea 2:</label>
+								<label class="col-sm-3 control-label">Dirección  de la compañía Línea 2:</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="companyAddress2">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Ciudad:</label>
+								<label class="col-sm-3 control-label">Ciudad de la compañía:</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="city">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Zip:</label>
+								<label class="col-sm-3 control-label">Zip de la compañía:</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="zip">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">País:</label>
+								<label class="col-sm-3 control-label">País de la compañía:</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" name="country">
 								</div>
@@ -445,17 +490,18 @@
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th># de proveedor</th>
 										<th>Nombre del proveedor</th>
+										<th># de la compañía</th>
+										<th>Nombre de la compañía</th>
 										<th>Área de cobertura</th>
-										<th>Número de teléfono</th>
-										<th>Email</th>
+										<th>Teléfono de la compañía</th>
+										<th>Email de la compañía</th>
 									</tr>
 								</thead>
 								<tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
-											  <td>{user_reg_list.ID}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
+											  <td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.ID}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
 										  </tr>
 										<!-- END user_reg_list -->
 								</tbody>
