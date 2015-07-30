@@ -108,12 +108,12 @@ class Provider extends User
 			return false;
 		}
 		$this->id				= $this->sanitize_input($account['ID']);
-		$this->username			= $this->sanitize_input($account['USERNAME']);
+		$this->userid			= $this->sanitize_input($account['USERID']);
 		$this->companyName		= $this->sanitize_input($account['COMPANYNAME']);
 		$this->area				= $this->sanitize_input($account['AREA']);
 		
 		
-		if ($this->user_available($this->username))
+		if ($this->userid_available($this->userid))
 		{
 			$this->set_error(self::UNREGISTERED_USER);
 			return false;
@@ -128,15 +128,15 @@ class Provider extends User
 		$this->country	= isset($account['COUNTRY']) 					? $this->sanitize_input($account['COUNTRY']) : "";
 		
 			
-		$stmnt = sprintf("UPDATE providers SET userid=(SELECT id FROM login WHERE USER='%s'),companyName='%s', companyPhone='%s', companyEmail='%s', area='%s', companyAddress1='%s', companyAddress2='%s',
+		$stmnt = sprintf("UPDATE providers SET userid=%d,companyName='%s', companyPhone='%s', companyEmail='%s', area='%s', companyAddress1='%s', companyAddress2='%s',
 			city='%s', zip='%s', country='%s' WHERE id=%d",
-			$this->username, $this->companyName, $this->companyPhone, $this->companyEmail, $this->area, $this->companyAddress1,
+			$this->userid, $this->companyName, $this->companyPhone, $this->companyEmail, $this->area, $this->companyAddress1,
 			$this->companyAddress2, $this->city, $this->zip, $this->country, $this->id);
 			
 		if (!$this->sql_conn->query($stmnt))
 			trigger_error('/admin/providers/index.php::modify_provider(): '.$this->sql_conn->error, E_USER_ERROR);
 	
-		if (!$this->update_role($this->username))
+		if (!$this->update_userid_role($this->userid))
 		{
 			$this->set_error(self::INCOMPLETE_TRANSACTION);
 			return false;
@@ -200,6 +200,28 @@ class Provider extends User
 
 	}
 	
+		public function check_userid_role($userid)
+	{
+		$userid = $this->sanitize_input($userid);
+		$confirm_role;
+		
+		$stmnt = sprintf("SELECT * FROM login WHERE role='provider' and id=%d", $userid);		
+		$result = $this->sql_conn->query($stmnt);
+
+		if ($result->num_rows > 0)
+		{
+			$confirm_role = true;
+		}
+		else 
+		{
+			$confirm_role = false; 
+		}	
+				
+		$result->close();
+		return $confirm_role;
+
+	}
+	
 	public function update_role($user)
 	{
 		$user = $this->sanitize_input($user);
@@ -215,6 +237,29 @@ class Provider extends User
 			$this->sql_conn->query($stmnt);
 		
 			if ($this->check_role($user) == true)
+				$confirm_role= true;
+			else
+				$confirm_role = false;
+		}
+
+		return $confirm_role;
+	}
+	
+		public function update_userid_role($userid)
+	{
+		$userid = $this->sanitize_input($userid);
+		$confirm_role;
+
+		if ($this->check_userid_role($userid) == true)
+		{
+			$confirm_role= true;
+		}
+		else 
+		{
+			$stmnt = sprintf("UPDATE login SET role='provider' WHERE id=%d", $userid);
+			$this->sql_conn->query($stmnt);
+		
+			if ($this->check_userid_role($userid) == true)
 				$confirm_role= true;
 			else
 				$confirm_role = false;
@@ -245,6 +290,29 @@ class Provider extends User
 		return $confirm_id;
 
 	}
+	
+		public function userid_available($userid)
+	{
+		$userid = $this->sanitize_input($userid);
+		$confirm_userid;
+		
+		$stmnt = sprintf("SELECT * FROM login WHERE id=%d", $userid);		
+		$result = $this->sql_conn->query($stmnt);
+
+		if ($result->num_rows > 0)
+		{
+			$confirm_id = false;
+		}
+		else 
+		{
+			$confirm_id = true; 
+		}	
+				
+		$result->close();
+		return $confirm_id;
+
+	}
+	
 	public function check_other_accounts($id)
 	{
 		$id = $this->sanitize_input($id);
