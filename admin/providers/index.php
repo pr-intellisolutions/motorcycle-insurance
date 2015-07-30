@@ -44,8 +44,9 @@ if ($user->auth() && $user->role == 'admin')
 	{
 		switch($_POST['searchType'])
 		{
+
 			case 'area':
-				$stmnt = sprintf("SELECT login.user, providers.companyName, providers.area, providers.companyPhone, providers.companyEmail, providers.id FROM providers, login WHERE login.id = providers.userid AND providers.area='%s' ORDER BY providers.companyName", $_POST['inputSearch']);
+				$stmnt = sprintf("SELECT p.companyName, p.area, p.companyPhone, p.companyEmail, p.id, CONCAT (pr.name, ' ', pr.last) as nameLast, pr.userid FROM providers p, profile pr WHERE p.userid = pr.userid AND p.area='%s' ORDER BY p.companyName", $_POST['inputSearch']);
 				$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
@@ -56,7 +57,7 @@ if ($user->auth() && $user->role == 'admin')
 					{
 					$index++;
 					$template->assign_block_vars('user_reg_list',
-					array('INDEX' => $index, 'AREA' => $row['area'], 'COMPANYNAME' => $row['companyName'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail'], 'USER' => $row ['user'],  'ID' => $row ['id']));
+					array('INDEX' => $index, 'AREA' => $row['area'], 'COMPANYNAME' => $row['companyName'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail'],  'ID' => $row ['id'], 'NAMELAST' => $row ['nameLast'], 'USERID' => $row ['userid']));
 					}
 				}
 				else
@@ -66,7 +67,7 @@ if ($user->auth() && $user->role == 'admin')
 				$result->close();
 			break;
 			case 'companyName':
-				$stmnt = sprintf("SELECT login.user, providers.companyName, providers.area, providers.companyPhone, providers.companyEmail, providers.id FROM providers, login WHERE login.id = providers.userid AND providers.companyName = '%s' ORDER BY providers.area", $_POST['inputSearch']);
+				$stmnt = sprintf("SELECT p.companyName, p.area, p.companyPhone, p.companyEmail, p.id, CONCAT (pr.name, ' ', pr.last) as nameLast, pr.userid FROM providers p, profile pr WHERE p.userid = pr.userid AND p.companyName REGEXP '%s' ORDER BY p.area", $_POST['inputSearch']);
 				$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
@@ -77,8 +78,49 @@ if ($user->auth() && $user->role == 'admin')
 					{
 					$index++;
 					$template->assign_block_vars('user_reg_list',
-					array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail'], 'USER' => $row ['user'],  'ID' => $row ['id']));
+					array('INDEX' => $index, 'AREA' => $row['area'], 'COMPANYNAME' => $row['companyName'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail'],  'ID' => $row ['id'], 'NAMELAST' => $row ['nameLast'], 'USERID' => $row ['userid']));					
 					}
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 1, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();
+			break;
+			case 'nameLast':
+				$stmnt = sprintf("SELECT p.companyName, p.area, p.companyPhone, p.companyEmail, p.id, CONCAT (pr.name, ' ', pr.last) as nameLast, pr.userid FROM providers p, profile pr WHERE p.userid = pr.userid AND CONCAT(pr.name, ' ', pr.last) REGEXP '%s'", $_POST['inputSearch']);
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 1, 'USERNAME_FOUND' => 1));
+					$index = 0;
+					while ($row = $result->fetch_assoc())
+					{
+					$index++;
+					$template->assign_block_vars('user_reg_list',
+					array('INDEX' => $index, 'AREA' => $row['area'], 'COMPANYNAME' => $row['companyName'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail'],  'ID' => $row ['id'], 'NAMELAST' => $row ['nameLast'], 'USERID' => $row ['userid']));					
+					}
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 1, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();
+			break;
+			case 'userid':
+				$stmnt = sprintf("SELECT p.companyName, p.area, p.companyPhone, p.companyEmail, p.id, CONCAT (pr.name, ' ', pr.last) as nameLast, pr.userid FROM providers p, profile pr WHERE p.userid = pr.userid AND p.userid=%d ORDER BY p.companyName", $_POST['inputSearch']);
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 1, 'USERNAME_FOUND' => 1));
+					$index = 0;
+					while ($row = $result->fetch_assoc())
+					{
+					$index++;
+					$template->assign_block_vars('user_reg_list',
+					array('INDEX' => $index, 'AREA' => $row['area'], 'COMPANYNAME' => $row['companyName'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail'],  'ID' => $row ['id'], 'NAMELAST' => $row ['nameLast'], 'USERID' => $row ['userid']));					}
 				}
 				else
 				{
@@ -95,15 +137,15 @@ if ($user->auth() && $user->role == 'admin')
 	else if (isset($_POST['action']) && $_POST['action'] == 'show_modify_provider')
 	{
 			
-			$stmnt = sprintf("SELECT * FROM providers, login WHERE providers.userid=login.id and providers.id = '%d'", $_POST['inputSearch']);
+			$stmnt = sprintf("SELECT * FROM providers WHERE id = '%d'", $_POST['inputSearch']);
 			$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
 				{
 					$row = $result->fetch_assoc();
 					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
-						'ID' => $_POST['inputSearch'],
-						'USERNAME' => $row['user'],
+						'ID' => $row['id'],
+						'USERID' => $row['userid'],
 						'COMPANYNAME' => $row['companyName'],
 						'COMPANYPHONE' => $row['companyPhone'],
 						'COMPANYEMAIL' => $row['companyEmail'],
@@ -153,10 +195,10 @@ if ($user->auth() && $user->role == 'admin')
 	}
 	
 	
-	// DISPLAY PROVIDER 
+	// DISPLAY PROVIDER BEFORE DELETE
 	else if (isset($_POST['action']) && $_POST['action'] === 'show_delete_provider')
 	{	
-			$stmnt = sprintf("SELECT * FROM providers WHERE id = '%d'", $_POST['inputSearch']);
+			$stmnt = sprintf("SELECT p.id, p.companyName, p.area, p.companyPhone, p.companyEmail, CONCAT(pr.name, ' ', pr.last) as nameLast FROM providers p, profile pr WHERE p.userid=pr.userid AND p.id = '%d'", $_POST['inputSearch']);
 			$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
@@ -165,7 +207,7 @@ if ($user->auth() && $user->role == 'admin')
 					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 1, 'ID' => $row['id']));
 					
 					$template->assign_block_vars('user_reg_list',
-					array('ID' => $row['id'], 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+					array('ID' => $row['id'], 'COMPANYNAME' => $row['companyName'], 'NAMELAST' => $row['nameLast'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
 				}
 				else
 				{
@@ -196,8 +238,8 @@ if ($user->auth() && $user->role == 'admin')
 	{
 			switch($_POST['searchType'])
 		{
-			case 'companyName':
-				$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY companyName ASC, area ASC");
+			case 'nameLast':
+		$stmnt = sprintf("SELECT  p.area, p.companyPhone, p.city, p.companyEmail, CONCAT (pr.name, ' ', pr.Last) as nameLast FROM providers p, profile pr WHERE p.userid=pr.userid ORDER BY area ASC, nameLast ASC;");
 				$result = $user->sql_conn->query($stmnt);
 				if ($result->num_rows > 0)
 				{
@@ -207,7 +249,7 @@ if ($user->auth() && $user->role == 'admin')
 					{
 						$index++;
 						$template->assign_block_vars('user_reg_list',
-						array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+						array('INDEX' => $index, 'NAMELAST' => $row['nameLast'], 'AREA' => $row['area'], 'CITY' =>  $row ['city'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
 					}
 				}
 				else 
@@ -217,7 +259,7 @@ if ($user->auth() && $user->role == 'admin')
 				$result->close();
 				break;	
 			case 'area': 	
-				$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY area ASC, companyName ASC");
+						$stmnt = sprintf("SELECT  p.area, p.companyPhone, p.city, p.companyEmail, CONCAT (pr.name, ' ', pr.Last) as nameLast FROM providers p, profile pr WHERE p.userid=pr.userid ORDER BY area;");
 				$result = $user->sql_conn->query($stmnt);
 				if ($result->num_rows > 0)
 				{
@@ -227,7 +269,7 @@ if ($user->auth() && $user->role == 'admin')
 					{
 						$index++;
 						$template->assign_block_vars('user_reg_list',
-						array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+						array('INDEX' => $index, 'NAMELAST' => $row['nameLast'], 'AREA' => $row['area'], 'CITY' =>  $row ['city'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
 					}
 				}
 				else 
@@ -245,7 +287,7 @@ if ($user->auth() && $user->role == 'admin')
 	else 
 	{
 		$template->assign_vars(array('SIDE_CONTENT' => 'home', 'USERNAME_FOUND' => 0));
-		$stmnt = sprintf("SELECT companyName, area, companyPhone, companyEmail FROM providers ORDER BY area ASC, companyName ASC");
+		$stmnt = sprintf("SELECT  p.area, p.companyPhone, p.city, p.companyEmail, CONCAT (pr.name, ' ', pr.Last) as nameLast FROM providers p, profile pr WHERE p.userid=pr.userid ORDER BY p.area ASC;");
 		$result = $user->sql_conn->query($stmnt);
 			if ($result->num_rows > 0)
 				{
@@ -254,7 +296,7 @@ if ($user->auth() && $user->role == 'admin')
 					{
 						$index++;
 						$template->assign_block_vars('user_reg_list',
-						array('INDEX' => $index, 'COMPANYNAME' => $row['companyName'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+						array('INDEX' => $index, 'NAMELAST' => $row['nameLast'], 'AREA' => $row['area'], 'CITY' => $row ['city'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
 					}
 				}
 				else 
