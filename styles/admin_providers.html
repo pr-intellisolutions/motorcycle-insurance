@@ -258,18 +258,22 @@
 							</div>
 							<script type="text/JavaScript">
 								setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=2';",1500);
-							</script>
+							</script>			
 						<!-- ELSE -->
 							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label for="selectSearch">Inserte número de compañía </label>
+									<label for="selectSearch">Buscar por: </label>
+									<select class="form-control" name="searchType" id="plan_type">
+									
+									<option value="userid">Número de usuario</option>
+									<option value="username">Nombre de usuario</option>
+									</select>
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" name="inputSearch" required>
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="show_modify_provider">Mostrar</button>
 							</form>
-						
 								
 						<!-- ENDIF -->
 						
@@ -528,13 +532,19 @@
 							<!-- ELSE -->
 							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label for="selectSearch">Inserte número de compañía </label>
+									<label for="selectSearch">Buscar por: </label>
+									<select class="form-control" name="searchType" id="plan_type">
+									
+									<option value="userid">Número de usuario</option>
+									<option value="username">Nombre de usuario</option>
+									</select>
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" name="inputSearch" required>
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="show_delete_provider">Mostrar</button>
 							</form>
+		
 		
 							<!-- ENDIF -->	
 							
@@ -557,10 +567,9 @@
 						<script type="text/JavaScript">
 							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=4';",1700);
 						</script>
-		
-		
-						<!-- ENDIF -->			
-					
+	
+						<!-- ENDIF -->	
+						
 				</div>
 			</div>
 		<!-- INCLUDE admin_footer.html -->

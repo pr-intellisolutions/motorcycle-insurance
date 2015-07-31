@@ -137,8 +137,12 @@ if ($user->auth() && $user->role == 'admin')
 	else if (isset($_POST['action']) && $_POST['action'] == 'show_modify_provider')
 	{
 			
-			$stmnt = sprintf("SELECT * FROM providers WHERE id = '%d'", $_POST['inputSearch']);
-			$result = $user->sql_conn->query($stmnt);
+		switch($_POST['searchType'])
+		{
+
+			case 'userid':
+				$stmnt = sprintf("SELECT * FROM providers WHERE userid = %d", $_POST['inputSearch']);				
+				$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
 				{
@@ -161,6 +165,36 @@ if ($user->auth() && $user->role == 'admin')
 					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
 				}					
 				$result->close();
+			break;
+			case 'username':
+				$stmnt = sprintf("SELECT p.id, p.userid, p.companyName, p.companyPhone, p.companyEmail, p.area, p.companyAddress1, p.companyAddress2, p.zip, p.city, p.country FROM providers p, login l WHERE p.userid=l.id AND l.user = '%s'", $_POST['inputSearch']);				
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$row = $result->fetch_assoc();
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+						'ID' => $row['id'],
+						'USERID' => $row['userid'],
+						'COMPANYNAME' => $row['companyName'],
+						'COMPANYPHONE' => $row['companyPhone'],
+						'COMPANYEMAIL' => $row['companyEmail'],
+						'AREA' => $row['area'],
+						'COMPANYADDRESS1' => $row['companyAddress1'],
+						'COMPANYADDRESS2' => $row['companyAddress2'],
+						'CITY' => $row['city'],
+						'ZIP' => $row['zip'],
+						'COUNTRY' => $row['country']));
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();
+			break;
+			default:
+			break;
+		}
 		
 	}
 	
@@ -173,8 +207,7 @@ if ($user->auth() && $user->role == 'admin')
 			$template->assign_var('SIDE_CONTENT', 'modify_account_successful');
 		else
 		{
-			$template->assign_vars(array('SIDE_CONTENT' => 'modify_account_failed',
-				'ERROR_MESSAGE' => $provider->error));
+			$template->assign_vars(array('SIDE_CONTENT' => 'modify_account_failed', 'ERROR_MESSAGE' => $provider->error));
 		}
 		
 	}
@@ -183,13 +216,23 @@ if ($user->auth() && $user->role == 'admin')
 	else if (isset($_POST['action']) && $_POST['action'] === 'add_provider')
 	{	
 		$provider = new Provider;
-	
-		if ($provider->add_provider($_POST))
-			$template->assign_var('SIDE_CONTENT', 'create_account_successful');
-		else
+		
+		switch($_POST['searchType'])
 		{
-			$template->assign_vars(array('SIDE_CONTENT' => 'create_account_failed',
-				'ERROR_MESSAGE' => $provider->error));
+			case 'username':
+				if ($provider->add_provider_username($_POST))
+					$template->assign_var('SIDE_CONTENT', 'create_account_successful');
+				else
+					$template->assign_vars(array('SIDE_CONTENT' => 'create_account_failed','ERROR_MESSAGE' => $provider->error));
+			break;
+			case 'userid':
+				if ($provider->add_provider_userid($_POST))
+					$template->assign_var('SIDE_CONTENT', 'create_account_successful');
+				else
+					$template->assign_vars(array('SIDE_CONTENT' => 'create_account_failed','ERROR_MESSAGE' => $provider->error));
+			break;		
+			default:
+			break;
 		}
 		
 	}
@@ -197,9 +240,12 @@ if ($user->auth() && $user->role == 'admin')
 	
 	// DISPLAY PROVIDER BEFORE DELETE
 	else if (isset($_POST['action']) && $_POST['action'] === 'show_delete_provider')
-	{	
-			$stmnt = sprintf("SELECT p.id, p.companyName, p.area, p.companyPhone, p.companyEmail, CONCAT(pr.name, ' ', pr.last) as nameLast FROM providers p, profile pr WHERE p.userid=pr.userid AND p.id = '%d'", $_POST['inputSearch']);
-			$result = $user->sql_conn->query($stmnt);
+	{		
+		switch($_POST['searchType'])
+		{
+			case 'userid':
+				$stmnt = sprintf("SELECT p.id, p.companyName, p.area, p.companyPhone, p.companyEmail, CONCAT(pr.name, ' ', pr.last) as nameLast FROM providers p, profile pr WHERE p.userid=pr.userid AND p.userid ='%d'", $_POST['inputSearch']);
+				$result = $user->sql_conn->query($stmnt);
 				
 				if ($result->num_rows > 0)
 				{
@@ -214,6 +260,28 @@ if ($user->auth() && $user->role == 'admin')
 					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 2));
 				}					
 				$result->close();
+			break;
+			case 'username':
+				$stmnt = sprintf("SELECT p.id, p.companyName, p.area, p.companyPhone, p.companyEmail, CONCAT(pr.name, ' ', pr.last) as nameLast FROM providers p, profile pr, login l WHERE p.userid=pr.userid AND p.userid=l.id AND l.user = '%s'", $_POST['inputSearch']);
+				$result = $user->sql_conn->query($stmnt);
+				
+				if ($result->num_rows > 0)
+				{
+					$row = $result->fetch_assoc();
+					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 1, 'ID' => $row['id']));
+					
+					$template->assign_block_vars('user_reg_list',
+					array('ID' => $row['id'], 'COMPANYNAME' => $row['companyName'], 'NAMELAST' => $row['nameLast'], 'AREA' => $row['area'], 'COMPANYPHONE' => $row['companyPhone'], 'COMPANYEMAIL' => $row['companyEmail']));
+				}
+				else
+				{
+					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 2));
+				}					
+				$result->close();
+			break;
+			default:
+			break;
+		}		
 	}
 	
 	// PROVIDER DELETE PROCESS 
