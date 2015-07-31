@@ -171,6 +171,7 @@ CREATE TABLE IF NOT EXISTS `providers` (
   `zip` varchar(18) NOT NULL,
   `country` varchar(64) NOT NULL, 
   PRIMARY KEY (`id`), 
+  KEY (`userid`), 
   CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
