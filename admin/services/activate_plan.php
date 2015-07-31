@@ -14,7 +14,13 @@ if ($plan_name === "")
 $plan = new Plan;
 
 if ($plan->activate_plan($plan_name, true))
+{
 	echo "success";
+	die();
+}
 else
+{
 	echo $plan->error;
+	die();
+}
 ?>

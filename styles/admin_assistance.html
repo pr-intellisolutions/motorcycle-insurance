@@ -26,7 +26,7 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td><a href="#" data-toggle="modal" data-target="#">Ordenes abiertas</td>
+									<td><a href="#" data-toggle="modal" data-target="#">Ordenes corrientes</td>
 									<td>{ACTIVE_ORDERS}0</td>
 								</tr>
 								<tr>
@@ -42,25 +42,29 @@
 							<li class="active">Crear orden de servicio</li>
 						</ol>
 						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
-							<p class="text-info">Información del usuario</p>
-							<div class="form-group">
-								<div class="col-sm-3">
-									<select class="form-control">
-											<option default>Nombre de usuario</option>
-											<option>Número de socio</option>
-									</select>
-								</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control">
-								</div>
-								<div class="col-sm-3">
-										<button type="button" class="btn btn-default">Verificar</button>
+							<p class="text-info" id="user_info_status">Información del usuario</p>
+							<div id="hide_this">
+								<div class="form-group">
+									<div class="col-sm-3">
+										<select class="form-control" id="search_type">
+												<option default value="username">Nombre de usuario</option>
+												<option value="member_id">Número de miembro</option>
+										</select>
+									</div>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="search_input">
+									</div>
+									<div class="col-sm-3">
+											<button type="button" class="btn btn-default" id="verify_user">
+												<span id="verify_spinner"></span> Verificar
+											</button>
+									</div>
 								</div>
 							</div>
 							<hr>
 							<p class="text-info">Información del incidente</p>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Descripción del incidente</label>
+								<label class="col-sm-3 control-label">Descripción del incidente:</label>
 								<div class="col-sm-4">
 									<textarea class="form-control" rows="3"></textarea>
 								</div>
@@ -114,8 +118,8 @@
 							<hr>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-4">
-									<button type="button" class="btn btn-default">Cancelar</button>
-									<button type="button" class="btn btn-primary">Generar orden</button>
+									<button type="button" class="btn btn-default" id="cancel">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="create_order">Crear orden</button>
 								</div>
 							</div>
 						</form>
@@ -126,6 +130,57 @@
 							<li class="active">Ver reportes de servicio</li>
 						</ol>
 					<!-- ENDIF -->
+					<!-- Status modal -->
+					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel"></h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<script>
+						$(document).ready(function() {
+							$("#verify_user").click(function(){
+								$("#verify_spinner").addClass("glyphicon glyphicon-refresh glyphicon-spin");
+								$.ajax({
+									type: "POST",
+									url: "verify_user.php",
+									data: {'search_type': $('#search_type').val(),
+										   'search_input': $('#search_input').val() },
+									dataType: 'json',
+									success: function(data){									
+										if (data.status === "success")
+										{
+											$("#user_info_status").html("Generando orden para "+data.name);
+											$("#hide_this").hide();
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data.error);
+										}
+										$("#verify_spinner").removeClass("glyphicon glyphicon-refresh glyphicon-spin");
+									}
+								});
+							});
+							$("#create_order").click(function(){
+								alert("test");
+							});
+							$('#cancel').click(function()
+							{
+								window.location.href = 'index.php';
+							});
+						});
+					</script>
 				</div>
 			</div>
 		<!-- INCLUDE admin_footer.html -->

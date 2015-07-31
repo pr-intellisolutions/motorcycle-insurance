@@ -8,7 +8,14 @@ $name = isset($_POST['name']) ? $_POST['name'] : "";
 $plan = new Plan;
 
 if ($plan->delete_plan($name))
+{
 	echo "success";
+	die();
+}
 else
+{
 	echo $plan->error;
+	die();
+}
+
 ?>
