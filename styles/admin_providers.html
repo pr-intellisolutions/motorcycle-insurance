@@ -62,13 +62,29 @@
 								</tbody>
 							</table>
 							<!-- ELSEIF USERNAME_FOUND == 2 -->
-							<div class="alert alert-danger" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								No existen proveedores.
-							</div>
-							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/providers/index.php';",1500);
-							</script>
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+								<div class="form-group" >
+									<label class="control-label">Ordenar por:</label>
+									<select class="form-control" name="searchType">
+										<option value="area" default>Área de cobertura</option>
+										<option value="nameLast">Nombre del proveedor</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
+							</form>
+						
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre del proveedor</th>
+										<th>Área de cobertura</th>
+										<th>Pueblo</th>
+										<th>Teléfono de la compañía</th>
+										<th>Email de la compañía</th>
+									</tr>
+								</thead>
+							</table>
 						
 							<!-- ELSE -->
 							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
