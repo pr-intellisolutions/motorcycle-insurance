@@ -255,7 +255,7 @@ class User extends Session
 			trigger_error('Profile::create_account(): '.$this->sql_conn->error, E_USER_ERROR);
 
 		// Populate profile table with user info
-		$stmt = sprintf("INSERT INTO profile(userid, name, middle, last, maiden, phone, address1, address2, city, state, zip, country)
+		$stmt = sprintf("INSERT INTO profile(userid, first, middle, last, maiden, phone, address1, address2, city, state, zip, country)
 			VALUES (%d,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')",
 			$this->user_id, $this->first, $this->middle, $this->last, $this->maiden, $this->phone, $this->address1, $this->address2,
 			$this->city, $this->state, $this->zip, $this->country);
@@ -323,5 +323,46 @@ class User extends Session
 		$result->close();
 
 		return true;
+	}
+	public function get_user_id($username)
+	{
+		$user_id = -1;
+		$username = $this->sanitize_input($username);
+
+		$stmt = sprintf("SELECT id FROM login WHERE user = '%s'", $username);
+		
+		$result = $this->sql_conn->query($stmt);
+	
+		if ($result->num_rows > 0)
+		{
+			$row = $result->fetch_assoc();
+			$user_id = $row['id'];
+		}
+		else
+		{
+			$this->set_error(self::UNREGISTERED_USER);
+		}
+		$result->close();
+	
+		return $user_id;
+	}
+	public function user_verify($username)
+	{
+		$username = $this->sanitize_input($username);
+		$verify = false;
+
+		$stmt = sprintf("SELECT user FROM login WHERE user = '%s'", $username);
+		
+		$result = $this->sql_conn->query($stmt);
+	
+		if ($result->num_rows > 0)
+			$verify = true;
+		else
+			$this->set_error(self::UNREGISTERED_USER);
+
+		$result->close();
+
+		return $verify;
+
 	}
 }

@@ -355,7 +355,7 @@ if ($user->auth() && $user->role == 'admin')
 	else 
 	{
 		$template->assign_vars(array('SIDE_CONTENT' => 'home', 'USERNAME_FOUND' => 0));
-		$stmnt = sprintf("SELECT  p.area, p.companyPhone, p.city, p.companyEmail, CONCAT (pr.name, ' ', pr.Last) as nameLast FROM providers p, profile pr WHERE p.userid=pr.userid ORDER BY p.area ASC;");
+		$stmnt = sprintf("SELECT  p.area, p.companyPhone, p.city, p.companyEmail, CONCAT (pr.first, ' ', pr.Last) as nameLast FROM providers p, profile pr WHERE p.userid=pr.userid ORDER BY p.area ASC;");
 		$result = $user->sql_conn->query($stmnt);
 			if ($result->num_rows > 0)
 				{

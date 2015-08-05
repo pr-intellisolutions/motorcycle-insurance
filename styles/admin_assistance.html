@@ -55,9 +55,7 @@
 										<input type="text" class="form-control" id="search_input">
 									</div>
 									<div class="col-sm-3">
-											<button type="button" class="btn btn-default" id="verify_user">
-												<span id="verify_spinner"></span> Verificar
-											</button>
+											<button type="button" class="btn btn-default" id="verify_user">Verificar</button>
 									</div>
 								</div>
 							</div>
@@ -98,7 +96,11 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Proveedor asignado:</label>
 								<div class="col-sm-3">
-									<input type="text" class="form-control">
+									<select class="form-control">
+									<!-- BEGIN providers_list -->
+										<option value={providers_list.PROVIDER_ID}>{providers_list.PROVIDER_NAME}</option>
+									<!-- END -->
+									</select>
 								</div>
 								<div class="col-sm-3">
 										<button type="button" class="btn btn-default">Asignar</button>
@@ -149,18 +151,17 @@
 					<script>
 						$(document).ready(function() {
 							$("#verify_user").click(function(){
-								$("#verify_spinner").addClass("glyphicon glyphicon-refresh glyphicon-spin");
 								$.ajax({
 									type: "POST",
 									url: "verify_user.php",
 									data: {'search_type': $('#search_type').val(),
 										   'search_input': $('#search_input').val() },
 									dataType: 'json',
-									success: function(data){									
+									success: function(data) {
 										if (data.status === "success")
 										{
-											$("#user_info_status").html("Generando orden para "+data.name);
-											$("#hide_this").hide();
+											$("#user_info_status").html("Generando orden para " + data.name);
+											//$("#hide_this").hide();
 										}
 										else
 										{
@@ -168,7 +169,6 @@
 											$("#ModalLabel").html('<strong>Error</strong>');
 											$("#ModalBody").html(data.error);
 										}
-										$("#verify_spinner").removeClass("glyphicon glyphicon-refresh glyphicon-spin");
 									}
 								});
 							});
