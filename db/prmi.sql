@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 31, 2015 at 02:00 PM
+-- Generation Time: Aug 09, 2015 at 04:35 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -56,15 +56,16 @@ CREATE TABLE IF NOT EXISTS `config` (
   `pass_maxlen` int(11) NOT NULL,
   `pass_complexity` enum('simple','normal','strong','') NOT NULL,
   `pass_expiration` int(11) NOT NULL,
-  `max_login_attempts` int(11) NOT NULL
+  `max_login_attempts` int(11) NOT NULL,
+  `activation_req` tinyint(1) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `config`
 --
 
-INSERT INTO `config` (`id`, `site_name`, `site_desc`, `site_host`, `site_module`, `user_minlen`, `user_maxlen`, `user_complexity`, `pass_minlen`, `pass_maxlen`, `pass_complexity`, `pass_expiration`, `max_login_attempts`) VALUES
-(1, 'Puerto Rico Motorcycle Road Assistance Services', '', 'localhost', '/motorcycle-insurance/', 4, 24, 'alphanumeric with spacers', 4, 32, 'normal', 60, 4);
+INSERT INTO `config` (`id`, `site_name`, `site_desc`, `site_host`, `site_module`, `user_minlen`, `user_maxlen`, `user_complexity`, `pass_minlen`, `pass_maxlen`, `pass_complexity`, `pass_expiration`, `max_login_attempts`, `activation_req`) VALUES
+(1, 'Puerto Rico Motorcycle Road Assistance Services', '', 'localhost', '/motorcycle-insurance/', 5, 24, 'alphanumeric with spacers', 4, 32, 'normal', 60, 4, 0);
 
 -- --------------------------------------------------------
 
@@ -99,11 +100,10 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisit`, `lastip`, `lastbrowser`, `ip`, `browser`, `session`, `expired`, `disabled`, `active`, `passchg`, `passdate`, `login_attempts`, `permissions`) VALUES
-(12854, 'admin', '$2y$11$putu03YGlI8t6eahu68ZOuKU1vHt./wSn7OGmlJ4VmlpVfKYQGxuG', 'q', 'admin', '2015-02-02 23:37:12', '2015-07-30 22:09:40', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'ujnlikml4me5ugbfd42tj6d3r5', 0, 0, 1, 0, '2015-10-15 23:37:12', 0, 'all'),
-(37749, 'dborrero', '$2y$11$8XD0LqIHCZ6Hh0LsQuNPbupbQQelaC91iS2FTqy9mnc6vK85F/AJa', 'g', 'admin', '2015-07-06 20:00:07', '2015-07-10 23:46:54', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-09-04 20:00:07', 0, ''),
-(39460, 'test', '$2y$11$1oHfDr/pPsLnupcmSBjCjui7g9WL537ssYcufpek1JeuXJJFv5q5q', 'test', 'user', '2015-07-28 21:47:59', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', 'qgjacv0ldngaqq3olnk0fcnh26', 0, 0, 1, 0, '2015-09-26 21:47:59', 0, 'none'),
-(41873, 'dennis', '$2y$11$eR9EV3NbYR.qnG.dRWt0eOTXgawEOQnUfnsLrz8b9T3if0jaWNSde', 'q', 'user', '2015-02-02 23:37:44', '2015-06-28 20:57:33', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'e4f9hdv38l4abe5altmqj0vdg5', 0, 0, 1, 0, '2015-07-23 00:10:30', 4, ''),
-(43054, 'provider', '$2y$11$7Bta0ZCDr/7fy1B.fftbC.8HM9hIclpVVjFYDtykT.PNIwmPfvl9q', 'provider', 'provider', '2015-07-10 20:49:43', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qsur6rbqkvqfd86tdsc6nmaoh5', 0, 0, 1, 0, '2015-09-08 20:49:43', 0, '');
+(4157, '', '$2y$11$VpfY7vUX1hOJU2LukJkocun5qFJ4CYb2CKi7Qrv8/FQAk5p15xPDC', '', 'user', '2015-08-08 11:35:48', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', 0, 0, 1, 0, '2015-10-07 11:35:48', 0, 'none'),
+(12854, 'admin', '$2y$11$4CnuTprD.hJvi2Eg2riMTefQSHfO5EPFjQyDySOd4DxCmiIPPBNfO', 'dennis.borrerotorres@gmai..com', 'admin', '2015-02-02 23:37:12', '2015-08-09 10:32:11', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'sb2inmmsovm73abu61t94nvqh2', 0, 0, 1, 0, '2015-10-08 15:53:54', 0, 'all'),
+(48752, 'dborrero', '$2y$11$7NI64MwCZf6doF4H/qAiJO9gN6kIHZaRx5hC4fgTfLmHBVEvbumi2', 'my@email.com', 'admin', '2015-08-08 09:37:50', '2015-08-08 13:12:50', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', 0, 0, 1, 0, '2015-10-07 19:14:23', 0, 'all'),
+(50807, 'provider', '$2y$11$8Bp/psg/cyA25Chr87pkju.VPWwYzzMcryNqwHrLAu5TUdj/UAKdu', 'provider', 'provider', '2015-08-08 18:00:45', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', 0, 0, 1, 0, '2015-10-07 18:00:45', 0, 'none');
 
 -- --------------------------------------------------------
 
@@ -126,16 +126,15 @@ CREATE TABLE IF NOT EXISTS `plans` (
   `active` tinyint(1) NOT NULL,
   `date_entered` datetime NOT NULL,
   `last_modify` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `plans`
 --
 
 INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `num_miles`, `num_vehicles`, `plan_price`, `mile_price`, `extend_price`, `term`, `active`, `date_entered`, `last_modify`) VALUES
-(14, 'basico', 'Membres&iacute;a B&aacute;sica', 'Incluye 4 ocurrencias en adici&oacute;n 50 millas de remolque', 4, 50, 2, 60, 3, 30, 12, 1, '2015-07-28 21:37:01', '0000-00-00 00:00:00'),
-(15, 'extendido', 'Membres&iacute;a Extendida', 'Incluye 4 ocurrencias en adici&oacute;n 100 millas de remolque', 4, 100, 2, 90, 3, 30, 12, 1, '2015-07-28 21:45:00', '2015-07-28 21:45:33'),
-(16, 'test', '', '', 0, 0, 0, 0, 0, 0, 0, 1, '2015-07-30 22:39:34', '0000-00-00 00:00:00');
+(14, 'basico', 'Membres&iacute;a B&aacute;sica', 'Incluye 4 ocurrencias en adici&oacute;n 50 millas de remolque', 4, 50, 2, 60, 3, 30, 12, 1, '2015-07-28 21:37:01', '2015-08-05 09:26:06'),
+(15, 'extendido', 'Membres&iacute;a Extendida', 'Incluye 4 ocurrencias en adici&oacute;n 100 millas de remolque', 4, 100, 2, 90, 3, 30, 12, 1, '2015-07-28 21:45:00', '2015-07-28 21:45:33');
 
 -- --------------------------------------------------------
 
@@ -146,7 +145,7 @@ INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `n
 CREATE TABLE IF NOT EXISTS `profile` (
 `id` int(11) unsigned NOT NULL,
   `userid` int(11) unsigned NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `first` varchar(32) NOT NULL,
   `middle` varchar(32) NOT NULL,
   `last` varchar(32) NOT NULL,
   `maiden` varchar(32) NOT NULL,
@@ -157,15 +156,17 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `state` varchar(64) NOT NULL,
   `zip` varchar(18) NOT NULL,
   `country` varchar(64) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1012 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1031 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `profile`
 --
 
-INSERT INTO `profile` (`id`, `userid`, `name`, `middle`, `last`, `maiden`, `phone`, `address1`, `address2`, `city`, `state`, `zip`, `country`) VALUES
-(1010, 37749, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', '6109 Calle San Claudio', '', 'Ponce', 'PR', '00730', 'Puerto Rico'),
-(1011, 39460, 'test', 'test', 'test', '', '', '', '', '', '', '', '');
+INSERT INTO `profile` (`id`, `userid`, `first`, `middle`, `last`, `maiden`, `phone`, `address1`, `address2`, `city`, `state`, `zip`, `country`) VALUES
+(1016, 12854, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', '6109 Calle San Claudio', '', 'Ponce', 'PR', '00731', 'Puerto Rico'),
+(1020, 48752, 'Dennis', 'J', 'Borrero', 'Torres', '', '', '', '', '', '', ''),
+(1021, 4157, '', '', '', '', '', '', '', '', '', '', ''),
+(1030, 50807, 'Rubeli', '', 'Ortiz', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -176,6 +177,7 @@ INSERT INTO `profile` (`id`, `userid`, `name`, `middle`, `last`, `maiden`, `phon
 CREATE TABLE IF NOT EXISTS `providers` (
 `id` int(11) unsigned NOT NULL,
   `userid` int(11) unsigned NOT NULL,
+  `profile_id` int(11) unsigned NOT NULL,
   `companyName` varchar(64) NOT NULL,
   `companyPhone` varchar(18) NOT NULL,
   `companyEmail` varchar(128) NOT NULL,
@@ -185,14 +187,14 @@ CREATE TABLE IF NOT EXISTS `providers` (
   `city` varchar(64) NOT NULL,
   `zip` varchar(18) NOT NULL,
   `country` varchar(64) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `providers`
 --
 
-INSERT INTO `providers` (`id`, `userid`, `companyName`, `companyPhone`, `companyEmail`, `area`, `companyAddress1`, `companyAddress2`, `city`, `zip`, `country`) VALUES
-(1, 43054, 'La compania', '888-8888', 'lacompania@email.com', 'sur', '123', 'probando', 'san juan', '000911', 'PR');
+INSERT INTO `providers` (`id`, `userid`, `profile_id`, `companyName`, `companyPhone`, `companyEmail`, `area`, `companyAddress1`, `companyAddress2`, `city`, `zip`, `country`) VALUES
+(11, 50807, 1030, 'Transporte Rubeli Ortiz', '787 698 4545', 'rubeli.ortiz@gmail.com', 'norte', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -204,18 +206,11 @@ CREATE TABLE IF NOT EXISTS `services` (
 `id` int(11) unsigned NOT NULL,
   `userid` int(11) unsigned NOT NULL,
   `plan_id` int(11) unsigned NOT NULL,
+  `vehicle_id` int(11) unsigned NOT NULL,
   `occurrence_counter` int(11) NOT NULL,
   `miles_counter` int(11) NOT NULL,
-  `vehicles_counter` int(11) NOT NULL,
   `renewal` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `services`
---
-
-INSERT INTO `services` (`id`, `userid`, `plan_id`, `occurrence_counter`, `miles_counter`, `vehicles_counter`, `renewal`) VALUES
-(1, 39460, 14, 0, 0, 0, 0);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -254,7 +249,7 @@ ALTER TABLE `config`
 -- Indexes for table `login`
 --
 ALTER TABLE `login`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `user` (`user`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `user` (`user`), ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indexes for table `plans`
@@ -272,13 +267,13 @@ ALTER TABLE `profile`
 -- Indexes for table `providers`
 --
 ALTER TABLE `providers`
- ADD PRIMARY KEY (`id`), ADD KEY `providers_ibfk_1` (`userid`), ADD KEY `userid` (`userid`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `profile_id` (`profile_id`), ADD UNIQUE KEY `userid` (`userid`);
 
 --
 -- Indexes for table `services`
 --
 ALTER TABLE `services`
- ADD PRIMARY KEY (`id`), ADD KEY `userid` (`userid`), ADD KEY `plan_id` (`plan_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `userid` (`userid`), ADD KEY `plan_id` (`plan_id`), ADD KEY `vehicle_id` (`vehicle_id`);
 
 --
 -- Indexes for table `vehicles`
@@ -304,22 +299,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1012;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1031;
 --
 -- AUTO_INCREMENT for table `providers`
 --
 ALTER TABLE `providers`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
@@ -340,13 +335,14 @@ ADD CONSTRAINT `assist_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `providers
 -- Constraints for table `profile`
 --
 ALTER TABLE `profile`
-ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE;
+ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `providers`
 --
 ALTER TABLE `providers`
-ADD CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `providers_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `services`
@@ -354,12 +350,6 @@ ADD CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id
 ALTER TABLE `services`
 ADD CONSTRAINT `services_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `services_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `vehicles`
---
-ALTER TABLE `vehicles`
-ADD CONSTRAINT `vehicles_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
