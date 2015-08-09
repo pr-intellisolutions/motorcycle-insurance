@@ -18,6 +18,7 @@
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Proveedores de servicio</li>
 						</ol>
+<<<<<<< HEAD
 						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 							<div class="form-group" >
 								<label class="control-label">Filtrar por:</label>
@@ -36,6 +37,105 @@
 							</div>
 						</form>
 						<hr>
+=======
+						
+							<!-- IF USERNAME_FOUND == 1 -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+								<div class="form-group" >
+									<label class="control-label">Ordenar por:</label>
+									<select class="form-control" name="searchType">
+										<option value="area" default>Área de cobertura</option>
+										<option value="nameLast">Nombre del proveedor</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
+							</form>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre del proveedor</th>
+										<th>Área de cobertura</th>
+										<th>Pueblo</th>
+										<th>Teléfono de la compañía</th>
+										<th>Email de la compañía</th>
+									</tr>
+								</thead>
+								<tbody>
+										<!-- BEGIN user_reg_list -->
+										  <tr>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.CITY}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
+										  </tr>
+										<!-- END user_reg_list -->
+								</tbody>
+							</table>
+							<!-- ELSEIF USERNAME_FOUND == 2 -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+								<div class="form-group" >
+									<label class="control-label">Ordenar por:</label>
+									<select class="form-control" name="searchType">
+										<option value="area" default>Área de cobertura</option>
+										<option value="nameLast">Nombre del proveedor</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
+							</form>
+						
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre del proveedor</th>
+										<th>Área de cobertura</th>
+										<th>Pueblo</th>
+										<th>Teléfono de la compañía</th>
+										<th>Email de la compañía</th>
+									</tr>
+								</thead>
+							</table>
+						
+							<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
+								<div class="form-group" >
+									<label class="control-label">Ordenar por:</label>
+									<select class="form-control" name="searchType">
+										<option value="area" default>Área de cobertura</option>
+										<option value="nameLast">Nombre del proveedor</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
+							</form>
+						
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nombre del proveedor</th>
+										<th>Área de cobertura</th>
+										<th>Pueblo</th>
+										<th>Teléfono de la compañía</th>
+										<th>Email de la compañía</th>
+									</tr>
+								</thead>
+								<tbody>
+										<!-- BEGIN user_reg_list -->
+										  <tr>
+											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.CITY}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
+										  </tr>
+										<!-- END user_reg_list -->
+								</tbody>
+							</table>
+							<!-- ENDIF -->	
+					
+					<!-- ELSEIF SIDE_CONTENT == 1 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
+							<li class="active">Buscar proveedor</li>
+						</ol>
+							
+						<!-- IF USERNAME_FOUND == 1 -->
+>>>>>>> origin/master
 						<table class="table table-striped">
 							<thead>
 								<tr>
