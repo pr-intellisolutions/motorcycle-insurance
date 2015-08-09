@@ -27,8 +27,6 @@ class Session extends SiteDB
 	public $passchg;
 	public $perms;
 
-	public $error;
-
 	function __construct()
 	{
 		// Open the connection to the database

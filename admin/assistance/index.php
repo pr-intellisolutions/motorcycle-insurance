@@ -15,6 +15,9 @@ if ($user->auth() && $user->role == 'admin')
 	if (isset($_GET['option']) && $_GET['option'] == 1)
 	{
 		$template->assign_var('SIDE_CONTENT', 1);
+		
+		// Generate providers list
+		$stmnt = sprintf("SELECT * FROM providers INNER JOIN login ON providers.userid = login.id INNER JOIN profile ON login.id = profile.userid");
 	}
 	else if (isset($_GET['option']) && $_GET['option'] == 2)
 	{

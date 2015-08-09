@@ -4,73 +4,33 @@ require_once('../common.php');
 
 $template->set_custom_template(DIR_BASE.'styles', 'default');
 
-$template->assign_var('SITE_URL', SITE_URL);
-
-if ($user->auth() && $user->role == 'admin')
+if ($user->auth() && $user->role === 'admin')
 {
-	
-	$template->assign_vars(array('SIDE_CONTENT' => 'home',
+	/*
+	Order of execution on page load:
+
+		-- GET method --
+		No conditions:			# home content
+		Modify configuration:	# modify configuration content
+		Modify database:		# modify database content
+		Modify security:		# modify security policy content
+		Database backup:		# Database backup content
+		Database restore:		# Database restore content
+
+	Note 1: This only controls what parts of the front-end are visible to the user at a time using
+		    the back-end template engine.
+
+	Note 2: All POST requests are now processed through AJAX.
+
+	*/
+
+	$template->assign_vars(array('SITE_URL' => SITE_URL,
 		'FORM_ACTION' => $_SERVER['PHP_SELF'],
 		'FORM_METHOD' => 'POST',
 		'USERNAME' => $user->user));
-
-	if (isset($_POST['action']) && $_POST['action'] === 'saveSiteConfig')
-	{		
-		$site_config->site_name = $_POST['siteName'];
-		$site_config->site_desc = $_POST['siteDesc'];
-		$site_config->site_host = $_POST['siteHost'];
-		$site_config->site_module = $_POST['siteModule'];
 	
-
-		$stmt = sprintf("UPDATE config SET site_name = '%s', site_desc = '%s', site_host = '%s', site_module = '%s'",
-			$site_config->site_name, $site_config->site_desc, $site_config->site_host, $site_config->site_module);
-		
-		if (!$user->sql_conn->query($stmt))
-			trigger_error('/admin/index.php: '.$user->sql_conn->error, E_USER_ERROR);
-
-		$template->assign_vars(array("FORM_STATUS" => "SUCCESS",
-			"VIEW_OPTION" => 1));		
-	}
-	else if (isset($_POST['action']) && $_POST['action'] === 'saveDBConfig')
-	{
-		$user->db_host = $_POST['dbHost'];
-		$user->db_port = $_POST['dbPort'];
-		$user->db_user = $_POST['dbUser'];
-		$user->db_pass = $_POST['dbPass'];
-		$user->db_name = $_POST['dbName'];
-	
-		$user->save_db_config();
-
-		$template->assign_vars(array("FORM_STATUS" => "SUCCESS",
-			"VIEW_OPTION" => 2));	
-	}
-	else if (isset($_POST['action']) && $_POST['action'] === 'saveSecurityConfig')
-	{
-		$site_config->user_minlen = $_POST['userMinLen'];
-		$site_config->user_maxlen = $_POST['userMaxLen'];
-		$site_config->user_complexity = $_POST['userComplexity'];
-		$site_config->pass_minlen = $_POST['passMinLen'];
-		$site_config->pass_maxlen = $_POST['passMaxLen'];
-		$site_config->pass_complexity = $_POST['passComplexity'];
-		$site_config->pass_expiration = $_POST['passExpiration'];
-		$site_config->max_login_attempts = $_POST['maxLoginAttempts'];
-
-		$stmt = sprintf("UPDATE config SET user_minlen = %d, user_maxlen = %d, user_complexity = '%s', pass_minlen = %d, pass_maxlen = %d,
-			pass_complexity = '%s', pass_expiration = %d, max_login_attempts = %d",
-			$site_config->user_minlen, $site_config->user_maxlen, $site_config->user_complexity, $site_config->pass_minlen, $site_config->pass_maxlen,
-			$site_config->pass_complexity, $site_config->pass_expiration, $site_config->max_login_attempts);
-		
-		if (!$user->sql_conn->query($stmt))
-			trigger_error('/admin/index.php: '.$user->sql_conn->error, E_USER_ERROR);
-
-		$template->assign_vars(array("FORM_STATUS" => "SUCCESS",
-			"VIEW_OPTION" => 3));	
-	}
-	else if (isset($_POST['action']) && $_POST['action'] === 'cancel')
-	{
-		$template->assign_var("FORM_STATUS", "CANCEL");
-	}
-	else if (isset($_GET['option']) && $_GET['option'] == 1)
+	//# modify configuration content
+	if (isset($_GET['option']) && $_GET['option'] == 1)
 	{
 		$template->assign_vars(array("SIDE_CONTENT" => 1,
 			"SITE_NAME" => $site_config->site_name,
@@ -78,6 +38,7 @@ if ($user->auth() && $user->role == 'admin')
 			"SITE_HOST" => $site_config->site_host,
 			"SITE_MODULE" => $site_config->site_module));
 	}
+	//# modify database content
 	else if (isset($_GET['option']) && $_GET['option'] == 2)
 	{
 		$template->assign_vars(array("SIDE_CONTENT" => 2,
@@ -87,6 +48,7 @@ if ($user->auth() && $user->role == 'admin')
 			"DB_USER" => $user->db_user,
 			"DB_PASS" => $user->db_pass));
 	}
+	//# modify security policy content
 	else if (isset($_GET['option']) && $_GET['option'] == 3)
 	{
 		$template->assign_vars(array("SIDE_CONTENT" => 3,
@@ -108,12 +70,23 @@ if ($user->auth() && $user->role == 'admin')
 			$template->assign_var("NORMAL_SELECTED", "selected");
 		else
 			$template->assign_var("STRONG_SELECTED", "selected");
+		
+		if ($site_config->activation_req == true)
+			$template->assign_var("ACTIVATION_REQUIRED", "selected");
+		else
+			$template->assign_var("ACTIVATION_NOT_REQUIRED", "selected");
+
+
 	}
+	//# Database backup content
 	else if (isset($_GET['option']) && $_GET['option'] == 4)
 		$template->assign_var("SIDE_CONTENT", 4);
 
+	//# Database restore content
 	else if (isset($_GET['option']) && $_GET['option'] == 5)
 		$template->assign_var("SIDE_CONTENT", 5);
+
+	//# home content
 	else
 	{
 		$stmnt = sprintf("SELECT lastvisit, lastip, lastbrowser FROM login WHERE id = '%s'", $user->user_id);
@@ -124,21 +97,19 @@ if ($user->auth() && $user->role == 'admin')
 		{
 			$row = $result->fetch_assoc();
 
-			$template->assign_vars(array('FORM_STATUS' => 'INVALID',
+			$template->assign_vars(array('SIDE_CONTENT' => 'home',
 				'LAST_VISIT' => $row['lastvisit'],
 				'LAST_IP_ADDRESS' => $row['lastip'],
 				'LAST_BROWSER' => $row['lastbrowser'],
 				'CURRENT_BROWSER' => $_SERVER['HTTP_USER_AGENT'],
 				'CURRENT_IP_ADDRESS' => $_SERVER['REMOTE_ADDR'],
 				'CURRENT_DATE' => date('Y-m-d G:i:s')));
+
+			$result->close();
 		}
-		else
-			trigger_error('/admin/index.php: '.$this->sql_conn->connect_error, E_USER_ERROR);
-
-		$result->close();
 	}
-	$template->set_filenames(array('body' => 'admin_cp.html'));
 
+	$template->set_filenames(array('body' => 'admin_cp.html'));
 	$template->display('body');
 }
 else

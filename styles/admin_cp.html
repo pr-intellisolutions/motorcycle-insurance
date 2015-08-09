@@ -16,63 +16,43 @@
 				</div>
 				<div class="col-md-8">
 					<!-- IF SIDE_CONTENT == "home" -->
-						<!-- IF FORM_STATUS == "INVALID" -->
-							<ol class="breadcrumb">
-								<li class="active">Inicio</li>
-							</ol>
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th>Información General</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Última visita registrada</td>
-											<td>{LAST_VISIT}</td>
-										</tr>
-										<tr> 
-											<td>Última dirección de ip registrada</td>
-											<td>{LAST_IP_ADDRESS}</td>
-										</tr>
-										<tr> 
-											<td>Último navegador registrado</td>
-											<td>{LAST_BROWSER}</td>
-										</tr>
-										<tr> 
-											<td>Navegador actual</td>
-											<td>{CURRENT_BROWSER}</td>
-										</tr>
-										<tr>
-											<td>Dirección de ip actual</td>
-											<td>{CURRENT_IP_ADDRESS}</td>
-										</tr>
-										<tr> 
-											<td>Fecha actual</td>
-											<td>{CURRENT_DATE}</td>
-										</tr>
-									</tbody>
-								</table>
-						<!-- ELSEIF FORM_STATUS == "SUCCESS" -->
-							<div class="alert alert-success" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								¡La configuración ha sido guardada correctamente!
-							</div>
-							<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
-							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/index.php?option={VIEW_OPTION}';",1500);
-							</script>
-						<!-- ELSEIF FORM_STATUS == "CANCEL" -->
-							<div class="alert alert-danger" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								¡No se efectuó ningún cambio en la configuración!
-							</div>
-							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin';",1500);
-							</script>
-							<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
-						<!-- ENDIF -->
+						<ol class="breadcrumb">
+							<li class="active">Inicio</li>
+						</ol>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Información General</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Última visita registrada</td>
+									<td>{LAST_VISIT}</td>
+								</tr>
+								<tr> 
+									<td>Última dirección de ip registrada</td>
+									<td>{LAST_IP_ADDRESS}</td>
+								</tr>
+								<tr> 
+									<td>Último navegador registrado</td>
+									<td>{LAST_BROWSER}</td>
+								</tr>
+								<tr> 
+									<td>Navegador actual</td>
+									<td>{CURRENT_BROWSER}</td>
+								</tr>
+								<tr>
+									<td>Dirección de ip actual</td>
+									<td>{CURRENT_IP_ADDRESS}</td>
+								</tr>
+								<tr> 
+									<td>Fecha actual</td>
+									<td>{CURRENT_DATE}</td>
+								</tr>
+							</tbody>
+						</table>
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
@@ -86,7 +66,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Nombre del sitio:</label>
 							<div class="col-sm-4">
-								<textarea class="form-control" rows="3" name="siteName"
+								<textarea class="form-control" rows="3" id="siteName"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -99,7 +79,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Descripción del sitio:</label>
 							<div class="col-sm-4">
-								<textarea class="form-control" rows="3" name="siteDesc"
+								<textarea class="form-control" rows="3" id="siteDesc"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -112,7 +92,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Dirección del sitio:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="siteHost" value="{SITE_HOST}" placeholder="{SITE_HOST}"
+								<input type="text" class="form-control" id="siteHost" value="{SITE_HOST}" placeholder="{SITE_HOST}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -124,7 +104,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Directorio principal:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="siteModule" value="{SITE_MODULE}" placeholder="{SITE_MODULE}"
+								<input type="text" class="form-control" id="siteModule" value="{SITE_MODULE}" placeholder="{SITE_MODULE}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -136,8 +116,8 @@
 						  </div>
 						  <div class="form-group">
 							<div class="col-sm-offset-3 col-sm-4">
-							  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
-							  <button type="submit" class="btn btn-primary" name="action" value="saveSiteConfig">Guardar</button>
+							  <button type="button" class="btn btn-default" id="cancel">Cancelar</button>
+							  <button type="button" class="btn btn-primary" id="save_config">Guardar</button>
 							</div>
 						  </div>
 						</form>
@@ -154,7 +134,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Dirección de la base de datos: </label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="dbHost" value="{DB_HOST}" placeholder="{DB_HOST}"
+								<input type="text" class="form-control" id="dbHost" value="{DB_HOST}" placeholder="{DB_HOST}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -166,7 +146,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Puerto de la base de datos</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="dbPort" value="{DB_PORT}" placeholder="{DB_PORT}"
+								<input type="text" class="form-control" id="dbPort" value="{DB_PORT}" placeholder="{DB_PORT}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -178,7 +158,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Nombre de la base de datos:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="dbName" value="{DB_NAME}" placeholder="{DB_NAME}"
+								<input type="text" class="form-control" id="dbName" value="{DB_NAME}" placeholder="{DB_NAME}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -190,7 +170,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Usuario:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="dbUser" value="{DB_USER}" placeholder="{DB_USER}"
+								<input type="text" class="form-control" id="dbUser" value="{DB_USER}" placeholder="{DB_USER}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -202,7 +182,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Contraseña:</label>
 							<div class="col-sm-4">
-								<input type="password" class="form-control" name="dbPass" value="{DB_PASS}" placeholder="{DB_PASS}"
+								<input type="password" class="form-control" id="dbPass" value="{DB_PASS}" placeholder="{DB_PASS}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -213,8 +193,8 @@
 						  </div>
 						  <div class="form-group">
 							<div class="col-sm-offset-3 col-sm-4">
-							  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
-							  <button type="submit" class="btn btn-primary" name="action" value="saveDBConfig">Guardar</button>
+							  <button type="button" class="btn btn-default" id="cancel">Cancelar</button>
+							  <button type="button" class="btn btn-primary" id="save_db">Guardar</button>
 							</div>
 						  </div>
 						</form>
@@ -231,7 +211,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Complejidad del nombre de usuario:</label>
 							<div class="col-sm-4">
-								<select class="form-control" name="userComplexity"
+								<select class="form-control" id="userComplexity"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -247,7 +227,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tamaño mínimo del nombre de usuario:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="userMinLen" value="{USER_MINLEN}" placeholder="{USER_MINLEN}"
+								<input type="text" class="form-control" id="userMinLen" value="{USER_MINLEN}" placeholder="{USER_MINLEN}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -260,7 +240,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tamaño máximo del nombre de usuario:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="userMaxLen" value="{USER_MAXLEN}" placeholder="{USER_MAXLEN}"
+								<input type="text" class="form-control" id="userMaxLen" value="{USER_MAXLEN}" placeholder="{USER_MAXLEN}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -273,7 +253,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Complejidad de la contraseña:</label>
 							<div class="col-sm-4">
-								<select class="form-control" name="passComplexity"
+								<select class="form-control" id="passComplexity"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -292,7 +272,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tamaño mínimo de la contraseña:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="passMinLen" value="{PASS_MINLEN}" placeholder="{PASS_MINLEN}"
+								<input type="text" class="form-control" id="passMinLen" value="{PASS_MINLEN}" placeholder="{PASS_MINLEN}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -305,7 +285,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tamaño máximo de la contraseña:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="passMaxLen" value="{PASS_MAXLEN}" placeholder="{PASS_MAXLEN}"
+								<input type="text" class="form-control" id="passMaxLen" value="{PASS_MAXLEN}" placeholder="{PASS_MAXLEN}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -318,7 +298,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Tiempo de expiración de la contraseña:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="passExpiration" value="{PASS_EXPIRATION}" placeholder="{PASS_EXPIRATION}"
+								<input type="text" class="form-control" id="passExpiration" value="{PASS_EXPIRATION}" placeholder="{PASS_EXPIRATION}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -330,7 +310,7 @@
 						  <div class="form-group">
 							<label class="col-sm-3 control-label">Intentos antes de bloquar una cuenta:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="maxLoginAttempts" value="{MAX_LOGIN_ATTEMPTS}" placeholder="{MAX_LOGIN_ATTEMPTS}"
+								<input type="text" class="form-control" id="maxLoginAttempts" value="{MAX_LOGIN_ATTEMPTS}" placeholder="{MAX_LOGIN_ATTEMPTS}"
 								data-container="body"
 								data-toggle="popover"
 								data-placement="right"
@@ -341,9 +321,25 @@
 							</div>
 						  </div>
 						  <div class="form-group">
+							  <label class="col-sm-3 control-label">Activation requerida al registrar una cuenta:</label>
+							  <div class="col-sm-4">
+								<select class="form-control" id="activationReq"
+								data-container="body"
+								data-toggle="popover"
+								data-placement="right"
+								data-trigger="focus"
+								title="Información sobre la opción"
+								data-content="Esta opción evita que usuarios abusen del sistema de registro de cuentas obligando al usuario a que valide y confirme 
+								la cuenta registrada antes de poder ser utilizada por primera vez.">
+									<option value="1" {ACTIVATION_REQUIRED}>Si</option>
+									<option value="0" {ACTIVATION_NOT_REQUIRED}>No</option>
+								</select>
+							  </div>
+						  </div>
+						  <div class="form-group">
 							<div class="col-sm-offset-3 col-sm-4">
-							  <button type="submit" class="btn btn-default" name="action" value="cancel">Cancelar</button>
-							  <button type="submit" class="btn btn-primary" name="action" value="saveSecurityConfig">Guardar</button>
+							  <button type="button" class="btn btn-default" id="cancel">Cancelar</button>
+							  <button type="button" class="btn btn-primary" id="save_policy">Guardar</button>
 							</div>
 						  </div>
 						</form>
@@ -358,6 +354,111 @@
 							<li class="active">Recuperar base de datos</li>
 						</ol>
 					<!-- ENDIF -->
+					<!-- Status modal -->
+					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel"></h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<script>
+						$(document).ready(function() {
+							$("#save_config").click(function() {
+								$.ajax({
+									type: "POST",
+									url: "save_config.php",
+									data: {'siteName': $('#siteName').val(),
+										   'siteDesc': $('#siteDesc').val(),
+										   'siteHost': $('#siteHost').val(),
+										   'siteModule': $('#siteModule').val()},
+									success: function(data) {
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡La configuración del sitio ha sido guardada exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								});
+							});
+							$("#save_db").click(function() {
+								$.ajax({
+									type: "POST",
+									url: "save_db.php",
+									data: {'dbHost': $('#dbHost').val(),
+										   'dbPort': $('#dbPort').val(),
+										   'dbName': $('#dbName').val(),
+										   'dbUser': $('#dbUser').val(),
+										   'dbPass': $('#dbPass').val()},
+									success: function(data) {
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡La configuración de la base de datos ha sido guardada exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								});
+							});
+							$("#save_policy").click(function() {
+								$.ajax({
+									type: "POST",
+									url: "save_policy.php",
+									data: {'userComplexity': $('#userComplexity').val(),
+										   'userMinLen': $('#userMinLen').val(),
+										   'userMaxLen': $('#userMaxLen').val(),
+										   'passComplexity': $('#passComplexity').val(),
+										   'passMinLen': $('#passMinLen').val(),
+										   'passMaxLen': $('#passMaxLen').val(),
+										   'passExpiration': $('#passExpiration').val(),
+										   'maxLoginAttempts': $('#maxLoginAttempts').val(),
+										   'activationReq': $('#activationReq').val()},
+									success: function(data) {
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡Las políticas de seguridad han sido guardada exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								});
+							});
+							$('#cancel').click(function() {
+								window.location.href = 'index.php';
+							});
+							$('#modal').on('hidden.bs.modal', function() { 
+								//location.reload();
+								window.location.href = 'index.php';
+							});
+						});
+					</script>
 				</div>
 			</div>
 		<!-- INCLUDE admin_footer.html -->

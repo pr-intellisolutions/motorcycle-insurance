@@ -82,6 +82,7 @@ class User extends Session
 			$this->set_error(self::PASS_INVALID);
 			return false;
 		}
+		$result->close();
 
 		// Create date object with current date and time
 		$passdate = date_create(date('Y-m-d G:i:s'));
@@ -108,9 +109,57 @@ class User extends Session
 		$this->session_update('pass', $newpass);
 		$this->session_update('passchg', false);
 
-		$result->close();
-
 		return true;
+	}
+	public function change_passwd($username, $newpass)
+	{
+		// This function is to be called while in administrator mode
+		global $site_config;
+
+		$newpass = $this->sanitize_input($newpass);
+
+		$stmt = sprintf("SELECT * FROM login WHERE user = '%s'", $username);
+
+		$result = $this->sql_conn->query($stmt);
+
+		if ($result->num_rows > 0)
+		{
+			$result->close();
+
+			// Create date object with current date and time
+			$passdate = date_create(date('Y-m-d G:i:s'));
+
+			// Add the number of days in which the password should expire
+			date_add($passdate, date_interval_create_from_date_string($site_config->pass_expiration.' days'));
+
+			// Convert the date in MySQL format
+			$passdate = date_format($passdate, 'Y-m-d G:i:s');
+
+			// Encrypt new password
+			$options = array('cost' => 11, 'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+
+			$newpass = password_hash($newpass, PASSWORD_BCRYPT, $options);
+
+			// Store the new password expiration date and reset password
+			$stmt = sprintf("UPDATE login SET pass = '%s', passchg = 0, passdate = '%s' WHERE user = '%s'",
+							$newpass, $passdate, $username);
+
+			if (!$this->sql_conn->query($stmt))
+			{
+				$this->error = $this->sql_conn->error;
+				return false;
+			}
+			return true;
+		}
+		else
+		{
+			if ($this->sql_conn->error)
+				$this->error = $this->sql_conn->error;
+			else
+				$this->set_error(self::USER_INVALID);
+
+			return false;		
+		}
 	}
 	public function user_valid($username)
 	{
@@ -267,7 +316,6 @@ class User extends Session
 	}
 	public function delete_account($username)
 	{
-		$username = $this->sanitize_input($username);			
 		if ($this->user_available($username)==false)
 		{
 			$stmt = sprintf("DELETE FROM login WHERE user = '%s'", $username);
@@ -345,6 +393,28 @@ class User extends Session
 		$result->close();
 	
 		return $user_id;
+	}
+	public function get_member_id($username)
+	{
+		$member_id = -1;
+		$username = $this->sanitize_input($username);
+
+		$stmt = sprintf("SELECT profile.id FROM profile INNER JOIN login ON profile.userid = login.id WHERE login.user = '%s'", $username);
+		
+		$result = $this->sql_conn->query($stmt);
+	
+		if ($result->num_rows > 0)
+		{
+			$row = $result->fetch_assoc();
+			$member_id = $row['id'];
+		}
+		else
+		{
+			$this->set_error(self::UNREGISTERED_USER);
+		}
+		$result->close();
+	
+		return $member_id;
 	}
 	public function user_verify($username)
 	{

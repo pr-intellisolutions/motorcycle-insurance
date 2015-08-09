@@ -8,6 +8,7 @@ class SiteDB
 	public $db_pass;
 	public $db_name;
 	public $sql_conn;
+	public $error;
 
 	function __construct()
 	{
@@ -96,12 +97,17 @@ class SiteDB
 	function save_db_config()
 	{
 		if (!($fp = fopen(self::DB_CONFIG_FILE, 'w')))
-			trigger_error("SiteDB::__construct(): Unable to open db_config.ini for writting.", E_USER_ERROR);
+		{
+			$this->error = "SiteDB::save_db_config(): Unable to open db_config.ini for writting.";
+			return false;
+		}
 		
 		fprintf($fp, "DatabaseHostname = %s\nDatabasePort = %d\nDatabaseUsername = %s\nDatabasePassword = %s\nDatabaseName = %s\n",
 			$this->db_host, $this->db_port, $this->db_user, $this->db_pass, $this->db_name);
 
 		fclose($fp);
+		
+		return true;
 	}
 }
 ?>

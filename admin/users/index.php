@@ -4,7 +4,7 @@ require_once('../../common.php');
 
 $template->set_custom_template(DIR_BASE.'styles', 'default');
 
-if ($user->auth() && $user->role == 'admin')
+if ($user->auth() && $user->role === 'admin')
 {
 	/*
 	Order of execution on page load:
@@ -12,13 +12,13 @@ if ($user->auth() && $user->role == 'admin')
 		-- GET method --
 		No conditions:			# home content
 		Account creation:		# create account content
+		Account deletion:		# remove account content
 		Modify profile:			# modify profile content
 		Modify permissions:		# modify permissions content
 		Modify plans/services:	# modify plans and services content
 		Modify vehicles:		# modify vehicles content
 
 		-- POST method --
-		Process account creation:	# process account creation
 		Process show profile:		# process show profile
 		Process edit permissions:	# process edit permissions
 		Process edit plans:			# process edit plans
@@ -42,36 +42,58 @@ if ($user->auth() && $user->role == 'admin')
 	{
 		$template->assign_var('SIDE_CONTENT', 1);
 	}
-	//# modify profile content
+	//# remove account content
 	else if (isset($_GET['option']) && $_GET['option'] == 2)
 	{
-		$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 0));
+		$template->assign_var('SIDE_CONTENT', 2);
 	}
-	//# modify permissions content
+	//# modify profile content
 	else if (isset($_GET['option']) && $_GET['option'] == 3)
 	{
-		$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 0));
+		if (isset($_GET['show']) && $_GET['show'] == true)
+		{
+			$stmnt = sprintf("SELECT * FROM profile INNER JOIN login ON profile.userid = login.id WHERE login.user = '%s'", $_GET['user']);
+
+			$result = $user->sql_conn->query($stmnt);
+			
+			if ($result->num_rows > 0)
+			{
+				$row = $result->fetch_assoc();
+
+				$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 1,
+					'USER' => $row['user'],
+					'FIRST' => $row['first'],
+					'MIDDLE' => $row['middle'],
+					'LAST' => $row['last'],
+					'MAIDEN' => $row['maiden'],
+					'ADDRESS1' => $row['address1'],
+					'ADDRESS2' => $row['address2'],
+					'CITY' => $row['city'],
+					'STATE' => $row['state'],
+					'ZIP' => $row['zip'],
+					'COUNTRY' => $row['country'],
+					'PHONE' => $row['phone'],
+					'EMAIL' => $row['email']));
+			}
+			$result->close();
+		}
+		else
+			$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 0));
 	}
-	//# modify plans and services content
+	//# modify permissions content
 	else if (isset($_GET['option']) && $_GET['option'] == 4)
 	{
 		$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 0));
 	}
-	//# modify vehicles content
+	//# modify plans and services content
 	else if (isset($_GET['option']) && $_GET['option'] == 5)
 	{
 		$template->assign_vars(array('SIDE_CONTENT' => 5, 'USERNAME_FOUND' => 0));
 	}
-	//# process account creation
-	else if (isset($_POST['action']) && $_POST['action'] === 'create_account')
+	//# modify vehicles content
+	else if (isset($_GET['option']) && $_GET['option'] == 6)
 	{
-		if ($user->create_account($_POST))
-			$template->assign_var('SIDE_CONTENT', 'create_account_successful');
-		else
-		{
-			$template->assign_vars(array('SIDE_CONTENT' => 'create_account_failed',
-				'ERROR_MESSAGE' => $user->error));
-		}
+		$template->assign_vars(array('SIDE_CONTENT' => 6, 'USERNAME_FOUND' => 0));
 	}
 	//# process show profile
 	else if (isset($_POST['action']) && $_POST['action'] === 'show_profile')
@@ -87,9 +109,9 @@ if ($user->auth() && $user->role == 'admin')
 				{
 					$row = $result->fetch_assoc();
 
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 1,
 						'USER' => $row['user'],
-						'FIRST' => $row['name'],
+						'FIRST' => $row['first'],
 						'MIDDLE' => $row['middle'],
 						'LAST' => $row['last'],
 						'MAIDEN' => $row['maiden'],
@@ -104,7 +126,7 @@ if ($user->auth() && $user->role == 'admin')
 				}
 				else
 				{
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
+					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 2));
 				}					
 				$result->close();
 				break;
@@ -117,9 +139,9 @@ if ($user->auth() && $user->role == 'admin')
 				{
 					$row = $result->fetch_assoc();
 
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 1,
+					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 1,
 						'USER' => $row['user'],
-						'FIRST' => $row['name'],
+						'FIRST' => $row['first'],
 						'MIDDLE' => $row['middle'],
 						'LAST' => $row['last'],
 						'MAIDEN' => $row['maiden'],
@@ -134,11 +156,9 @@ if ($user->auth() && $user->role == 'admin')
 				}
 				else
 				{
-					$template->assign_vars(array('SIDE_CONTENT' => 2, 'USERNAME_FOUND' => 2));
-				}					
+					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 2));
+				}
 				$result->close();
-				break;
-			case 'plate':
 				break;
 			default:
 				break;
@@ -165,20 +185,31 @@ if ($user->auth() && $user->role == 'admin')
 					{
 						$template->assign_vars(array('USER_CHG_PERM_ALLOW' => true, 'USER' => $row['user']));
 
-						if (strstr($row['permissions'], 'all'))
+						if (!strstr($row['permissions'], 'none'))
 						{
-							$template->assign_vars(array('CHECK_ALL' => 'checked',
-								'CHECK_U' => 'disabled',
-								'CHECK_S' => 'disabled',
-								'CHECK_O' => 'disabled',
-								'CHECK_R' => 'disabled',
-								'CHECK_F' => 'disabled'));
+							if (strstr($row['permissions'], 'all'))
+							{
+								$template->assign_vars(array('CHECK_ALL' => 'checked',
+									'CHECK_U' => 'disabled',
+									'CHECK_S' => 'disabled',
+									'CHECK_O' => 'disabled',
+									'CHECK_R' => 'disabled',
+									'CHECK_F' => 'disabled'));
+							}
+							else
+							{
+								if (strstr($row['permissions'], 'u')) $template->assign_var('CHECK_U', 'checked');
+								if (strstr($row['permissions'], 's')) $template->assign_var('CHECK_S', 'checked');
+								if (strstr($row['permissions'], 'o')) $template->assign_var('CHECK_O', 'checked');
+								if (strstr($row['permissions'], 'r')) $template->assign_var('CHECK_R', 'checked');
+								if (strstr($row['permissions'], 'f')) $template->assign_var('CHECK_F', 'checked');
+							}
 						}
 					}
-					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 1));
+					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 1));
 				}
 				else
-					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 2));
+					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 2));
 				$result->close();
 				break;
 			case 'id':
@@ -197,14 +228,33 @@ if ($user->auth() && $user->role == 'admin')
 					else
 					{
 						$template->assign_vars(array('USER_CHG_PERM_ALLOW' => true, 'USER' => $row['user']));
+
+						if (!strstr($row['permissions'], 'none'))
+						{
+							if (strstr($row['permissions'], 'all'))
+							{
+								$template->assign_vars(array('CHECK_ALL' => 'checked',
+									'CHECK_U' => 'disabled',
+									'CHECK_S' => 'disabled',
+									'CHECK_O' => 'disabled',
+									'CHECK_R' => 'disabled',
+									'CHECK_F' => 'disabled'));
+							}
+							else
+							{
+								if (strstr($row['permissions'], 'u')) $template->assign_var('CHECK_U', 'checked');
+								if (strstr($row['permissions'], 's')) $template->assign_var('CHECK_S', 'checked');
+								if (strstr($row['permissions'], 'o')) $template->assign_var('CHECK_O', 'checked');
+								if (strstr($row['permissions'], 'r')) $template->assign_var('CHECK_R', 'checked');
+								if (strstr($row['permissions'], 'f')) $template->assign_var('CHECK_F', 'checked');
+							}
+						}
 					}
-					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 1));
+					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 1));
 				}
 				else
-					$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 2));
+					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 2));
 				$result->close();
-				break;
-			case 'plate':
 				break;
 			default:
 				break;
@@ -226,7 +276,7 @@ if ($user->auth() && $user->role == 'admin')
 		$template->assign_var('SIDE_CONTENT', 'home');
 
 		/* Fetch all registered users to show on the modal box */
-		$stmnt = sprintf("SELECT id, user, regdate, lastvisit FROM login");
+		$stmnt = sprintf("SELECT profile.id, user, email, phone, CONCAT (first, ' ', middle, ' ', last, ' ', maiden) as fullname FROM login INNER JOIN profile on login.id=profile.userid ORDER BY profile.id");
 
 		$result = $user->sql_conn->query($stmnt);
 		
@@ -236,9 +286,13 @@ if ($user->auth() && $user->role == 'admin')
 			while ($row = $result->fetch_assoc())
 			{
 				$index++;
-			
+
 				$template->assign_block_vars('user_reg_list',
-					array('INDEX' => $index, 'ID' => $row['id'], 'USERNAME' => $row['user'], 'REG_DATE' => $row['regdate'], 'LAST_VISIT' => $row['lastvisit']));
+					array('MEMBERID' => $row['id'],
+						'USERNAME' => $row['user'],
+						'FULLNAME' => $row['fullname'],
+						'EMAIL' => $row['email'],
+						'PHONE' => $row['phone']));
 			}
 			$template->assign_vars(array('NUM_REG_USERS' => $index, 'NO_REG_RESULTS' => false));
 		}
@@ -248,7 +302,7 @@ if ($user->auth() && $user->role == 'admin')
 		$result->close();
 
 		/* Fetch all active users to show on the modal box */
-		$stmnt = sprintf("SELECT user, regdate, lastvisit FROM login where active=1");
+		$stmnt = sprintf("SELECT profile.id, user, email, phone, CONCAT (first, ' ', middle, ' ', last, ' ', maiden) as fullname FROM login INNER JOIN profile on login.id=profile.userid WHERE active=1 ORDER BY profile.id");
 
 		$result = $user->sql_conn->query($stmnt);
 		
@@ -260,7 +314,11 @@ if ($user->auth() && $user->role == 'admin')
 				$index++;
 			
 				$template->assign_block_vars('user_active_list',
-					array('INDEX' => $index, 'USERNAME' => $row['user'], 'REG_DATE' => $row['regdate'], 'LAST_VISIT' => $row['lastvisit']));
+					array('MEMBERID' => $row['id'],
+						'USERNAME' => $row['user'],
+						'FULLNAME' => $row['fullname'],
+						'EMAIL' => $row['email'],
+						'PHONE' => $row['phone']));
 			}
 			$template->assign_vars(array('NUM_ACTIVE_USERS' => $index, 'NO_ACTIVE_RESULTS' => false));
 		}
@@ -270,7 +328,7 @@ if ($user->auth() && $user->role == 'admin')
 		$result->close();
 
 		/* Fetch all inactive users to show on the modal box */
-		$stmnt = sprintf("SELECT user, regdate, lastvisit FROM login where active=0");
+		$stmnt = sprintf("SELECT profile.id, user, email, phone, CONCAT (first, ' ', middle, ' ', last, ' ', maiden) as fullname FROM login INNER JOIN profile on login.id=profile.userid WHERE active=0 ORDER BY profile.id");
 
 		$result = $user->sql_conn->query($stmnt);
 		
@@ -280,9 +338,13 @@ if ($user->auth() && $user->role == 'admin')
 			while ($row = $result->fetch_assoc())
 			{
 				$index++;
-			
+
 				$template->assign_block_vars('user_inactive_list',
-					array('INDEX' => $index, 'USERNAME' => $row['user'], 'REG_DATE' => $row['regdate'], 'LAST_VISIT' => $row['lastvisit']));
+					array('MEMBERID' => $row['id'],
+						'USERNAME' => $row['user'],
+						'FULLNAME' => $row['fullname'],
+						'EMAIL' => $row['email'],
+						'PHONE' => $row['phone']));
 			}
 			$template->assign_vars(array('NUM_INACTIVE_USERS' => $index, 'NO_INACTIVE_RESULTS' => false));
 		}
@@ -292,7 +354,7 @@ if ($user->auth() && $user->role == 'admin')
 		$result->close();
 
 		/* Fetch all disabled users to show on the modal box */
-		$stmnt = sprintf("SELECT user, regdate, lastvisit FROM login where disabled=1");
+		$stmnt = sprintf("SELECT profile.id, user, email, phone, CONCAT (first, ' ', middle, ' ', last, ' ', maiden) as fullname FROM login INNER JOIN profile on login.id=profile.userid WHERE disabled=1 ORDER BY profile.id");
 
 		$result = $user->sql_conn->query($stmnt);
 		
@@ -302,9 +364,14 @@ if ($user->auth() && $user->role == 'admin')
 			while ($row = $result->fetch_assoc())
 			{
 				$index++;
-			
+	
 				$template->assign_block_vars('user_disabled_list',
-					array('INDEX' => $index, 'USERNAME' => $row['user'], 'REG_DATE' => $row['regdate'], 'LAST_VISIT' => $row['lastvisit']));
+					array('MEMBERID' => $row['id'],
+						'USERNAME' => $row['user'],
+						'FULLNAME' => $row['fullname'],
+						'EMAIL' => $row['email'],
+						'PHONE' => $row['phone']));
+	
 			}
 			$template->assign_vars(array('NUM_DISABLED_USERS' => $index, 'NO_DISABLED_RESULTS' => false));
 		}
@@ -314,7 +381,7 @@ if ($user->auth() && $user->role == 'admin')
 		$result->close();
 
 		/* Fetch all expired users to show on the modal box */
-		$stmnt = sprintf("SELECT user, regdate, lastvisit FROM login where expired=1");
+		$stmnt = sprintf("SELECT profile.id, user, email, phone, CONCAT (first, ' ', middle, ' ', last, ' ', maiden) as fullname FROM login INNER JOIN profile on login.id=profile.userid WHERE expired=1 ORDER BY profile.id");
 
 		$result = $user->sql_conn->query($stmnt);
 		
@@ -324,9 +391,13 @@ if ($user->auth() && $user->role == 'admin')
 			while ($row = $result->fetch_assoc())
 			{
 				$index++;
-			
+				
 				$template->assign_block_vars('user_expired_list',
-					array('INDEX' => $index, 'USERNAME' => $row['user'], 'REG_DATE' => $row['regdate'], 'LAST_VISIT' => $row['lastvisit']));
+					array('MEMBERID' => $row['id'],
+						'USERNAME' => $row['user'],
+						'FULLNAME' => $row['fullname'],
+						'EMAIL' => $row['email'],
+						'PHONE' => $row['phone']));	
 			}
 			$template->assign_vars(array('NUM_EXPIRED_USERS' => $index, 'NO_EXPIRED_RESULTS' => false));
 		}

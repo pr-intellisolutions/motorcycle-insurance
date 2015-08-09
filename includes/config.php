@@ -16,6 +16,7 @@ class SiteConfig extends SiteDB
 	public $pass_expiration;
 
 	public $max_login_attempts;
+	public $activation_req;
 
 	function __construct()
 	{
@@ -41,6 +42,7 @@ class SiteConfig extends SiteDB
 			$this->pass_complexity = $row['pass_complexity'];
 			$this->pass_expiration = $row['pass_expiration'];
 			$this->max_login_attempts = $row['max_login_attempts'];
+			$this->activation_req = $row['activation_req'];
 		}
 		else
 			trigger_error('SiteConfig::__construct(): '.$this->sql_conn->error, E_USER_ERROR);

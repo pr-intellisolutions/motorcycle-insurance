@@ -7,24 +7,15 @@
 						</div>
 						<div class="list-group">
 						  <a href="index.php?option=1" class="list-group-item">Crear una cuenta</a>
-						  <a href="index.php?option=2" class="list-group-item">Manejar perfil de usuarios</a>
-						  <a href="index.php?option=3" class="list-group-item">Manejar privilegios de usuarios</a>
-						  <a href="index.php?option=4" class="list-group-item">Manejar planes y servicios de usuarios</a>
-						  <a href="index.php?option=5" class="list-group-item">Manejar vehículos de motor de usuarios</a>
+						  <a href="index.php?option=2" class="list-group-item">Remover una cuenta</a>
+						  <a href="index.php?option=3" class="list-group-item">Manejar perfil de usuarios</a>
+						  <a href="index.php?option=4" class="list-group-item">Manejar privilegios de usuarios</a>
+						  <a href="index.php?option=5" class="list-group-item">Manejar planes y servicios de usuarios</a>
+						  <a href="index.php?option=6" class="list-group-item">Manejar vehículos de motor de usuarios</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-8">
-					<script>
-						$(document).ready(function()
-						{
-							$('#cancel_button').click(function()
-							{
-								// When user clicks cancel button the page is reloaded and home content is displayed
-								window.location.href = 'index.php';
-							});
-						});
-					</script>
 					<!-- IF SIDE_CONTENT == "home" -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
@@ -54,16 +45,17 @@
 									<td><a href="#" data-toggle="modal" data-target="#userDisabledModal">Número de usuarios bloqueados</a></td>
 									<td>{NUM_DISABLED_USERS}</td>
 								</tr>
+								<!--
 								<tr> 
 									<td><a href="#" data-toggle="modal" data-target="#userExpiredModal">Número de usuarios suspendidos</a></td>
 									<td>{NUM_EXPIRED_USERS}</td>
 								</tr>
+								-->
 							</tbody>
 						</table>
-
-						<!-- Modals -->
+						<!-- Registered users modal -->
 						<div class="modal fade" id="userRegModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document" style="overflow-y: initial !important;">
+						  <div class="modal-dialog modal-lg" role="document" style="overflow-y: initial !important;">
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -76,13 +68,33 @@
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
+											<th>Número de Miembro</th>
+											<th>Nombre de Usuario</th>
+											<th>Nombre del Dueño</th>
+											<th>Email</th>
+											<th>Teléfono</th>
+											<th></th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_reg_list -->
 										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.USERNAME}</td><td>{user_reg_list.REG_DATE}</td><td>{user_reg_list.LAST_VISIT}</td>
+											  <td>{user_reg_list.MEMBERID}</td>
+											  <td>{user_reg_list.USERNAME}</td>
+											  <td>{user_reg_list.FULLNAME}</td>
+											  <td><a href="mailto:{user_reg_list.EMAIL}">{user_reg_list.EMAIL}</a></td>
+											  <td>{user_reg_list.PHONE}</td>
+											  <td>
+												<a href="index.php?option=3&show=true&user={user_reg_list.USERNAME}"
+												data-container="body"
+												data-toggle="popover"
+												data-placement="right"
+												data-trigger="hover"
+												title="Ver más"
+												data-content="Haga click en el enlace para ver más información.">
+													...
+												</a>
+											  </td>
 										  </tr>
 										<!-- END user_reg_list -->
 									  </tbody>
@@ -90,143 +102,114 @@
 								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
-								<script>
-									$('document').ready(function(){
-										$("#remove_user").click(function() {
-											var username = $("#remove_input").val();
-											
-											if (username !== "")
-											{
-												$.ajax({
-													type: "POST",
-													url: "remove_user.php",
-													data: "username="+username,
-													success: function(data){
-														if (data === "success")
-															$("#activate_status").html("'"+username+"' ha sido removido.");
-														else
-															$("#activate_status").html(data);
-													}
-												})
-											}
-										});
-										$('#userRegModal').on('hidden.bs.modal', function() { 
-											location.reload();
-										});
-									})
-								</script>
-								<form class="form-inline">
-									<div class="form-group">
-										<input type="text" class="form-control" id="remove_input">
-									</div>
-									<button type="button" class="btn btn-default" id="remove_user">Remover</button>
-									<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-								</form>
-								</br>
-								<p id="activate_status" class="text-info"></p>
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 							</div>
 						  </div>
+						 </div>
 						</div>
-
+						<!-- Active users modal -->
 						<div class="modal fade" id="userActiveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document" style="overflow-y: initial !important;">
+						  <div class="modal-dialog modal-lg" role="document" style="overflow-y: initial !important;">
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<h4 class="modal-title" id="myModalLabel">Usuarios Activos</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_ACTIVE_RESULTS == true -->
-									<p class="text-info"> -- No se encontro ningún resultado -- </p>
-								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
+											<th>Número de Miembro</th>
+											<th>Nombre de Usuario</th>
+											<th>Nombre del Dueño</th>
+											<th>Email</th>
+											<th>Teléfono</th>
+											<th></th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_active_list -->
 										  <tr>
-											  <td>{user_active_list.INDEX}</td><td>{user_active_list.USERNAME}</td><td>{user_active_list.REG_DATE}</td><td>{user_active_list.LAST_VISIT}</td>
+											  <td>{user_active_list.MEMBERID}</td>
+											  <td>{user_active_list.USERNAME}</td>
+											  <td>{user_active_list.FULLNAME}</td>
+											  <td><a href="mailto:{user_reg_list.EMAIL}">{user_active_list.EMAIL}</a></td>
+											  <td>{user_active_list.PHONE}</td>
+											  <td>
+												<a href="index.php?option=3&show=true&user={user_active_list.USERNAME}"
+												data-container="body"
+												data-toggle="popover"
+												data-placement="right"
+												data-trigger="hover"
+												title="Ver más"
+												data-content="Haga click en el enlace para ver más información.">
+													...
+												</a>
+											  </td>
 										  </tr>
 										<!-- END user_active_list -->
 									  </tbody>
 								  </table>
-								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
-								<script>
-									$('document').ready(function(){
-										$('#userActiveModal').on('hidden.bs.modal', function() { 
-											location.reload();
-										});
-									})
-								</script>
 								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 							  </div>
 							</div>
 						  </div>
 						</div>
-
+						<!-- Inactive users modal -->
 						<div class="modal fade" id="userInactiveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document" style="overflow-y: initial !important;">
+						  <div class="modal-dialog modal-lg" role="document" style="overflow-y: initial !important;">
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<h4 class="modal-title" id="myModalLabel">Usuarios Inactivos</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_INACTIVE_RESULTS == true -->
-									<p class="text-info"> -- No se encontro ningún resultado -- </p>
-								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
+											<th>Número de Miembro</th>
+											<th>Nombre de Usuario</th>
+											<th>Nombre del Dueño</th>
+											<th>Email</th>
+											<th>Teléfono</th>
+											<th></th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_inactive_list -->
 										  <tr>
-											  <td>{user_inactive_list.INDEX}</td><td>{user_inactive_list.USERNAME}</td><td>{user_inactive_list.REG_DATE}</td><td>{user_inactive_list.LAST_VISIT}</td>
-										  </tr>
+											  <td>{user_inactive_list.MEMBERID}</td>
+											  <td>{user_inactive_list.USERNAME}</td>
+											  <td>{user_inactive_list.FULLNAME}</td>
+											  <td><a href="mailto:{user_reg_list.EMAIL}">{user_inactive_list.EMAIL}</a></td>
+											  <td>{user_inactive_list.PHONE}</td>
+											  <td>
+												<a href="index.php?option=3&show=true&user={user_inactive_list.USERNAME}"
+												data-container="body"
+												data-toggle="popover"
+												data-placement="right"
+												data-trigger="hover"
+												title="Ver más"
+												data-content="Haga click en el enlace para ver más información.">
+													...
+												</a>
+											  </td>
+										   </tr>									
 										<!-- END user_inactive_list -->
 									  </tbody>
 								  </table>
-								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
-								<script>
-									$(document).ready(function() {
-										$("#activate_user").click(function() {
-											var username = $("#activate_input").val();
-											
-											if (username !== "")
-											{
-												$.ajax({
-													type: "POST",
-													url: "activate_user.php",
-													data: "username="+username,
-													success: function(data){
-														if (data === "success")
-															$("#activate_status").html("'"+username+"' ha sido activado.");
-														else if (data === "failed")
-															$("#activate_status").html("'"+username+"' no está desactivado.");
-														else
-															$("#activate_status").html("'"+username+"' no existe.");
-													}
-												})
-											}
-										});
-										$('#userInactiveModal').on('hidden.bs.modal', function() { 
-											location.reload();
-										});
-									});
-								</script>
 								<form class="form-inline">
 									<div class="form-group">
-										<input type="text" class="form-control" id="activate_input">
+										<label>Nombre de usuario:</label>
+										<select class="form-control" id="inactive_user">
+											<!-- BEGIN user_inactive_list -->
+												<option>{user_inactive_list.USERNAME}</option>
+											<!-- END -->
+										</select>
 									</div>
 									<button type="button" class="btn btn-default" id="activate_user">Activar</button>
 									<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
@@ -237,65 +220,59 @@
 							</div>
 						  </div>
 						</div>
-
+						<!-- Disabled users modal -->
 						<div class="modal fade" id="userDisabledModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document" style="overflow-y: initial !important;">
+						  <div class="modal-dialog modal-lg" role="document" style="overflow-y: initial !important;">
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<h4 class="modal-title" id="myModalLabel">Usuarios Bloqueados</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_DISABLED_RESULTS == true -->
-									<p class="text-info"> -- No se encontro ningún resultado -- </p>
-								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
+											<th>Número de Miembro</th>
+											<th>Nombre de Usuario</th>
+											<th>Nombre del Dueño</th>
+											<th>Email</th>
+											<th>Teléfono</th>
+											<th></th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_disabled_list -->
 										  <tr>
-											  <td>{user_disabled_list.INDEX}</td><td>{user_disabled_list.USERNAME}</td><td>{user_disabled_list.REG_DATE}</td><td>{user_disabled_list.LAST_VISIT}</td>
-										  </tr>
+											  <td>{user_disabled_list.MEMBERID}</td>
+											  <td>{user_disabled_list.USERNAME}</td>
+											  <td>{user_disabled_list.FULLNAME}</td>
+											  <td><a href="mailto:{user_reg_list.EMAIL}">{user_disabled_list.EMAIL}</a></td>
+											  <td>{user_disabled_list.PHONE}</td>
+											  <td>
+												<a href="index.php?option=3&show=true&user={user_disabled_list.USERNAME}"
+												data-container="body"
+												data-toggle="popover"
+												data-placement="right"
+												data-trigger="hover"
+												title="Ver más"
+												data-content="Haga click en el enlace para ver más información.">
+													...
+												</a>
+											  </td>
+										   </tr>	
 										<!-- END user_disabled_list -->
 									  </tbody>
 								  </table>
-								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
-								<script>
-									$(document).ready(function() {
-										$("#unlock_user").click(function() {
-											var username = $("#unlock_input").val();
-											
-											if (username !== "")
-											{
-												$.ajax({
-													type: "POST",
-													url: "unlock_user.php",
-													data: "username="+username,
-													success: function(data){
-														if (data === "success")
-															$("#unlock_status").html("'"+username+"' ha sido desbloqueado.");
-														else if (data === "failed")
-															$("#unlock_status").html("'"+username+"' no está bloqueado.");
-														else
-															$("#unlock_status").html("'"+username+"' no existe.");
-													}
-												})
-											}
-										});
-										$('#userDisabledModal').on('hidden.bs.modal', function() { 
-											location.reload();
-										});
-									});
-								</script>
 								<form class="form-inline">
 									<div class="form-group">
-										<input type="text" class="form-control" id="unlock_input">
+										<label>Nombre de usuario:</label>
+										<select class="form-control" id="disabled_user">
+											<!-- BEGIN user_disabled_list -->
+												<option>{user_disabled_list.USERNAME}</option>
+											<!-- END -->
+										</select>
 									</div>
 									<button type="button" class="btn btn-default" id="unlock_user">Desbloquear</button>
 									<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
@@ -306,65 +283,56 @@
 							</div>
 						  </div>
 						</div>
-
+						<!-- Expired users modal -->
 						<div class="modal fade" id="userExpiredModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document" style="overflow-y: initial !important;">
+						  <div class="modal-dialog modal-lg" role="document" style="overflow-y: initial !important;">
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<h4 class="modal-title" id="myModalLabel">Usuarios Suspendidos</h4>
 							  </div>
 							  <div class="modal-body" style="height:360px; overflow-y: auto;">
-								<!-- IF NO_EXPIRED_RESULTS == true -->
-									<p class="text-info"> -- No se encontro ningún resultado -- </p>
-								<!-- ELSE -->
 								  <table class="table table-striped">
 									  <thead>
 										<tr>
-											<th> # </th><th> Usuario </th><th> Fecha de registro </th><th> Última visita </th>
+											<th>Número de Miembro</th>
+											<th>Nombre de Usuario</th>
+											<th>Nombre del Dueño</th>
+											<th>Email</th>
+											<th>Teléfono</th>
+											<th></th>
 										</tr>
 									  </thead>
 									  <tbody>
 										<!-- BEGIN user_expired_list -->
 										  <tr>
-											  <td>{user_expired_list.INDEX}</td><td>{user_expired_list.USERNAME}</td><td>{user_expired_list.REG_DATE}</td><td>{user_expired_list.LAST_VISIT}</td>
-										  </tr>
+											  <td>{user_expired_list.MEMBERID}</td>
+											  <td>{user_expired_list.USERNAME}</td>
+											  <td>{user_expired_list.FULLNAME}</td>
+											  <td><a href="mailto:{user_reg_list.EMAIL}">{user_expired_list.EMAIL}</a></td>
+											  <td>{user_expired_list.PHONE}</td>
+											  <td>
+												<a href="index.php?option=3&show=true&user={user_expired_list.USERNAME}"
+												data-container="body"
+												data-toggle="popover"
+												data-placement="right"
+												data-trigger="hover"
+												title="Ver más"
+												data-content="Haga click en el enlace para ver más información.">
+													...
+												</a>
+											  </td>
+										   </tr>
 										<!-- END user_expired_list -->
 									  </tbody>
 								  </table>
-								<!-- ENDIF -->
 							  </div>
 							  <div class="modal-footer">
-								<script>
-									$('document').ready(function(){
-										$('#userExpiredModal').on('hidden.bs.modal', function() { 
-											location.reload();
-										});
-									})
-								</script>
 								<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
 							  </div>
 							</div>
 						  </div>
 						</div>
-					<!-- ELSEIF SIDE_CONTENT == 'create_account_successful' -->
-						<div class="alert alert-success" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							¡La cuenta ha sido creada exitosamente!
-						</div>
-						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
-						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=1';",1500);
-						</script>
-					<!-- ELSEIF SIDE_CONTENT == 'create_account_failed' -->
-						<div class="alert alert-danger" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							¡La cuenta no se pudo crear!</br><strong>Error: {ERROR_MESSAGE}</strong>
-						</div>
-						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
-						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=1';",1700);
-						</script>
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
@@ -375,8 +343,9 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label" for="role">Tipo de cuenta:</label>
 								<div class="col-sm-4">
-									<select class="form-control" name="role">
+									<select class="form-control" id="role">
 										<option value="user" default>usuario</option>
+										<option value="provider" >proveedor</option>
 										<option value="admin">administrador</option>
 									</select>
 								</div>
@@ -384,129 +353,101 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Nombre de usuario: </label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="username" id="username" required>
+									<input type="text" class="form-control" id="username" required>
 									<span id="check_user_status"></span>
 								</div>
 								<div class="col-sm-4">
 									<button type="button" class="btn btn-default" id="check_user">Verificar disponibilidad</button>
 								</div>
-								<script>
-									$(document).ready(function() {
-										$("#check_user").click(function() {
-											var username = $("#username").val();
-											
-											if (username !== "")
-											{
-												$.ajax({
-													type: "POST",
-													url: "check_user.php",
-													data: "username="+username,
-													success: function(data){
-														if (data === "available")
-														{
-															$("#check_user_status").attr("class", "label label-success");
-															$("#check_user_status").html("'"+username+"' está disponible!");
-														}
-														else
-														{
-															$("#check_user_status").attr("class", "label label-warning");
-															$("#check_user_status").html("'"+username+"' no está disponible!");
-														}
-													}
-												})
-											}
-										});
-									});
-								</script>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Contraseña: </label>
 								<div class="col-sm-4">
-									<input type="password" class="form-control" name="password" required>
+									<input type="password" class="form-control" id="password" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Confirmar contraseña: </label>
 								<div class="col-sm-4">
-									<input type="password" class="form-control" name="password_confirm" required>
+									<input type="password" class="form-control" id="password_confirm" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Email: </label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="email" required>
+									<input type="text" class="form-control" id="email" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Primer nombre:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="first">
+									<input type="text" class="form-control" id="first">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Segundo nombre:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="middle">
+									<input type="text" class="form-control" id="middle">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Apellido paterno:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="last">
+									<input type="text" class="form-control" id="last">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Apellido materno:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="maiden">
+									<input type="text" class="form-control" id="maiden">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Dirección Línea 1:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="address1">
+									<input type="text" class="form-control" id="address1">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Dirección Línea 2:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="address2">
+									<input type="text" class="form-control" id="address2">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Ciudad:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="city">
+									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Estado:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="state">
+									<input type="text" class="form-control" id="state">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Zip:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="zip">
+									<input type="text" class="form-control" id="zip">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">País:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="country">
+									<input type="text" class="form-control" id="country">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Teléfono:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="telephone">
+									<input type="text" class="form-control" id="telephone">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-4">
 									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-									<button type="submit" class="btn btn-primary" name="action" value="create_account">Crear cuenta</button>
+									<button type="button" class="btn btn-primary" id="create_user">Crear cuenta</button>
 								</div>
 							</div>
 						</form>
@@ -514,87 +455,108 @@
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
+							<li class="active">Remover una cuenta</li>
+						</ol>
+						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<div class="form-group">
+								<label class="form-label">Remover por: </label>
+								<select class="form-control" id="searchType">
+									<option value="username">Nombre de usuario</option>
+									<option value="id">Número de miembro</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" id="inputSearch" required>
+							</div>
+							<button type="button" class="btn btn-primary" id="remove_user">Remover</button>
+						</form>
+					<!-- ELSEIF SIDE_CONTENT == 3 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar perfil de usuarios</li>
 						</ol>
 						<!-- IF USERNAME_FOUND == 1 -->
-							<p class="text-info">Mostrando información personal del usuario {USER}.</p>
+							<p class="text-info">Mostrando información personal del usuario <span id="mod_user">{USER}</span>.</p>
+							<p class="text-info">Para cambiar la contraseña de este usuario presione <a href="#" data-toggle="modal" data-target="#passwordResetModal">aquí</a></p>
+
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Primer nombre:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{FIRST}">
+										<input type="text" class="form-control" id="first" value="{FIRST}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Segundo nombre:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{MIDDLE}">
+										<input type="text" class="form-control" id="middle" value="{MIDDLE}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Apellido paterno:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{LAST}">
+										<input type="text" class="form-control" id="last" value="{LAST}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Apellido materno:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{MAIDEN}">
+										<input type="text" class="form-control" id="maiden" value="{MAIDEN}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección Línea 1:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{ADDRESS1}">
+										<input type="text" class="form-control" id="address1" value="{ADDRESS1}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección Línea 2:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{ADDRESS2}">
+										<input type="text" class="form-control" id="address2" value="{ADDRESS2}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Ciudad:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{CITY}">
+										<input type="text" class="form-control" id="city" value="{CITY}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Estado:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{STATE}">
+										<input type="text" class="form-control" id="state" value="{STATE}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Zip:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{ZIP}">
+										<input type="text" class="form-control" id="zip" value="{ZIP}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">País:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COUNTRY}">
+										<input type="text" class="form-control" id="country" value="{COUNTRY}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Teléfono:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{PHONE}">
+										<input type="text" class="form-control" id="phone" value="{PHONE}">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Email: </label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{EMAIL}" required>
+										<input type="text" class="form-control" id="email" value="{EMAIL}">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-4">
 										<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-										<button type="submit" class="btn btn-primary">Guardar</button>
+										<button type="button" class="btn btn-primary" id="save_user">Guardar</button>
 									</div>
 								</div>
 							</form>
@@ -604,16 +566,15 @@
 								¡El perfil para este usuario no se pudo encontrar!
 							</div>
 							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=2';",1500);
+								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=3';",1500);
 							</script>
 						<!-- ELSE -->
 							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label for="selectSearch">Buscar por: </label>
+									<label>Buscar por: </label>
 									<select class="form-control" name="searchType">
 										<option value="user">Nombre de usuario</option>
 										<option value="id">Número de miembro</option>
-										<option value="plate">Tablilla de vehículo</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -622,7 +583,7 @@
 								<button type="submit" class="btn btn-primary" name="action" value="show_profile">Mostrar</button>
 							</form>
 						<!-- ENDIF -->
-					<!-- ELSEIF SIDE_CONTENT == 3 -->
+					<!-- ELSEIF SIDE_CONTENT == 4 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
@@ -630,70 +591,52 @@
 						</ol>
 						<!-- IF USERNAME_FOUND == 1 -->
 							<!-- IF USER_CHG_PERM_ALLOW -->
-								<p class="text-info">Los siguientes permisos se le pueden otorgar a la cuenta de {USER}.</p>
+								<p class="text-info">Los siguientes permisos se le pueden otorgar a la cuenta de <span id="perm_user">{USER}</span>.</p>
 								<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 									<div class="form-group">
 										<div class="col-sm-offset-1 col-sm-4">
 											<div class="checkbox">
 											  <label>
-												<input class="check_parent" type="checkbox" name="permission[]" value="all" {CHECK_ALL}>
+												<input class="check_parent" type="checkbox" id="check_all" {CHECK_ALL}>
 												Asignar todos los permisos
 											  </label>
 											</div>
 											<div class="checkbox">
 											  <label>
-												<input class="check_child" type="checkbox" name="permission[]" value="u" {CHECK_U}>
+												<input class="check_child" type="checkbox" id="check_u" {CHECK_U}>
 												Modificar usuarios y miembros
 											  </label>
 											</div>
 											<div class="checkbox">
 											  <label>
-												<input class="check_child" type="checkbox" name="permission[]" value="s" {CHECK_S}>
+												<input class="check_child" type="checkbox" id="check_s" {CHECK_S}>
 												Modificar planes y servicios
 											  </label>
 											</div>
 											<div class="checkbox">
 											  <label>
-												<input class="check_child" type="checkbox" name="permission[]" value="o" {CHECK_O}>
+												<input class="check_child" type="checkbox" id="check_o" {CHECK_O}>
 												Generar ordenes de servicios
 											  </label>
 											</div>
 											<div class="checkbox">
 											  <label>
-												<input class="check_child" type="checkbox" name="permission[]" value="r" {CHECK_R}>
+												<input class="check_child" type="checkbox" id="check_r" {CHECK_R}>
 												Ver reportes
 											  </label>
 											</div>
 											<div class="checkbox">
 											  <label>
-												<input class="check_child" type="checkbox" name="permission[]" value="f" {CHECK_F}>
+												<input class="check_child" type="checkbox" id="check_f" {CHECK_F}>
 												Ver finanzas
 											  </label>
 											</div>
 										</div>
-										<script>
-											$(document).ready(function() {
-												 $('.check_parent').click(function(event) {  //on click 
-													 if(this.checked) { // check select status
-														 $('.check_child').each(function() { //loop through each checkbox
-															 this.disabled = true;  //disable all checkboxes with class "checkbox1"  
-															 this.checked = false;              														 
-														 });
-													 }else{
-														 $('.check_child').each(function() { //loop through each checkbox
-															 this.disabled = false; //deselect all checkboxes with class "checkbox1"  
-															 this.checked = false;              														 
-														 });         
-													 }
-												 });
-												 
-											});
-										</script>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-1 col-sm-4">
 											<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-											<button type="submit" class="btn btn-primary">Guardar</button>
+											<button type="button" class="btn btn-primary" id="save_perms">Guardar</button>
 										</div>
 									</div>
 								</form>
@@ -703,7 +646,7 @@
 									¡Esta cuenta no tiene permisos para modificar!
 								</div>
 								<script type="text/JavaScript">
-									setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=3';",1500);
+									setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=4';",1500);
 								</script>	
 							<!-- ENDIF -->
 						<!-- ELSEIF USERNAME_FOUND == 2 -->
@@ -712,16 +655,15 @@
 								¡La cuenta de usuario no se pudo encontrar!
 							</div>
 							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=3';",1500);
+								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=4';",1500);
 							</script>
 						<!-- ELSE -->
 							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label for="selectSearch">Buscar por: </label>
+									<label>Buscar por: </label>
 									<select class="form-control" name="searchType">
 										<option value="user">Nombre de usuario</option>
 										<option value="id">Número de miembro</option>
-										<option value="last">Tablilla de vehículo</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -730,7 +672,7 @@
 								<button type="submit" class="btn btn-primary" name="action" value="edit_permissions">Mostrar</button>
 							</form>
 						<!-- ENDIF -->
-					<!-- ELSEIF SIDE_CONTENT == 4 -->
+					<!-- ELSEIF SIDE_CONTENT == 5 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
@@ -738,7 +680,7 @@
 						</ol>
 						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 							<div class="form-group">
-								<label for="selectSearch">Buscar por: </label>
+								<label>Buscar por: </label>
 								<select class="form-control" name="searchType">
 									<option value="user">Nombre de usuario</option>
 									<option value="id">Número de miembro</option>
@@ -750,7 +692,7 @@
 							</div>
 							<button type="submit" class="btn btn-primary">Mostrar</button>
 						</form>
-					<!-- ELSEIF SIDE_CONTENT == 5 -->
+					<!-- ELSEIF SIDE_CONTENT == 6 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
@@ -758,7 +700,7 @@
 						</ol>
 						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 							<div class="form-group">
-								<label for="selectSearch">Buscar por: </label>
+								<label>Buscar por: </label>
 								<select class="form-control" name="searchType">
 									<option value="user">Nombre de usuario</option>
 									<option value="id">Número de miembro</option>
@@ -771,6 +713,340 @@
 							<button type="submit" class="btn btn-primary">Mostrar</button>
 						</form>
 					<!-- ENDIF -->
+					<!-- Status modal -->
+					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel"></h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<!-- Password reset modal -->
+					<div class="modal fade" id="passwordResetModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel">Cambiar contraseña de usuario</h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+						    <form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<input type="password" class="form-control" id="newpass" placeholder="Nueva contraseña" required>
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control" id="newpass_confirm" placeholder="Confirme contraseña" required>
+								</div>
+								<div class="form-group">
+									<button type="button" class="btn btn-default" id="pass_change">Cambiar</button>
+								</div>
+							</form>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<script>
+						$(document).ready(function()
+						{
+							$(document).ready(function() {
+								$("#check_user").click(function() {
+									var username = $("#username").val();
+									
+									if (username !== "")
+									{
+										$.ajax({
+											type: "POST",
+											url: "check_user.php",
+											data: "username="+username,
+											success: function(data){
+												if (data === "available")
+												{
+													$("#check_user_status").attr("class", "label label-success");
+													$("#check_user_status").html("'"+username+"' está disponible!");
+												}
+												else
+												{
+													$("#check_user_status").attr("class", "label label-warning");
+													$("#check_user_status").html("'"+username+"' no está disponible!");
+												}
+											}
+										})
+									}
+								});
+							});
+							$('#create_user').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "create_user.php",
+									data: {'username': $('#username').val(),
+										'role': $('#role').val(),
+										'password': $('#password').val(),
+										'email': $('#email').val(),
+										'first': $('#first').val(),
+										'middle': $('#middle').val(),
+										'last': $('#last').val(),
+										'maiden': $('#maiden').val(),
+										'address1': $('#address1').val(),
+										'address2': $('#address2').val(),
+										'city': $('#city').val(),
+										'state': $('#state').val(),
+										'zip': $('#zip').val(),
+										'country': $('#country').val(),
+										'telephone': $('#telephone').val(),
+										'state': $('#state').val(),
+										'zip': $('#zip').val()},
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡La cuenta de usuario ha sido creada exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$('#save_user').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "save_user.php",
+									data: {'username': $('#mod_user').html(),
+										'first': $('#first').val(),
+										'middle': $('#middle').val(),
+										'last': $('#last').val(),
+										'maiden': $('#maiden').val(),
+										'address1': $('#address1').val(),
+										'address2': $('#address2').val(),
+										'city': $('#city').val(),
+										'state': $('#state').val(),
+										'zip': $('#zip').val(),
+										'country': $('#country').val(),
+										'phone': $('#phone').val(),
+										'state': $('#state').val(),
+										'zip': $('#zip').val(),
+										'email': $('#email').val()},
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El perfil del usuario ha sido guardada exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$("#remove_user").click(function() {
+								switch($('#searchType').val())
+								{
+								case 'username':
+									$.ajax({
+										type: "POST",
+										url: "remove_user.php",
+										data: "username="+$('#inputSearch').val(),
+										success: function(data){
+											if (data === "success")
+											{
+												$('#modal').modal('show');
+												$("#ModalLabel").html('<strong>Información</strong>');
+												$("#ModalBody").html('¡La cuenta de usuario ha sido removida exitosamente!');
+											}
+											else
+											{
+												$('#modal').modal('show');
+												$("#ModalLabel").html('<strong>Error</strong>');
+												$("#ModalBody").html(data);
+											}
+										}
+									});
+									break;
+								case 'id':
+									$.ajax({
+										type: "POST",
+										url: "remove_user.php",
+										data: "id="+$('#inputSearch').val(),
+										success: function(data){
+											if (data === "success")
+											{
+												$('#modal').modal('show');
+												$("#ModalLabel").html('<strong>Información</strong>');
+												$("#ModalBody").html('¡La cuenta de usuario ha sido removida exitosamente!');
+											}
+											else
+											{
+												$('#modal').modal('show');
+												$("#ModalLabel").html('<strong>Error</strong>');
+												$("#ModalBody").html(data);
+											}
+										}
+									});
+									break;
+								}
+							});
+							$('#save_perms').click(function()
+							{						
+								var perm_string = '';
+
+								if ($('#check_all').is(':checked'))
+									perm_string = 'all';
+								else
+								{
+									if ($('#check_u').is(':checked')) perm_string += ' u ';
+									if ($('#check_s').is(':checked')) perm_string += ' s ';
+									if ($('#check_o').is(':checked')) perm_string += ' o ';
+									if ($('#check_r').is(':checked')) perm_string += ' r ';
+									if ($('#check_f').is(':checked')) perm_string += ' f ';
+									
+									perm_string.trim();
+								}
+								
+								if (perm_string === '')
+									perm_string = 'none';
+								$.ajax({
+									type: "POST",
+									url: "save_perms.php",
+									data: {'username': $('#perm_user').html(),
+										'permissions': perm_string},
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡Los permisos del usuario han sido guardados exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							$("#activate_user").click(function() {
+								$.ajax({
+									type: "POST",
+									url: "activate_user.php",
+									data: "username="+$('#inactive_user option:selected').text(),
+									success: function(data){
+										if (data === "success")
+										{
+											$('#userInactiveModal').modal('hide');
+
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('El usuario ha sido activado satisfactoriamente.');
+										}
+										else
+										{
+											$('#userInactiveModal').modal('hide');
+
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+
+										}
+									}
+								})
+							});
+							$("#unlock_user").click(function() {
+								$.ajax({
+									type: "POST",
+									url: "unlock_user.php",
+									data: "username="+$('#disabled_user option:selected').text(),
+									success: function(data){
+										if (data === "success")
+										{
+											$('#userDisabledModal').modal('hide');
+
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('El usuario ha sido desbloqueado satisfactoriamente.');
+										}
+										else
+										{
+											$('#userDisabledModal').modal('hide');
+
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+
+										}
+									}
+								})
+							});
+							$('#pass_change').click(function() {
+								$.ajax({
+									type: "POST",
+									url: "pass_change.php",
+									data: {'username': $('#mod_user').html(),
+										'newpass': $('#newpass').val()},
+									success: function(data){
+										if (data === "success")
+										{
+											$('#passwordResetModal').modal('hide');
+
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('La contraseña ha sido cambiada satisfactoriamente.');
+										}
+										else
+										{
+											$('#passwordResetModal').modal('hide');
+
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+
+										}
+									}
+								})
+							});
+							$('#cancel_button').click(function()
+							{
+								// When user clicks cancel button the page is reloaded and home content is displayed
+								window.location.href = 'index.php';
+							});
+							$('#modal').on('hidden.bs.modal', function() { 
+								//location.reload();
+								window.location.href = 'index.php';
+							});
+							$('.check_parent').click(function(event) {  //on click 
+								 if(this.checked) { // check select status
+									 $('.check_child').each(function() { //loop through each checkbox
+										 this.disabled = true;  //disable all checkboxes with class "check_child"  
+										 this.checked = false;              														 
+									 });
+								 }else{
+									$('.check_child').each(function() { //loop through each checkbox
+										 this.disabled = false; //deselect all checkboxes with class "check_child"  
+										 this.checked = false;              														 
+									});         
+								}
+							});
+						});
+					</script>
 				</div>
 			</div>
 		<!-- INCLUDE admin_footer.html -->

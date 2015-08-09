@@ -24,43 +24,42 @@ class Provider extends User
 	}
 	
 	
-	public function add_provider_username($account)
+	public function add_provider($account)
 	{
-		if (!isset($account['companyName']) || $account['companyName'] === "" || !isset($account['user']) || $account['user'] === "")
+		if (!isset($account['user']) || $account['user'] === "")
 		{
 			$this->set_error(self::BAD_INPUT);
 			return false;
 		}
 		
-		$this->username 		= $this->sanitize_input($account['user']);
-		$this->companyName 		= $this->sanitize_input($account['companyName']);
-		$this->area				= $this->sanitize_input($account['area']);
-	
+		$this->username 	= $this->sanitize_input($account['user']);
+
 		if ($this->user_available($this->username))
 		{
 			$this->set_error(self::UNREGISTERED_USER);
 			return false;
 		}
 		
-
+		$this->companyName	 	= isset($account['companyName'])		? $this->sanitize_input($account['companyName']) : "";
+		$this->area				= isset($account['area'])				? $this->sanitize_input($account['area']) : "";
 		$this->companyPhone		= isset($account['companyPhone']) 		? $this->sanitize_input($account['companyPhone']) : "";
 		$this->companyEmail		= isset($account['companyEmail']) 		? $this->sanitize_input($account['companyEmail']) : "";
 		$this->companyAddress1	= isset($account['companyAddress1']) 	? $this->sanitize_input($account['companyAddress1']) : "";
 		$this->companyAddress2	= isset($account['companyAddress2']) 	? $this->sanitize_input($account['companyAddress2']) : "";
-		$this->city		= isset($account['city']) 						? $this->sanitize_input($account['city']) : "";
-		$this->zip		= isset($account['zip']) 						? $this->sanitize_input($account['zip']) : "";
-		$this->country	= isset($account['country']) 					? $this->sanitize_input($account['country']) : "";
+		$this->city				= isset($account['city']) 				? $this->sanitize_input($account['city']) : "";
+		$this->zip				= isset($account['zip']) 				? $this->sanitize_input($account['zip']) : "";
+		$this->country			= isset($account['country']) 			? $this->sanitize_input($account['country']) : "";
 
-		
 		// Populate providers table 
-		$stmt = sprintf("INSERT INTO providers VALUES (NULL, (SELECT id FROM login WHERE user = '%s'), '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-			$this->username, $this->companyName, $this->companyPhone, $this->companyEmail, $this->area, $this->companyAddress1, $this->companyAddress2, $this->city, $this->zip, $this->country);
-
+		$stmt = sprintf("INSERT INTO providers (userid, profile_id, companyName, companyPhone, companyEmail, area, companyAddress1, companyAddress2, city, zip, country) 
+			VALUES ((SELECT login.id FROM login WHERE login.user = '%s'), (SELECT id FROM profile WHERE profile.userid = (SELECT id FROM login WHERE user = '%s')), '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+			$this->username, $this->username, $this->companyName, $this->companyPhone, $this->companyEmail, $this->area, $this->companyAddress1, $this->companyAddress2, $this->city, $this->zip, $this->country);
 		
-		//
 		if (!$this->sql_conn->query($stmt))
-			trigger_error('/admin/providers/index.php::add_provider(): '.$this->sql_conn->error, E_USER_ERROR);
-			
+		{
+			$this->error = $this->sql_conn->error;
+			return false;
+		}
 			
 		if (!$this->update_role($this->username))
 		{
@@ -69,57 +68,8 @@ class Provider extends User
 		}
 
 		return true;
-		
 	}
-	
-	public function add_provider_userid($account)
-	{
-		if (!isset($account['companyName']) || $account['companyName'] === "" || !isset($account['user']) || $account['user'] === "")
-		{
-			$this->set_error(self::BAD_INPUT);
-			return false;
-		}
 		
-		$this->userid	 		= $this->sanitize_input($account['user']);
-		$this->companyName 		= $this->sanitize_input($account['companyName']);
-		$this->area				= $this->sanitize_input($account['area']);
-	
-		if ($this->userid_available($this->userid))
-		{
-			$this->set_error(self::UNREGISTERED_USER);
-			return false;
-		}
-		
-
-		$this->companyPhone		= isset($account['companyPhone']) 		? $this->sanitize_input($account['companyPhone']) : "";
-		$this->companyEmail		= isset($account['companyEmail']) 		? $this->sanitize_input($account['companyEmail']) : "";
-		$this->companyAddress1	= isset($account['companyAddress1']) 	? $this->sanitize_input($account['companyAddress1']) : "";
-		$this->companyAddress2	= isset($account['companyAddress2']) 	? $this->sanitize_input($account['companyAddress2']) : "";
-		$this->city		= isset($account['city']) 						? $this->sanitize_input($account['city']) : "";
-		$this->zip		= isset($account['zip']) 						? $this->sanitize_input($account['zip']) : "";
-		$this->country	= isset($account['country']) 					? $this->sanitize_input($account['country']) : "";
-
-		
-		// Populate providers table 
-		$stmt = sprintf("INSERT INTO providers VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-			$this->userid, $this->companyName, $this->companyPhone, $this->companyEmail, $this->area, $this->companyAddress1, $this->companyAddress2, $this->city, $this->zip, $this->country);
-
-		
-		//
-		if (!$this->sql_conn->query($stmt))
-			trigger_error('/admin/providers/index.php::add_provider(): '.$this->sql_conn->error, E_USER_ERROR);
-			
-			
-		if (!$this->update_userid_role($this->userid))
-		{
-			$this->set_error(self::INCOMPLETE_TRANSACTION);
-			return false;
-		}
-
-		return true;
-		
-	}
-	
 	public function load_provider($id)
 	{
 		$id = $this->sanitize_input($id);

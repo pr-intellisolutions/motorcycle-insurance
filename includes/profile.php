@@ -34,9 +34,27 @@ class Profile extends User
 		
 		$result->close();
 	}
-	public function save_profile($user_id)
+	public function save_profile($user_id, $profile_data)
 	{
-		
+		$stmnt = sprintf("UPDATE profile SET first='%s', middle='%s', last='%s', maiden='%s', phone='%s', 
+			address1='%s', address2='%s', city='%s', state='%s', zip='%s', country='%s' WHERE userid=%d",
+			$profile_data['first'], $profile_data['middle'], $profile_data['last'], $profile_data['maiden'], 
+			$profile_data['phone'], $profile_data['address1'], $profile_data['address2'], $profile_data['city'], 
+			$profile_data['state'], $profile_data['zip'], $profile_data['country'], $user_id);
+			
+		if ($this->sql_conn->query($stmnt))
+		{
+			$stmnt = sprintf("UPDATE login SET email='%s' WHERE id=%d", $profile_data['email'], $user_id);
+			
+			if ($this->sql_conn->query($stmnt))
+			{
+				return true;
+			}
+		}	
+
+		$this->error = $this->sql_conn->error;
+
+		return false;
 	}
 }
 ?>

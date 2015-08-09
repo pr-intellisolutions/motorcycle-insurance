@@ -6,195 +6,202 @@
 							<h3 class="panel-title">Navegación</h3>
 						</div>
 						<div class="list-group">
-						  <a href="index.php?option=1" class="list-group-item">Buscar proveedor de servicio</a>
-						  <a href="index.php?option=2" class="list-group-item">Modificar proveedor de servicio</a>
-						  <a href="index.php?option=3" class="list-group-item">Añadir proveedor</a>
-						  <a href="index.php?option=4" class="list-group-item">Eliminar proveedor</a>
+						  <a href="index.php?option=1" class="list-group-item">Añadir proveedor</a>
+						  <a href="index.php?option=2" class="list-group-item">Eliminar proveedor</a>
+						  <a href="index.php?option=3" class="list-group-item">Modificar proveedor</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-8">
-					<script>
-						$(document).ready(function()
-						{
-							$('#cancel_button').click(function()
-							{
-								// When user clicks cancel button the page is reloaded and home content is displayed
-								window.location.href = 'index.php';
-							});
-						});
-					</script>
-						
-						<!-- IF SIDE_CONTENT == "home" -->
+					<!-- IF SIDE_CONTENT == "home" -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Proveedores de servicio</li>
 						</ol>
-						
-							<!-- IF USERNAME_FOUND == 1 -->
-							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
-								<div class="form-group" >
-									<label class="control-label">Ordenar por:</label>
-									<select class="form-control" name="searchType">
-										<option value="area" default>Área de cobertura</option>
-										<option value="nameLast">Nombre del proveedor</option>
-									</select>
-								</div>
-								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
-							</form>
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Nombre del proveedor</th>
-										<th>Área de cobertura</th>
-										<th>Pueblo</th>
-										<th>Teléfono de la compañía</th>
-										<th>Email de la compañía</th>
-									</tr>
-								</thead>
-								<tbody>
-										<!-- BEGIN user_reg_list -->
-										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.CITY}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
-										  </tr>
-										<!-- END user_reg_list -->
-								</tbody>
-							</table>
-							<!-- ELSEIF USERNAME_FOUND == 2 -->
-							<div class="alert alert-danger" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								No existen proveedores.
+						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<div class="form-group" >
+								<label class="control-label">Filtrar por:</label>
+								
+								<select class="form-control" name="searchType">
+									<option value="provider" default>Nombre del proveedor</option>
+									<option value="area">Área de cobertura</option>
+									<option value="city">Ciudad o pueblo</option>
+								</select>
 							</div>
-							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/providers/index.php';",1500);
-							</script>
-						
-							<!-- ELSE -->
-							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}" >
-								<div class="form-group" >
-									<label class="control-label">Ordenar por:</label>
-									<select class="form-control" name="searchType">
-										<option value="area" default>Área de cobertura</option>
-										<option value="nameLast">Nombre del proveedor</option>
-									</select>
-								</div>
-								<button type="submit" class="btn btn-primary" name="action" value="order_by">Ordenar</button>
-							</form>
-						
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Nombre del proveedor</th>
-										<th>Área de cobertura</th>
-										<th>Pueblo</th>
-										<th>Teléfono de la compañía</th>
-										<th>Email de la compañía</th>
-									</tr>
-								</thead>
-								<tbody>
-										<!-- BEGIN user_reg_list -->
-										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.CITY}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
-										  </tr>
-										<!-- END user_reg_list -->
-								</tbody>
-							</table>
-							<!-- ENDIF -->	
-					
-					<!-- ELSEIF SIDE_CONTENT == 1 -->
-						<ol class="breadcrumb">
-							<li><a href="{SITE_URL}admin">Inicio</a></li>
-							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
-							<li class="active">Buscar proveedor</li>
-						</ol>
-							
-						<!-- IF USERNAME_FOUND == 1 -->
+							<div class="form-group">
+								<input type="text" class="form-control" name="searchInput">
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary" name="action" value="filter_by">Filtrar</button>
+							</div>
+						</form>
+						<hr>
 						<table class="table table-striped">
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Nombre de la compañía</th>
+									<th>Nombre del proveedor</th>
 									<th>Área de cobertura</th>
+									<th>Pueblo</th>
 									<th>Teléfono de la compañía</th>
 									<th>Email de la compañía</th>
-									<th>Número de la compañía</th>
-									<th>Nombre del proveedor</th>
-									<th>Número de miembro</th>
 								</tr>
 							</thead>
 							<tbody>
-										<!-- BEGIN user_reg_list -->
-										  <tr>
-											  <td>{user_reg_list.INDEX}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td><td>{user_reg_list.ID}</td><td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.USERID}</td>
-										  </tr>
-										<!-- END user_reg_list -->
+							<!-- BEGIN providers_list -->
+							  <tr>
+								  <td>{providers_list.INDEX}</td>
+								  <td>{providers_list.FULLNAME}</td>
+								  <td>{providers_list.AREA}</td>
+								  <td>{providers_list.CITY}</td>
+								  <td>{providers_list.COMPANYPHONE}</td>
+								  <td><a href="mailto:{providers_list.COMPANYEMAIL}">{providers_list.COMPANYEMAIL}<a/></td>
+							  </tr>
+							<!-- END providers_list -->
 							</tbody>
 						</table>
-						<!-- ELSEIF USERNAME_FOUND == 2 -->
-							<div class="alert alert-danger" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								Proveedor no se pudo encontrar.
-							</div>
-							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=1';",1500);
-							</script>
-						<!-- ELSE -->
-							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
-								<div class="form-group">
-									<label for="selectSearch">Buscar por: </label>
-									<select class="form-control" name="searchType">
-									<option value="area">Área de cobertura</option>
-									<option value="companyName">Nombre de la compañía</option>
-									<option value="nameLast">Nombre del proveedor</option>
-									<option value="userid">Número de miembro</option>
+					<!-- ELSEIF SIDE_CONTENT == 1 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
+							<li class="active">Añadir proveedor</li>
+						</ol>
+						<div class="alert alert-info" role="alert">
+							<strong>Nota:</strong>
+							Antes de añadir un nuevo proveedor se debe crear una cuenta en la sección de 'Usuarios y miembros'
+							y se debe especificar que la nueva cuenta es de tipo proveedor. Tan pronto esa cuenta se cree, el nombre
+							de usuario aparecerá en la lista de abajo y entonces se podrá proseguir a registrar debidamente el nuevo
+							proveedor.
+						</div>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<div class="form-group" >
+								<label class="col-sm-3 control-label">Nombre de usuario:</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="user">
+									<!-- BEGIN provider -->
+										<option value="{provider.USERNAME}">{provider.USERNAME}</option>
+									<!-- END -->
 									</select>
 								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" name="inputSearch" required>
+							</div>
+							<hr>													
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Nombre de la compañía: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="companyName" required>
 								</div>
-								<button type="submit" class="btn btn-primary" name="action" value="search_provider">Buscar</button>
-								<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-							</form>	
-						<!-- ENDIF -->					
-					
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Teléfono de la compañía: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="companyPhone" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Email de la compañía: </label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="companyEmail" required>
+								</div>
+							</div>							
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Área de cobertura:</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="area">
+										<option value="norte" default>Norte</option>
+										<option value="sur">Sur</option>
+										<option value="este">Este</option>
+										<option value="oeste">Oeste</option>
+										<option value="central">Centro</option>
+										<option value="noreste">Noreste</option>
+										<option value="sureste">Sureste</option>
+										<option value="noroeste">Noroeste</option>
+										<option value="suroeste">Suroeste</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Dirección de la compañía Línea 1:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="companyAddress1">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Dirección  de la compañía Línea 2:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="companyAddress2">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Ciudad de la compañía:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="city">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Zip de la compañía:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="zip">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">País de la compañía:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="country">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-4">
+									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="add_provider">Añadir</button>
+								</div>
+							</div>
+						</form>
 					<!-- ELSEIF SIDE_CONTENT == 2 -->
-					<ol class="breadcrumb">
-						<li><a href="{SITE_URL}admin">Inicio</a></li>
-						<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
-						<li class="active">Modificar proveedor</li>
-					</ol>
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
+							<li class="active">Añadir proveedor</li>
+						</ol>
+						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<div class="form-group">
+								<label class="form-label">Proveedor de servicio: </label>
+								<select class="form-control" id="user">
+								<!-- BEGIN provider -->
+									<option value="{provider.USERNAME}">{provider.FULLNAME}</option>
+								<!-- END -->
+								</select>
+							</div>
+							<button type="button" class="btn btn-primary" id="remove_user">Remover</button>
+						</form>
+					<!-- ELSEIF SIDE_CONTENT == 3 -->
+						<ol class="breadcrumb">
+							<li><a href="{SITE_URL}admin">Inicio</a></li>
+							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
+							<li class="active">Modificar proveedor</li>
+						</ol>
 						<!-- IF USERNAME_FOUND == 1 -->
-							<p class="text-info">Información del proveedor</p>
-							
-							
+							<p class="text-info">Mostrando información del proveedor con número {PROFILE_ID}</p>
+						
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}" >
 							<input type="hidden" class="form-control" value="{ID}" name="ID">
 							
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Número de miembro del proveedor:</label>
-									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{USERID}" name="USERID" required>
-									</div>
-								</div>
-								<div class="form-group">
 									<label class="col-sm-3 control-label">Nombre de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYNAME}" name="COMPANYNAME" required>
+										<input type="text" class="form-control" value="{COMPANYNAME}" name="COMPANYNAME">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Teléfono de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYPHONE}" name="COMPANYPHONE" required>
+										<input type="text" class="form-control" value="{COMPANYPHONE}" name="COMPANYPHONE">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Email de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYEMAIL}" name="COMPANYEMAIL" required>
+										<input type="text" class="form-control" value="{COMPANYEMAIL}" name="COMPANYEMAIL">
 									</div>
 								</div>
 								<div class="form-group">
@@ -217,359 +224,142 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección de la compañía línea 1:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYADDRESS1}" name="COMPANYADDRESS1" required>
+										<input type="text" class="form-control" value="{COMPANYADDRESS1}" name="COMPANYADDRESS1">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección de la compañía línea 2:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYADDRESS2}" name="COMPANYADDRESS2" required>
+										<input type="text" class="form-control" value="{COMPANYADDRESS2}" name="COMPANYADDRESS2">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Cuidad de la compañía::</label>
+									<label class="col-sm-3 control-label">Cuidad de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{CITY}" name="CITY" required>
+										<input type="text" class="form-control" value="{CITY}" name="CITY">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Código postal de la compañía::</label>
+									<label class="col-sm-3 control-label">Zip de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{ZIP}" name="ZIP" required>
+										<input type="text" class="form-control" value="{ZIP}" name="ZIP">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">País de la compañía::</label>
+									<label class="col-sm-3 control-label">País de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COUNTRY}" name="COUNTRY" required>
+										<input type="text" class="form-control" value="{COUNTRY}" name="COUNTRY">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-4">
-										<button type="submit" class="btn btn-primary" name="action" value="modify_provider">Guardar información</button>
 										<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
+										<button type="submit" class="btn btn-primary" name="action" value="modify_provider">Guardar</button>
 									</div>
 								</div>
 							</form>
 						<!-- ELSEIF USERNAME_FOUND == 2 -->
 							<div class="alert alert-danger" role="alert">
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								Proveedor no se pudo encontrar.
+								¡El proveedor no se pudo encontrar!
 							</div>
 							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=2';",1500);
+								setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",1500);
 							</script>			
 						<!-- ELSE -->
 							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
-									<label for="selectSearch">Buscar por: </label>
-									<select class="form-control" name="searchType" id="plan_type">
-									
-									<option value="userid">Número de usuario</option>
-									<option value="username">Nombre de usuario</option>
+									<label class="form-label">Proveedor de servicio: </label>
+									<select class="form-control" name="user">
+									<!-- BEGIN provider -->
+										<option value="{provider.USERNAME}">{provider.FULLNAME}</option>
+									<!-- END -->
 									</select>
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" name="inputSearch" required>
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="show_modify_provider">Mostrar</button>
-							</form>
-								
+							</form>	
 						<!-- ENDIF -->
-						
-						<!-- ELSEIF SIDE_CONTENT == 'modify_account_successful' -->
-						<div class="alert alert-success" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							El proveedor ha sido modificado exitosamente.
+					<!-- ENDIF -->
+					<!-- Status modal -->
+					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="ModalLabel"></h4>
+						  </div>
+						  <div class="modal-body" id="ModalBody">
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+						  </div>
 						</div>
-						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
-						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=2';",2500);
-						</script>
-						
-						<!-- ELSEIF SIDE_CONTENT == 'modify_account_failed' -->
-						<div class="alert alert-danger" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							Proveedor no se pudo modificar.</br><strong>Error: {ERROR_MESSAGE}</strong>
-						</div>
-						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
-						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=2';",2500);
-						</script>	
-						
-					<!-- ELSEIF SIDE_CONTENT == 3 -->
-					<!-- TODO: Data validation client side -->
-						<ol class="breadcrumb">
-							<li><a href="{SITE_URL}admin">Inicio</a></li>
-							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
-							<li class="active">Añadir proveedor</li>
-						</ol>
-											
-						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
-							
-							<div class="form-group" >
-								<label class="col-sm-3 control-label">Añadir por:</label>
-									<div class="col-sm-4">
-										<select class="form-control" name="searchType" id="searchType">
-											<option value="userid" default>Número de miembro</option>
-											<option value="username">Nombre de usuario</option>
-										</select>
-									</div>
-									<br><br>
-									<div class="col-sm-3">
-									</div>
-									<div class="col-sm-4">
-									
-										<input type="text" class="form-control" name="user" id="user" required>
-										<span id="check_user_status"></span>
-									</div>
-									<div class="col-sm-3">
-										<button type="button" class="btn btn-default"  id="check_user">Verificar registro de usuario</button>
-									</div>
-							</div>
-							
-							
-														
-							<!-- JQuery script to process user availability -->
-							<script type="text/javascript">
-								$(document).ready(function() {
-									$("#check_user").click(function() {
-										var username = $("#user").val();
-										var searchType = $("#searchType").val();
-										
-										if (searchType == "username")
+					  </div>
+					</div>
+					<script>
+						$(document).ready(function(){
+							$('#add_provider').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "add_provider.php",
+									data: {'user': $('#user').val(),
+										'companyName': $('#companyName').val(),
+										'companyPhone': $('#companyPhone').val(),
+										'companyEmail': $('#companyEmail').val(),
+										'area': $('#area').val(),
+										'companyAddress1': $('#companyAddress1').val(),
+										'companyAddress2': $('#companyAddress2').val(),
+										'city': $('#city').val(),
+										'zip': $('#zip').val(),
+										'country': $('#country').val()},
+									success: function(data){
+										if (data === "success")
 										{
-										
-											if (username !== "")
-											{
-												$.ajax({
-													type: "POST",
-													url: "check_user.php",
-													data: "username="+username,
-													success: function(data){
-														if (data === "available")
-														{
-															$("#check_user_status").attr("class", "label label-warning");
-															$("#check_user_status").html("'"+username+"' no es un usuario registrado.");
-														}
-														else
-														{
-															$("#check_user_status").attr("class", "label label-success");
-															$("#check_user_status").html("'"+username+"' es un usuario registrado.");
-														}
-													}
-												})
-											}
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡El proveedor de servicio ha sido añadido exitosamente!');
 										}
-										else if (searchType == "userid")
+										else
 										{
-										
-											if (username !== "")
-											{
-												$.ajax({
-													type: "POST",
-													url: "check_userid.php",
-													data: "username="+username,
-													success: function(data){
-														if (data === "available")
-														{
-															$("#check_user_status").attr("class", "label label-warning");
-															$("#check_user_status").html("'"+username+"' no es un usuario registrado.");
-														}
-														else
-														{
-															$("#check_user_status").attr("class", "label label-success");
-															$("#check_user_status").html("'"+username+"' es un usuario registrado.");
-														}
-													}
-												})
-											}
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
 										}
-										
-									});
+									}
+								})
+							});
+							$("#remove_user").click(function() {
+								$.ajax({
+									type: "POST",
+									url: "remove_provider.php",
+									data: "username="+$('#user').val(),
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡La cuenta de usuario ha sido removida exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
 								});
-							</script>
-													
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Nombre de la compañía: </label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="companyName" required>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Teléfono de la compañía: </label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="companyPhone" required>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Email de la compañía: </label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="companyEmail" required>
-								</div>
-							</div>							
-							<div class="form-group">
-								<label class="col-sm-3 control-label" for="area">Área de cobertura:</label>
-								<div class="col-sm-4">
-									<select class="form-control" name="area">
-										<option value="norte" default>Norte</option>
-										<option value="sur">Sur</option>
-										<option value="este">Este</option>
-										<option value="oeste">Oeste</option>
-										<option value="central">Centro</option>
-										<option value="noreste">Noreste</option>
-										<option value="sureste">Sureste</option>
-										<option value="noroeste">Noroeste</option>
-										<option value="suroeste">Suroeste</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Dirección de la compañía Línea 1:</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="companyAddress1">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Dirección  de la compañía Línea 2:</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="companyAddress2">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Ciudad de la compañía:</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="city">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Zip de la compañía:</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="zip">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">País de la compañía:</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" name="country">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-3 col-sm-4">
-									<button type="submit" class="btn btn-primary" name="action" value="add_provider">Añadir proveedor</button>
-									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-									
-								</div>
-							</div>
-						</form>
-						
-						<!-- ELSEIF SIDE_CONTENT == 'create_account_successful' -->
-						<div class="alert alert-success" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							El proveedor ha sido creado exitosamente.
-						</div>
-						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
-						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",2500);
-						</script>
-						
-						<!-- ELSEIF SIDE_CONTENT == 'create_account_failed' -->
-						<div class="alert alert-danger" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							Proveedor no se pudo crear.</br><strong>Error: {ERROR_MESSAGE}</strong>
-						</div>
-						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
-						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=3';",2500);
-						</script>				
-					
-						<!-- ELSEIF SIDE_CONTENT == 4 -->
-						<ol class="breadcrumb">
-							<li><a href="{SITE_URL}admin">Inicio</a></li>
-							<li><a href="{SITE_URL}admin/providers">Proveedores de Servicio</a></li>
-							<li class="active">Eliminar proveedor</li>
-						</ol>
-						
-							<!-- IF USERNAME_FOUND == 1 -->
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>Nombre del proveedor</th>
-										<th># de la compañía</th>
-										<th>Nombre de la compañía</th>
-										<th>Área de cobertura</th>
-										<th>Teléfono de la compañía</th>
-										<th>Email de la compañía</th>
-									</tr>
-								</thead>
-								<tbody>
-										<!-- BEGIN user_reg_list -->
-										  <tr>
-											  <td>{user_reg_list.NAMELAST}</td><td>{user_reg_list.ID}</td><td>{user_reg_list.COMPANYNAME}</td><td>{user_reg_list.AREA}</td><td>{user_reg_list.COMPANYPHONE}</td><td>{user_reg_list.COMPANYEMAIL}</td>
-										  </tr>
-										<!-- END user_reg_list -->
-								</tbody>
-							</table>
-							
-							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}" >
-							<input type="hidden" class="form-control" value="{ID}" name="ID">
-								<div class="col-sm-offset-3 col-sm-4">
-									<button type="submit" class="btn btn-primary" name="action" value="delete_provider">Eliminar proveedor</button>
-									<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-								</div>	
-							</form>					
-							
-							
-							<!-- ELSEIF USERNAME_FOUND == 2 -->
-							<div class="alert alert-danger" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								Proveedor no se pudo encontrar.
-							</div>
-							<script type="text/JavaScript">
-								setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=4';",1500);
-							</script>
-						
-							<!-- ELSE -->
-							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
-								<div class="form-group">
-									<label for="selectSearch">Buscar por: </label>
-									<select class="form-control" name="searchType" id="plan_type">
-									
-									<option value="userid">Número de usuario</option>
-									<option value="username">Nombre de usuario</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" name="inputSearch" required>
-								</div>
-								<button type="submit" class="btn btn-primary" name="action" value="show_delete_provider">Mostrar</button>
-							</form>
-		
-		
-							<!-- ENDIF -->	
-							
-						<!-- ELSEIF SIDE_CONTENT == 'delete_account_successful' -->
-						<div class="alert alert-success" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							El proveedor ha sido eliminado exitosamente.
-						</div>
-						<p class="text-info">Este mensaje se cerrará en 3 segundos...</p>
-						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=4';",1500);
-						</script>
-						
-						<!-- ELSEIF SIDE_CONTENT == 'delete_account_failed' -->
-						<div class="alert alert-danger" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							El proveedor no pudo ser eliminado.</br><strong>Error: {ERROR_MESSAGE}</strong>
-						</div>
-						<p class="text-info">Este mensaje se cerrará en 5 segundos...</p>
-						<script type="text/JavaScript">
-							setTimeout("location.href = '{SITE_URL}admin/providers/index.php?option=4';",1700);
-						</script>
-	
-						<!-- ENDIF -->	
-						
+							});
+							$('#cancel_button').click(function()
+							{
+								// When user clicks cancel button the page is reloaded and home content is displayed
+								window.location.href = 'index.php';
+							});
+							$('#modal').on('hidden.bs.modal', function() { 
+								//location.reload();
+								window.location.href = 'index.php';
+							});
+						});
+					</script
 				</div>
 			</div>
 		<!-- INCLUDE admin_footer.html -->
