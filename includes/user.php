@@ -29,6 +29,14 @@ class User extends Session
 			return false;
 		}
 
+		// Check if session has expired after inactivity
+		if ($this->session_exp)
+		{
+			$this->session_close();
+			
+			$this->set_error(self::SESSION_EXPIRED);
+			return false;
+		}
 		$stmt = sprintf("SELECT * FROM login WHERE id = %d", $this->user_id);
 
 		$result = $this->sql_conn->query($stmt);
@@ -113,7 +121,6 @@ class User extends Session
 	}
 	public function change_passwd($username, $newpass)
 	{
-		// This function is to be called while in administrator mode
 		global $site_config;
 
 		$newpass = $this->sanitize_input($newpass);

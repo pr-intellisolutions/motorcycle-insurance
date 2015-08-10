@@ -75,8 +75,6 @@ if ($user->auth() && $user->role === 'admin')
 			$template->assign_var("ACTIVATION_REQUIRED", "selected");
 		else
 			$template->assign_var("ACTIVATION_NOT_REQUIRED", "selected");
-
-
 	}
 	//# Database backup content
 	else if (isset($_GET['option']) && $_GET['option'] == 4)
@@ -108,7 +106,6 @@ if ($user->auth() && $user->role === 'admin')
 			$result->close();
 		}
 	}
-
 	$template->set_filenames(array('body' => 'admin_cp.html'));
 	$template->display('body');
 }

@@ -3,18 +3,24 @@
 require_once('../../common.php');
 require_once('./plan.php');
 
-$name = isset($_POST['name']) ? $_POST['name'] : "";
-
-$plan = New Plan;
-
-if ($plan->name_available($name))
+if ($user->auth() && $user->role === 'admin')
 {
-	echo "available";
-	die();
+	$plan = New Plan;
+
+	if ($plan->name_available($_POST['name']))
+	{
+		echo "available";
+		die();
+	}
+	else
+	{
+		echo "not available";
+		die();
+	}
 }
 else
 {
-	echo "not available";
+	http_response_code(400);
 	die();
 }
 

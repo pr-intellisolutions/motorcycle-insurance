@@ -470,6 +470,27 @@
 							</div>
 							<button type="button" class="btn btn-primary" id="remove_user">Remover</button>
 						</form>
+						<hr>
+						<table class="table table-hover">
+						  <thead>
+							<tr>
+								<th>Número de Miembro</th>
+								<th>Nombre de Usuario</th>
+								<th>Teléfono</th>
+								<th>Email</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<!-- BEGIN user_list -->
+							  <tr>
+								  <td>{user_list.MEMBERID}</td>
+								  <td>{user_list.USERNAME}</td>
+								  <td>{user_list.PHONE}</td>
+								  <td><a href="mailto:{user_reg_list.EMAIL}">{user_list.EMAIL}</a></td>
+							   </tr>									
+							<!-- END user_list -->
+						  </tbody>
+						</table>
 					<!-- ELSEIF SIDE_CONTENT == 3 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
@@ -582,6 +603,27 @@
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="show_profile">Mostrar</button>
 							</form>
+							<hr>
+							<table class="table table-hover">
+							  <thead>
+								<tr>
+									<th>Número de Miembro</th>
+									<th>Nombre de Usuario</th>
+									<th>Teléfono</th>
+									<th>Email</th>
+								</tr>
+							  </thead>
+							  <tbody>
+								<!-- BEGIN user_list -->
+								  <tr>
+									  <td>{user_list.MEMBERID}</td>
+									  <td>{user_list.USERNAME}</td>
+									  <td>{user_list.PHONE}</td>
+									  <td><a href="mailto:{user_reg_list.EMAIL}">{user_list.EMAIL}</a></td>
+								   </tr>									
+								<!-- END user_list -->
+							  </tbody>
+							</table>
 						<!-- ENDIF -->
 					<!-- ELSEIF SIDE_CONTENT == 4 -->
 						<ol class="breadcrumb">
@@ -671,6 +713,27 @@
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="edit_permissions">Mostrar</button>
 							</form>
+							<hr>
+							<table class="table table-hover">
+							  <thead>
+								<tr>
+									<th>Número de Miembro</th>
+									<th>Nombre de Usuario</th>
+									<th>Teléfono</th>
+									<th>Email</th>
+								</tr>
+							  </thead>
+							  <tbody>
+								<!-- BEGIN user_list -->
+								  <tr>
+									  <td>{user_list.MEMBERID}</td>
+									  <td>{user_list.USERNAME}</td>
+									  <td>{user_list.PHONE}</td>
+									  <td><a href="mailto:{user_reg_list.EMAIL}">{user_list.EMAIL}</a></td>
+								   </tr>									
+								<!-- END user_list -->
+							  </tbody>
+							</table>
 						<!-- ENDIF -->
 					<!-- ELSEIF SIDE_CONTENT == 5 -->
 						<ol class="breadcrumb">
@@ -686,7 +749,18 @@
 									<table class="table table-striped">
 										<thead>
 											<th>Información del plan {user_plans.INDEX}</th>
-											<th></th>
+											<th>
+												<div class="dropdown">
+													<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+														Opciones
+														<span class="caret"></span>
+													</button>
+														<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
+															<li><a href=#>Modificar plan de servicio</a></li>
+															<li><a href=#>Eliminar plan de servicio</a></li>
+														</ul>
+												</div>
+											</th>
 										</thead>
 										<tbody>
 											<tr>
@@ -732,7 +806,6 @@
 									<select class="form-control" name="searchType">
 										<option value="user">Nombre de usuario</option>
 										<option value="id">Número de miembro</option>
-										<option value="last">Tablilla de vehículo</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -740,6 +813,27 @@
 								</div>
 								<button type="submit" class="btn btn-primary" name="action" value="show_plans">Mostrar</button>
 							</form>
+							<hr>
+							<table class="table table-hover">
+							  <thead>
+								<tr>
+									<th>Número de Miembro</th>
+									<th>Nombre de Usuario</th>
+									<th>Teléfono</th>
+									<th>Email</th>
+								</tr>
+							  </thead>
+							  <tbody>
+								<!-- BEGIN user_list -->
+								  <tr>
+									  <td>{user_list.MEMBERID}</td>
+									  <td>{user_list.USERNAME}</td>
+									  <td>{user_list.PHONE}</td>
+									  <td><a href="mailto:{user_reg_list.EMAIL}">{user_list.EMAIL}</a></td>
+								   </tr>									
+								<!-- END user_list -->
+							  </tbody>
+							</table>
 						<!-- ENDIF -->
 					<!-- ELSEIF SIDE_CONTENT == 6 -->
 						<ol class="breadcrumb">
@@ -747,20 +841,98 @@
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar vehiculos de motor de usuarios</li>
 						</ol>
-						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
-							<div class="form-group">
-								<label>Buscar por: </label>
-								<select class="form-control" name="searchType">
-									<option value="user">Nombre de usuario</option>
-									<option value="id">Número de miembro</option>
-									<option value="last">Tablilla de vehículo</option>
-								</select>
+						<!-- IF USERNAME_FOUND == 1 -->
+							<p class="text text-info">Mostrando información de vehículos para el usuario {USER}.</p>
+							<table class="table table-striped">
+								<thead>
+									<th>Tipo de vehículo</th>
+									<th>Modelo</th>
+									<th>Marca</th>
+									<th>Año</th>
+									<th>tablilla</th>
+									<th>Número de serie</th>
+									<th>Plan de servicio</th>
+									<th></th>
+								</thead>
+								<tbody>
+								<!-- BEGIN vehicle_list -->
+									<tr>
+										<td>{vehicle_list.TYPE}</td>
+										<td>{vehicle_list.MODEL}</td>
+										<td>{vehicle_list.BRAND}</td>
+										<td>{vehicle_list.YEAR}</td>
+										<td>{vehicle_list.PLATE}</td>
+										<td>{vehicle_list.SERIAL}</td>
+										<td>{vehicle_list.SERVICE_PLAN}</td>
+										<td>
+											<div class="dropdown">
+												<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+													Opciones
+													<span class="caret"></span>
+												</button>
+													<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
+														<li><a href=#>Modificar vehículo</a></li>
+														<li><a href=#>Eliminar vehículo</a></li>
+														<li><a href=#>Transferir plan de servicio</a></li>
+													</ul>
+											</div>
+										</td>
+									</tr>
+								<!-- END -->
+								</tbody>
+							</table>
+						<!-- ELSEIF USERNAME_FOUND == 2 -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								¡La cuenta de usuario no se pudo encontrar!
 							</div>
-							<div class="form-group">
-								<input type="text" class="form-control" name="inputSearch" required>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=6';",1500);
+							</script>
+						<!-- ELSEIF USERNAME_FOUND == 3 -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								¡Este usuario no tiene ningún vehiculo registrado a su nombre!
 							</div>
-							<button type="submit" class="btn btn-primary">Mostrar</button>
-						</form>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=6';",1500);
+							</script>
+						<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label>Buscar por: </label>
+									<select class="form-control" name="searchType">
+										<option value="user">Nombre de usuario</option>
+										<option value="id">Número de miembro</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="inputSearch" required>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="show_vehicles">Mostrar</button>
+							</form>
+							<hr>
+							<table class="table table-hover">
+							  <thead>
+								<tr>
+									<th>Número de Miembro</th>
+									<th>Nombre de Usuario</th>
+									<th>Teléfono</th>
+									<th>Email</th>
+								</tr>
+							  </thead>
+							  <tbody>
+								<!-- BEGIN user_list -->
+								  <tr>
+									  <td>{user_list.MEMBERID}</td>
+									  <td>{user_list.USERNAME}</td>
+									  <td>{user_list.PHONE}</td>
+									  <td><a href="mailto:{user_reg_list.EMAIL}">{user_list.EMAIL}</a></td>
+								   </tr>									
+								<!-- END user_list -->
+							  </tbody>
+							</table>
+						<!-- ENDIF -->
 					<!-- ENDIF -->
 					<!-- Status modal -->
 					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">

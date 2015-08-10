@@ -128,8 +128,9 @@ class Plan extends User
 	}
 	public function name_available($name)
 	{
-		$name = $this->sanitize_input($name);
 		$is_available;
+
+		$name = $this->sanitize_input($name);
 		
 		$stmnt = sprintf("SELECT name FROM plans WHERE name='%s'", $name);
 		
@@ -178,10 +179,8 @@ class Plan extends User
 		$result = $this->sql_conn->query($stmnt);
 		
 		if ($result->num_rows > 0)
-		{
 			while ($row = $result->fetch_assoc())
 				$count++;
-		}
 		return $count;
 	}
 }

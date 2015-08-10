@@ -3,18 +3,24 @@
 require_once('../../common.php');
 require_once('./plan.php');
 
-$name = isset($_POST['name']) ? $_POST['name'] : "";
-
-$plan = new Plan;
-
-if ($plan->delete_plan($name))
+if ($user->auth() && $user->role === 'admin')
 {
-	echo "success";
-	die();
+	$plan = new Plan;
+
+	if ($plan->delete_plan($_POST['name']))
+	{
+		echo "success";
+		die();
+	}
+	else
+	{
+		echo $plan->error;
+		die();
+	}
 }
 else
 {
-	echo $plan->error;
+	http_response_code(400);
 	die();
 }
 

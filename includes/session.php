@@ -2,23 +2,28 @@
 class Session extends SiteDB
 {
 	// Error constants
-	const BAD_INPUT 		= 0;
-	const SESSION_INVALID	= 1;
-	const USER_INVALID		= 2;
-	const PASS_INVALID		= 3;
-	const NEWPASS_REQUEST	= 4;
-	const OLDPASS_EXPIRED	= 5;
-	const USER_TAKEN		= 6;
-	const PLAN_TAKEN		= 7;
-	const LOGIN_EXPIRED		= 8;
-	const LOGIN_DISABLED	= 9;
-	const LOGIN_INVALID		= 10;
-	const UNREGISTERED_USER	= 11;
-	const NO_SLOTS_AVAILABLE = 12;
-	const INCOMPLETE_TRANSACTION=13;
-	const UNREGISTERED_PROVIDER=14;
+	const BAD_INPUT 				= 0;
+	const SESSION_INVALID			= 1;
+	const SESSION_EXPIRED			= 2;
+	const USER_INVALID				= 3;
+	const PASS_INVALID				= 4;
+	const NEWPASS_REQUEST			= 5;
+	const OLDPASS_EXPIRED			= 6;
+	const USER_TAKEN				= 7;
+	const PLAN_TAKEN				= 8;
+	const LOGIN_EXPIRED				= 9;
+	const LOGIN_DISABLED			= 10;
+	const LOGIN_INVALID				= 11;
+	const UNREGISTERED_USER			= 12;
+	const NO_SLOTS_AVAILABLE		= 13;
+	const INCOMPLETE_TRANSACTION	= 14;
+	const UNREGISTERED_PROVIDER		= 15;
+
+	// Session is alive in seconds
+	const SESSION_TIME_WAIT_INACTIVITY = 1800;
 
 	public $session_id;
+	public $session_exp;
 	public $user_id;
 	public $user;
 	public $pass;
@@ -36,6 +41,12 @@ class Session extends SiteDB
 		if (session_status() == PHP_SESSION_NONE)
 			session_start();
 
+		// Check if session has expired
+		if (isset($_SESSION['session_time']) && (time() - $_SESSION['session_time']) > self::SESSION_TIME_WAIT_INACTIVITY)
+			$this->session_exp = true;
+		else
+			$_SESSION['session_time'] = time();
+
 		$this->session_id	= (isset($_SESSION['session_id'])) ? $this->sanitize_input($_SESSION['session_id']) : 0;
 		$this->user_id		= (isset($_SESSION['user_id'])) ? $this->sanitize_input($_SESSION['user_id']) : 0;
 		$this->user			= (isset($_SESSION['user'])) ? $this->sanitize_input($_SESSION['user']) : "";
@@ -44,19 +55,19 @@ class Session extends SiteDB
 		$this->role			= (isset($_SESSION['role'])) ? $this->sanitize_input($_SESSION['role']) : "";
 		$this->passchg		= (isset($_SESSION['passchg'])) ? $this->sanitize_input($_SESSION['passchg']) : 0;
 		$this->perms		= (isset($_SESSION['perms'])) ? $this->sanitize_input($_SESSION['perms']) : "";
-
 	}
 	public function session_init($val)
 	{
 		// Based on values extracted from the login database
-		$_SESSION['session_id']	= session_id();
-		$_SESSION['user_id']	= $val['id'];
-		$_SESSION['user']		= $val['user'];
-		$_SESSION['pass']		= $val['pass'];
-		$_SESSION['email']		= $val['email'];
-		$_SESSION['role']		= $val['role'];
-		$_SESSION['passchg']	= $val['passchg'];
-		$_SESSION['perms']		= $val['permissions'];
+		$_SESSION['session_id']		= session_id();
+		$_SESSION['session_time']	= time();
+		$_SESSION['user_id']		= $val['id'];
+		$_SESSION['user']			= $val['user'];
+		$_SESSION['pass']			= $val['pass'];
+		$_SESSION['email']			= $val['email'];
+		$_SESSION['role']			= $val['role'];
+		$_SESSION['passchg']		= $val['passchg'];
+		$_SESSION['perms']			= $val['permissions'];
 	}
 	public function session_update($key, $val)
 	{
@@ -79,6 +90,9 @@ class Session extends SiteDB
 			break;	
 		case self::SESSION_INVALID:
 			$this->error = 'La sesión actual es invalida.';
+			break;
+		case self::SESSION_EXPIRED:
+			$this->error = 'La sesión actual ha expirado.';
 			break;
 		case self::USER_INVALID:
 			$this->error = 'La cuenta de usario es invalida.';

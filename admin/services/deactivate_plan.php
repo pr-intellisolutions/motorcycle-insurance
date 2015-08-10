@@ -3,24 +3,24 @@
 require_once('../../common.php');
 require_once('./plan.php');
 
-$plan_name = isset($_POST['plan_name']) ? $_POST['plan_name'] : "";
-
-if ($plan_name === "")
+if ($user->auth() && $user->role === 'admin')
 {
-	echo "Nada seleccionado.";
-	die();
-}
+	$plan = new Plan;
 
-$plan = new Plan;
-
-if ($plan->activate_plan($plan_name, false))
-{
-	echo "success";
-	die();
+	if ($plan->activate_plan($_POST['plan_name'], false))
+	{
+		echo "success";
+		die();
+	}
+	else
+	{
+		echo $plan->error;
+		die();
+	}
 }
 else
 {
-	echo $plan->error;
+	http_response_code(400);
 	die();
 }
 
