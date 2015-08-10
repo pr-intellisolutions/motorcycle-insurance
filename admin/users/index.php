@@ -21,8 +21,8 @@ if ($user->auth() && $user->role === 'admin')
 		-- POST method --
 		Process show profile:		# process show profile
 		Process edit permissions:	# process edit permissions
-		Process edit plans:			# process edit plans
-		Process edit vehicles:		# process edit vehicles
+		Process show plans:			# process edit plans
+		Process show vehicles:		# process edit vehicles
 
 	Note 1: This only controls what parts of the front-end are visible to the user at a time using
 		    the back-end template engine.
@@ -160,8 +160,6 @@ if ($user->auth() && $user->role === 'admin')
 				}
 				$result->close();
 				break;
-			default:
-				break;
 		}
 	}
 	//# process edit permissions
@@ -256,14 +254,51 @@ if ($user->auth() && $user->role === 'admin')
 					$template->assign_vars(array('SIDE_CONTENT' => 4, 'USERNAME_FOUND' => 2));
 				$result->close();
 				break;
-			default:
-				break;
 		}
 	}
-	//# process edit plans
-	else if (isset($_POST['action']) && $_POST['action'] === 'edit_plans')
+	//# process show plans
+	else if (isset($_POST['action']) && $_POST['action'] === 'show_plans')
 	{
-		
+		switch($_POST['searchType'])
+		{
+			case 'user':
+			
+				if ($user->user_valid($_POST['inputSearch']))
+				{
+					$stmnt = sprintf("SELECT * FROM login, services, plans WHERE login.id=services.userid and plans.id=services.plan_id and login.user='%s'", $_POST['inputSearch']);
+					
+					$result = $user->sql_conn->query($stmnt);
+					
+					if ($result->num_rows > 0)
+					{
+						$template->assign_var('USER', $_POST['inputSearch']);
+
+						$index = 0;
+	
+						while ($row = $result->fetch_assoc())
+						{
+							$index++;
+				
+							$template->assign_block_vars('user_plans', array(
+								'INDEX' => $index,
+								'PLAN_NAME' => $row['name'],
+								'OCCUR_CURR' => $row['occurrence_counter'],
+								'OCCUR_MAX' => $row['num_occurrences'],
+								'MILE_CURR' => $row['miles_counter'],
+								'MILE_MAX' => $row['num_miles'],
+								'PLAN_EXP' => $row['exp_date']));
+						}
+						$template->assign_vars(array('SIDE_CONTENT' => 5, 'USERNAME_FOUND' => 1, 'PLANS_FOUND' => true));
+					}
+					else
+						$template->assign_vars(array('SIDE_CONTENT' => 5, 'USERNAME_FOUND' => 1, 'PLANS_FOUND' => false));
+
+					$result->close();
+				}
+				else
+					$template->assign_vars(array('SIDE_CONTENT' => 5, 'USERNAME_FOUND' => 2,));
+				break;
+		}
 	}
 	//# process edit vehicles
 	else if (isset($_POST['action']) && $_POST['action'] === 'edit_vehicles')

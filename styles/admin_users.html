@@ -678,20 +678,69 @@
 							<li><a href="{SITE_URL}admin/users">Usuarios y miembros</a></li>
 							<li class="active">Manejar planes y servicios de usuarios</li>
 						</ol>
-						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
-							<div class="form-group">
-								<label>Buscar por: </label>
-								<select class="form-control" name="searchType">
-									<option value="user">Nombre de usuario</option>
-									<option value="id">Número de miembro</option>
-									<option value="last">Tablilla de vehículo</option>
-								</select>
+						<!-- IF USERNAME_FOUND == 1 -->
+							<!-- IF PLANS_FOUND -->
+								<p class="text text-info">Mostrando información de planes de servicio para el usuario {USER}.</p>
+								<!-- BEGIN user_plans -->
+									<hr>
+									<table class="table table-striped">
+										<thead>
+											<th>Información del plan {user_plans.INDEX}</th>
+											<th></th>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Plan de servicio</td>
+												<td>{user_plans.PLAN_NAME}</td>
+											</tr>
+											<tr>
+												<td>Occurencias utilizadas</td>
+												<td>{user_plans.OCCUR_CURR} de {user_plans.OCCUR_MAX}</td>
+											</tr>
+											<tr>
+												<td>Millas utilizadas</td>
+												<td>{user_plans.MILE_CURR} de {user_plans.MILE_MAX}</td>
+											</tr>
+											<tr>
+												<td>Fecha de expiración</td>
+												<td>{user_plans.PLAN_EXP}</td>
+											</tr>
+										</tbody>
+									</table>
+								<!-- END -->
+							<!-- ELSE -->
+								<div class="alert alert-danger" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									No se encontró ningún plan de servicio para este usuario
+								</div>
+								<script type="text/JavaScript">
+									setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=5';",1500);
+								</script>	
+							<!-- ENDIF -->
+						<!-- ELSEIF USERNAME_FOUND == 2 -->
+							<div class="alert alert-danger" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								¡La cuenta de usuario no se pudo encontrar!
 							</div>
-							<div class="form-group">
-								<input type="text" class="form-control" name="inputSearch" required>
-							</div>
-							<button type="submit" class="btn btn-primary">Mostrar</button>
-						</form>
+							<script type="text/JavaScript">
+								setTimeout("location.href = '{SITE_URL}admin/users/index.php?option=5';",1500);
+							</script>
+						<!-- ELSE -->
+							<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+								<div class="form-group">
+									<label>Buscar por: </label>
+									<select class="form-control" name="searchType">
+										<option value="user">Nombre de usuario</option>
+										<option value="id">Número de miembro</option>
+										<option value="last">Tablilla de vehículo</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" name="inputSearch" required>
+								</div>
+								<button type="submit" class="btn btn-primary" name="action" value="show_plans">Mostrar</button>
+							</form>
+						<!-- ENDIF -->
 					<!-- ELSEIF SIDE_CONTENT == 6 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
