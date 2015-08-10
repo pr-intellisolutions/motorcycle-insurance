@@ -9,6 +9,10 @@ if ($user->auth())
 	header('Location: '.SITE_URL);
 	die();
 }
+else
+{
+	$template->assign_var('USER_AUTH_VALID',false);
+}
 
 require_once('./login.php');
 
