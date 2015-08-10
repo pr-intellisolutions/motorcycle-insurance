@@ -62,7 +62,7 @@ if ($user->auth() && $user->role == 'admin')
 	// DISPLAY/CHANGE PROVIDER 
 	else if (isset($_POST['action']) && $_POST['action'] == 'show_modify_provider')
 	{
-		$stmnt = sprintf("SELECT p.id, p.userid, p.profile_id, p.companyName, p.companyPhone, p.companyEmail, p.area, p.companyAddress1, p.companyAddress2, p.zip, p.city, p.country FROM providers p, login l WHERE p.userid=l.id AND l.user = '%s'", $_POST['user']);				
+		$stmnt = sprintf("SELECT l.user, p.profile_id, p.companyName, p.companyPhone, p.companyEmail, p.area, p.companyAddress1, p.companyAddress2, p.zip, p.city, p.country FROM providers p, login l WHERE p.userid=l.id AND l.user = '%s'", $_POST['user']);				
 
 		$result = $user->sql_conn->query($stmnt);
 		
@@ -70,8 +70,7 @@ if ($user->auth() && $user->role == 'admin')
 		{
 			$row = $result->fetch_assoc();
 			$template->assign_vars(array('SIDE_CONTENT' => 3, 'USERNAME_FOUND' => 1,
-				'ID' => $row['id'],
-				'USERID' => $row['userid'],
+				'USERNAME' => $row['user'],
 				'PROFILE_ID' => $row['profile_id'],
 				'COMPANYNAME' => $row['companyName'],
 				'COMPANYPHONE' => $row['companyPhone'],

@@ -132,13 +132,13 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Ciudad de la compañía:</label>
+								<label class="col-sm-3 control-label">Pueblo de la compañía:</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Zip de la compañía:</label>
+								<label class="col-sm-3 control-label">Código postal de la compañía:</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" id="zip">
 								</div>
@@ -183,31 +183,31 @@
 							<p class="text-info">Mostrando información del proveedor con número {PROFILE_ID}</p>
 						
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}" >
-							<input type="hidden" class="form-control" value="{ID}" name="ID">
+							<input type="hidden" class="form-control" value="{USERNAME}" id="username">
 							
 							<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Nombre de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYNAME}" name="COMPANYNAME">
+										<input type="text" class="form-control" value="{COMPANYNAME}" id="companyName">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Teléfono de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYPHONE}" name="COMPANYPHONE">
+										<input type="text" class="form-control" value="{COMPANYPHONE}" id="companyPhone">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Email de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYEMAIL}" name="COMPANYEMAIL">
+										<input type="text" class="form-control" value="{COMPANYEMAIL}" id="companyEmail">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label" for="AREA">Área de cobertura:</label>
 									<div class="col-sm-4">
-										<select class="form-control" name="AREA">
+										<select class="form-control" id="area">
 											<option value="{AREA}" default>{AREA}</option>
 											<option value="norte">Norte</option>
 											<option value="sur">Sur</option>
@@ -224,37 +224,37 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección de la compañía línea 1:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYADDRESS1}" name="COMPANYADDRESS1">
+										<input type="text" class="form-control" value="{COMPANYADDRESS1}" id="companyAddress1">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">Dirección de la compañía línea 2:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COMPANYADDRESS2}" name="COMPANYADDRESS2">
+										<input type="text" class="form-control" value="{COMPANYADDRESS2}" id="companyAddress2">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Cuidad de la compañía:</label>
+									<label class="col-sm-3 control-label">Pueblo de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{CITY}" name="CITY">
+										<input type="text" class="form-control" value="{CITY}" id="city">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Zip de la compañía:</label>
+									<label class="col-sm-3 control-label">Código postal de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{ZIP}" name="ZIP">
+										<input type="text" class="form-control" value="{ZIP}" id="zip">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label">País de la compañía:</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" value="{COUNTRY}" name="COUNTRY">
+										<input type="text" class="form-control" value="{COUNTRY}" id="country">
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-sm-offset-3 col-sm-4">
 										<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-										<button type="submit" class="btn btn-primary" name="action" value="modify_provider">Guardar</button>
+										<button type="submit" class="btn btn-primary" id="modify_provider">Guardar</button>
 									</div>
 								</div>
 							</form>
@@ -296,7 +296,7 @@
 						</div>
 					  </div>
 					</div>
-					<script>
+				<script>
 						$(document).ready(function(){
 							$('#add_provider').click(function(){
 								$.ajax({
@@ -318,6 +318,37 @@
 											$('#modal').modal('show');
 											$("#ModalLabel").html('<strong>Información</strong>');
 											$("#ModalBody").html('¡El proveedor de servicio ha sido añadido exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
+									}
+								})
+							});
+							
+							$('#modify_provider').click(function(){
+								$.ajax({
+									type: "POST",
+									url: "modify_provider.php",
+									data: {'username': $('#username').val(),
+										'companyName': $('#companyName').val(),
+										'companyPhone': $('#companyPhone').val(),
+										'companyEmail': $('#companyEmail').val(),
+										'area': $('#area').val(),
+										'companyAddress1': $('#companyAddress1').val(),
+										'companyAddress2': $('#companyAddress2').val(),
+										'city': $('#city').val(),
+										'zip': $('#zip').val(),
+										'country': $('#country').val()},
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡La cuenta de usuario ha sido modificada exitosamente!');
 										}
 										else
 										{
@@ -354,10 +385,11 @@
 								// When user clicks cancel button the page is reloaded and home content is displayed
 								window.location.href = 'index.php';
 							});
+							
 							$('#modal').on('hidden.bs.modal', function() { 
 								//location.reload();
 								window.location.href = 'index.php';
-							});
+							});							
 						});
 					</script>
 				</div>
