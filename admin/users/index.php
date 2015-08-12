@@ -364,7 +364,7 @@ if ($user->auth() && $user->role === 'admin')
 
 				if ($user->user_valid($username))
 				{
-					$stmnt = sprintf("SELECT * FROM login, services, plans WHERE login.id=services.userid and plans.id=services.plan_id and login.user='%s'", $username);
+					$stmnt = sprintf("SELECT s.id, s.occurrence_counter, s.miles_counter, s.exp_date, p.title, p.num_occurrences, p.num_miles FROM login l, services s, plans p WHERE l.id=s.userid and p.id=s.plan_id and l.user='%s'", $username);
 					
 					$result = $user->sql_conn->query($stmnt);
 					
@@ -380,6 +380,7 @@ if ($user->auth() && $user->role === 'admin')
 				
 							$template->assign_block_vars('user_plans', array(
 								'INDEX' => $index,
+								'SERVICE_ID' => $row['id'],
 								'PLAN_NAME' => $row['title'],
 								'OCCUR_CURR' => $row['occurrence_counter'],
 								'OCCUR_MAX' => $row['num_occurrences'],
@@ -405,7 +406,7 @@ if ($user->auth() && $user->role === 'admin')
 				if ($result->num_rows > 0)
 				{
 					$row = $result->fetch_assoc();
-					$stmnt = sprintf("SELECT * FROM login, services, plans WHERE login.id=services.userid and plans.id=services.plan_id and login.user='%s'", $row['user']);
+					$stmnt = sprintf("SELECT s.id, s.occurrence_counter, s.miles_counter, s.exp_date, p.title, p.num_occurrences, p.num_miles FROM login l, services s, plans p WHERE l.id=s.userid and p.id=s.plan_id and l.user='%s'", $row['user']);
 					$template->assign_var('USER', $row['user']);
 					$result->close();
 
@@ -421,6 +422,7 @@ if ($user->auth() && $user->role === 'admin')
 				
 							$template->assign_block_vars('user_plans', array(
 								'INDEX' => $index,
+								'SERVICE_ID' => $row['id'],
 								'PLAN_NAME' => $row['title'],
 								'OCCUR_CURR' => $row['occurrence_counter'],
 								'OCCUR_MAX' => $row['num_occurrences'],
@@ -440,6 +442,7 @@ if ($user->auth() && $user->role === 'admin')
 				break;
 		}
 	}
+	
 	//# process show vehicles
 	else if (isset($_POST['action']) && $_POST['action'] === 'show_vehicles')
 	{

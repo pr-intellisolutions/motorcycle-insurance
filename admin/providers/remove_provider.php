@@ -2,11 +2,9 @@
 
 require_once('../../common.php');
 
-if (isset($_POST['username']) && $_POST['username'] !== "")
+if ($user->auth() && $user->role === 'admin')
 {
-	$username = $user->sanitize_input($_POST['username']);			
-
-	if ($user->delete_account($username))
+	if ($user->delete_account($_POST['username']))
 	{
 		echo "success";
 		die();
@@ -19,9 +17,8 @@ if (isset($_POST['username']) && $_POST['username'] !== "")
 }
 else
 {
-	$user->set_error($user::BAD_INPUT);
-
-	echo $user->error;
+	http_response_code(400);
 	die();
 }
+
 ?>

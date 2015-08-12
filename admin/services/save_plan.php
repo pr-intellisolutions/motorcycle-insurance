@@ -3,17 +3,24 @@
 require_once('../../common.php');
 require_once('./plan.php');
 
-$plan = new Plan;
-
-if ($plan->save_plan($_POST))
+if ($user->auth() && $user->role === 'admin')
 {
-	echo "success";
-	die();
+	$plan = new Plan;
+
+	if ($plan->save_plan($_POST))
+	{
+		echo "success";
+		die();
+	}
+	else
+	{
+		echo $plan->error;
+		die();
+	}
 }
 else
 {
-	echo $plan->error;
+	http_response_code(400);
 	die();
 }
-
 ?>

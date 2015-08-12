@@ -323,6 +323,8 @@ class User extends Session
 	}
 	public function delete_account($username)
 	{
+		$username = $this->sanitize_input($username);			
+
 		if ($this->user_available($username)==false)
 		{
 			$stmt = sprintf("DELETE FROM login WHERE user = '%s'", $username);

@@ -615,7 +615,7 @@
 							  </thead>
 							  <tbody>
 								<!-- BEGIN user_list -->
-								  <tr>
+								  <tr">
 									  <td>{user_list.MEMBERID}</td>
 									  <td>{user_list.USERNAME}</td>
 									  <td>{user_list.PHONE}</td>
@@ -743,12 +743,13 @@
 						</ol>
 						<!-- IF USERNAME_FOUND == 1 -->
 							<!-- IF PLANS_FOUND -->
-								<p class="text text-info">Mostrando información de planes de servicio para el usuario {USER}.</p>
+								<p class="text text-info">Mostrando información de planes de servicio para el usuario <span id="username">{USER}</span>.</p>
 								<!-- BEGIN user_plans -->
 									<hr>
 									<table class="table table-striped">
 										<thead>
 											<th>Información del plan {user_plans.INDEX}</th>
+											<input type="hidden" id="service_id" value="{user_plans.SERVICE_ID}">
 											<th>
 												<div class="dropdown">
 													<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -756,8 +757,8 @@
 														<span class="caret"></span>
 													</button>
 														<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
-															<li><a href=#>Modificar plan de servicio</a></li>
-															<li><a href=#>Eliminar plan de servicio</a></li>
+															<li><a href="#" id="modify_servive">Modificar plan de servicio</a></li>
+															<li><a href="#" id="remove_service">Eliminar plan de servicio</a></li>
 														</ul>
 												</div>
 											</th>

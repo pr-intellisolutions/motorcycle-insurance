@@ -94,8 +94,14 @@ class SiteDB
 
 		return $this->sql_conn->real_escape_string($input_str);
 	}
-	function save_db_config()
+	function save_db_config($db_data)
 	{
+		$this->db_host = isset($db_data['dbHost']) ? $db_data['dbHost'] : "";
+		$this->db_port = isset($db_data['dbPort']) ? $db_data['dbPort'] : 0;
+		$this->db_user = isset($db_data['dbUser']) ? $db_data['dbUser'] : "";
+		$this->db_pass = isset($db_data['dbPass']) ? $db_data['dbPass'] : "";
+		$this->db_name = isset($db_data['dbName']) ? $db_data['dbName'] : "";
+
 		if (!($fp = fopen(self::DB_CONFIG_FILE, 'w')))
 		{
 			$this->error = "SiteDB::save_db_config(): Unable to open db_config.ini for writting.";
