@@ -9,14 +9,13 @@
 		<link href="{SITE_URL}styles/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Bootstrap custom CSS -->
 		<link href="{SITE_URL}styles/css/sticky-footer.css" rel="stylesheet">
-		<link href="{SITE_URL}styles/css/spinner.css" rel="stylesheet">
 		<!-- Bootstrap theme -->
 		<link href="{SITE_URL}styles/css/bootstrap-theme.min.css" rel="stylesheet">
 		<!-- Bootstrap JavaScript components -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="{SITE_URL}styles/js/bootstrap.min.js"></script>
 
-		<title>Panel del Usuario</title>
+		<title>TRO Puerto Rico Motorcycle Insurance</title>
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-inverse">
@@ -35,34 +34,27 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav " >
 						<li class="active"><a href="{SITE_URL}">Inicio<span class="sr-only">(current)</span></a></li>
+						<li><a href="{SITE_URL}services">Planes de servicio</a></li>
+						<li><a href="{SITE_URL}general_info">Conócenos</a></li>
+						<li><a href="{SITE_URL}contact_info">Contactenos</a></li>
+						<!-- IF USER_AUTH_VALID == true && USER_ROLE == "admin"-->
+							<li><a href="{SITE_URL}admin/">Administración CP</a></li>
+						<!-- ENDIF -->
 						<!-- IF USER_AUTH_VALID -->
 							<li><a href="{SITE_URL}user_info/">Ver Perfíl</a></li>
 						<!-- ELSE -->
-							<li><a href="{SITE_URL}/login">Iniciar Sesión</a></li>
-						<!-- ENDIF -->
-						<li><a href="{SITE_URL}/services">Servicios</a></li>
-						<li><a href="{SITE_URL}/general_info">Conócenos</a></li>
-						<li><a href="{SITE_URL}/contact_info">Contacto</a></li>
-						<!-- IF USER_AUTH_VALID -->
-							<li><a href="{SITE_URL}admin/services">Administración CP</a></li>
+							<li><a href="{SITE_URL}login">Iniciar Sesión</a></li>
 						<!-- ENDIF -->
 					</ul>
-					<!-- IF USER_AUTH_VALID -->
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Notificaciones <span class="badge">0</span></a></li>
-					</ul>
-					<!-- ENDIF -->
 				</div>
 			</div>
 		</nav>
 		<div class="container-fluid">
-		<!-- IF USER_AUTH_VALID -->						
-			<div class="row">
-				<div class="col-md-3">
-				<p class="text-muted">Usuario: <span class="text-info">{USERNAME}</span>
+		<!-- IF USER_AUTH_VALID == true-->						
+			<div class="row" align="right">
+				<p class="text-muted"><span class="text-info">{USERNAME}</span>
 					<a href="{SITE_URL}logoff"> [cerrar sesión]</a>
 				</p>
-				</div>
 			</div>
 		<!-- ENDIF -->
 			

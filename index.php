@@ -8,6 +8,18 @@ $template->assign_var('SITE_URL', SITE_URL);
 
 if ($user->auth())
 {
+	$stmnt = sprintf("SELECT first, middle, last, maiden FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.userid=%d", $user->user_id);
+	
+	$result = $user->sql_conn->query($stmnt);
+	
+	if ($result->num_rows > 0)
+	{
+		$row = $result->fetch_assoc();
+
+		$template->assign_var('USERNAME', sprintf("%s %s %s %s", $row['first'], $row['middle'], $row['last'], $row['maiden']));
+
+		$result->close();
+	}
 	$template->assign_vars(array('USER_AUTH_VALID' => true,
 		'USER_ROLE' => $user->role));
 }
@@ -18,7 +30,6 @@ else
 }
 
 $template->set_filenames(array('body' => 'index.html'));
-
 $template->display('body');
 
 ?>

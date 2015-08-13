@@ -1,6 +1,31 @@
-<!-- INCLUDE header.html -->
-<div class="row">
-
-</div>
-
-<!-- INCLUDE footer.html -->
+	<!-- INCLUDE header.html -->
+		<!-- IF USER_AUTH_VALID == false -->
+		<div class="row" style="background-color: #E2E2E6; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12); padding: 5px;">
+			<div class="col-sm-offset-6 col-md-6" align="right">
+				<form class="form-inline" action="{SITE_URL}login/index.php" method="post">
+				  <div class="form-group">
+					<label class="sr-only" for="username">Nombre de usuario</label>
+					<input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario">
+				  </div>
+				  <div class="form-group">
+					<label class="sr-only" for="inputPassword">Contraseña</label>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+				  </div>
+				  <button class="btn btn-primary" type="submit" value="Acceder">Acceder</button>
+				</form>
+			</div>
+		</div>
+		<!-- ENDIF -->
+	
+		<div class="row">
+			<div class="jumbotron" style="box-shadow: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);">
+				<h1>Transporte Rubeli Ortiz</h1>
+				<p>Bienvenidos al mejor plan de seguros para motoras en Puerto Rico</p>
+				<p align="right">
+					<a class="btn btn-primary btn-lg" href="#" role="button">Vea nuestros planes</a>
+					<a class="btn btn-primary btn-lg" href="#" role="button">Solicita asistencia</a>
+					<a class="btn btn-primary btn-lg" href="#" role="button">Contactanos</a>
+				</p>
+			</div>
+		</div>
+	<!-- INCLUDE footer.html -->
