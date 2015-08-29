@@ -981,59 +981,138 @@
 					<script>
 						$(document).ready(function()
 						{
-							$(document).ready(function() {
-								$("#check_user").click(function() {
-									var username = $("#username").val();
-									
-									if (username !== "")
-									{
-										$.ajax({
-											type: "POST",
-											url: "check_user.php",
-											data: "username="+username,
-											success: function(data){
-												if (data === "available")
-												{
-													$("#check_user_status").attr("class", "label label-success");
-													$("#check_user_status").html("'"+username+"' está disponible!");
-												}
-												else
-												{
-													$("#check_user_status").attr("class", "label label-warning");
-													$("#check_user_status").html("'"+username+"' no está disponible!");
-												}
+							$("#check_user").click(function() {
+								var username = $("#username").val();
+								
+								if (username !== "")
+								{
+									$.ajax({
+										type: "POST",
+										url: "check_user.php",
+										data: "username="+username,
+										success: function(data){
+											if (data === "available")
+											{
+												$("#check_user_status").attr("class", "label label-success");
+												$("#check_user_status").html("'"+username+"' está disponible!");
 											}
-										})
+											else
+											{
+												$("#check_user_status").attr("class", "label label-warning");
+												$("#check_user_status").html("'"+username+"' no está disponible!");
+											}
+										}
+									})
+								}
+							});
+						});
+						$('#create_user').click(function(){
+							$.ajax({
+								type: "POST",
+								url: "create_user.php",
+								data: {'username': $('#username').val(),
+									'role': $('#role').val(),
+									'password': $('#password').val(),
+									'email': $('#email').val(),
+									'first': $('#first').val(),
+									'middle': $('#middle').val(),
+									'last': $('#last').val(),
+									'maiden': $('#maiden').val(),
+									'address1': $('#address1').val(),
+									'address2': $('#address2').val(),
+									'city': $('#city').val(),
+									'state': $('#state').val(),
+									'zip': $('#zip').val(),
+									'country': $('#country').val(),
+									'telephone': $('#telephone').val(),
+									'state': $('#state').val(),
+									'zip': $('#zip').val()},
+								success: function(data){
+									if (data === "success")
+									{
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Información</strong>');
+										$("#ModalBody").html('¡La cuenta de usuario ha sido creada exitosamente!');
+									}
+									else
+									{
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Error</strong>');
+										$("#ModalBody").html(data);
+									}
+								}
+							})
+						});
+						$('#save_user').click(function(){
+							$.ajax({
+								type: "POST",
+								url: "save_user.php",
+								data: {'username': $('#mod_user').html(),
+									'first': $('#first').val(),
+									'middle': $('#middle').val(),
+									'last': $('#last').val(),
+									'maiden': $('#maiden').val(),
+									'address1': $('#address1').val(),
+									'address2': $('#address2').val(),
+									'city': $('#city').val(),
+									'state': $('#state').val(),
+									'zip': $('#zip').val(),
+									'country': $('#country').val(),
+									'phone': $('#phone').val(),
+									'state': $('#state').val(),
+									'zip': $('#zip').val(),
+									'email': $('#email').val()},
+								success: function(data){
+									if (data === "success")
+									{
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Información</strong>');
+										$("#ModalBody").html('¡El perfil del usuario ha sido guardada exitosamente!');
+									}
+									else
+									{
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Error</strong>');
+										$("#ModalBody").html(data);
+									}
+								}
+							})
+						});
+						$("#remove_user").click(function() {
+							switch($('#searchType').val())
+							{
+							case 'username':
+								$.ajax({
+									type: "POST",
+									url: "remove_user.php",
+									data: "username="+$('#inputSearch').val(),
+									success: function(data){
+										if (data === "success")
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡La cuenta de usuario ha sido removida exitosamente!');
+										}
+										else
+										{
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Error</strong>');
+											$("#ModalBody").html(data);
+										}
 									}
 								});
-							});
-							$('#create_user').click(function(){
+								break;
+							case 'id':
 								$.ajax({
 									type: "POST",
-									url: "create_user.php",
-									data: {'username': $('#username').val(),
-										'role': $('#role').val(),
-										'password': $('#password').val(),
-										'email': $('#email').val(),
-										'first': $('#first').val(),
-										'middle': $('#middle').val(),
-										'last': $('#last').val(),
-										'maiden': $('#maiden').val(),
-										'address1': $('#address1').val(),
-										'address2': $('#address2').val(),
-										'city': $('#city').val(),
-										'state': $('#state').val(),
-										'zip': $('#zip').val(),
-										'country': $('#country').val(),
-										'telephone': $('#telephone').val(),
-										'state': $('#state').val(),
-										'zip': $('#zip').val()},
+									url: "remove_user.php",
+									data: "id="+$('#inputSearch').val(),
 									success: function(data){
 										if (data === "success")
 										{
 											$('#modal').modal('show');
 											$("#ModalLabel").html('<strong>Información</strong>');
-											$("#ModalBody").html('¡La cuenta de usuario ha sido creada exitosamente!');
+											$("#ModalBody").html('¡La cuenta de usuario ha sido removida exitosamente!');
 										}
 										else
 										{
@@ -1042,231 +1121,150 @@
 											$("#ModalBody").html(data);
 										}
 									}
-								})
-							});
-							$('#save_user').click(function(){
-								$.ajax({
-									type: "POST",
-									url: "save_user.php",
-									data: {'username': $('#mod_user').html(),
-										'first': $('#first').val(),
-										'middle': $('#middle').val(),
-										'last': $('#last').val(),
-										'maiden': $('#maiden').val(),
-										'address1': $('#address1').val(),
-										'address2': $('#address2').val(),
-										'city': $('#city').val(),
-										'state': $('#state').val(),
-										'zip': $('#zip').val(),
-										'country': $('#country').val(),
-										'phone': $('#phone').val(),
-										'state': $('#state').val(),
-										'zip': $('#zip').val(),
-										'email': $('#email').val()},
-									success: function(data){
-										if (data === "success")
-										{
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Información</strong>');
-											$("#ModalBody").html('¡El perfil del usuario ha sido guardada exitosamente!');
-										}
-										else
-										{
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Error</strong>');
-											$("#ModalBody").html(data);
-										}
-									}
-								})
-							});
-							$("#remove_user").click(function() {
-								switch($('#searchType').val())
-								{
-								case 'username':
-									$.ajax({
-										type: "POST",
-										url: "remove_user.php",
-										data: "username="+$('#inputSearch').val(),
-										success: function(data){
-											if (data === "success")
-											{
-												$('#modal').modal('show');
-												$("#ModalLabel").html('<strong>Información</strong>');
-												$("#ModalBody").html('¡La cuenta de usuario ha sido removida exitosamente!');
-											}
-											else
-											{
-												$('#modal').modal('show');
-												$("#ModalLabel").html('<strong>Error</strong>');
-												$("#ModalBody").html(data);
-											}
-										}
-									});
-									break;
-								case 'id':
-									$.ajax({
-										type: "POST",
-										url: "remove_user.php",
-										data: "id="+$('#inputSearch').val(),
-										success: function(data){
-											if (data === "success")
-											{
-												$('#modal').modal('show');
-												$("#ModalLabel").html('<strong>Información</strong>');
-												$("#ModalBody").html('¡La cuenta de usuario ha sido removida exitosamente!');
-											}
-											else
-											{
-												$('#modal').modal('show');
-												$("#ModalLabel").html('<strong>Error</strong>');
-												$("#ModalBody").html(data);
-											}
-										}
-									});
-									break;
-								}
-							});
-							$('#save_perms').click(function()
-							{						
-								var perm_string = '';
+								});
+								break;
+							}
+						});
+						$('#save_perms').click(function()
+						{						
+							var perm_string = '';
 
-								if ($('#check_all').is(':checked'))
-									perm_string = 'all';
-								else
-								{
-									if ($('#check_u').is(':checked')) perm_string += ' u ';
-									if ($('#check_s').is(':checked')) perm_string += ' s ';
-									if ($('#check_o').is(':checked')) perm_string += ' o ';
-									if ($('#check_r').is(':checked')) perm_string += ' r ';
-									if ($('#check_f').is(':checked')) perm_string += ' f ';
-									
-									perm_string.trim();
-								}
-								
-								if (perm_string === '')
-									perm_string = 'none';
-								$.ajax({
-									type: "POST",
-									url: "save_perms.php",
-									data: {'username': $('#perm_user').html(),
-										'permissions': perm_string},
-									success: function(data){
-										if (data === "success")
-										{
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Información</strong>');
-											$("#ModalBody").html('¡Los permisos del usuario han sido guardados exitosamente!');
-										}
-										else
-										{
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Error</strong>');
-											$("#ModalBody").html(data);
-										}
-									}
-								})
-							});
-							$("#activate_user").click(function() {
-								$.ajax({
-									type: "POST",
-									url: "activate_user.php",
-									data: "username="+$('#inactive_user option:selected').text(),
-									success: function(data){
-										if (data === "success")
-										{
-											$('#userInactiveModal').modal('hide');
-
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Información</strong>');
-											$("#ModalBody").html('El usuario ha sido activado satisfactoriamente.');
-										}
-										else
-										{
-											$('#userInactiveModal').modal('hide');
-
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Error</strong>');
-											$("#ModalBody").html(data);
-
-										}
-									}
-								})
-							});
-							$("#unlock_user").click(function() {
-								$.ajax({
-									type: "POST",
-									url: "unlock_user.php",
-									data: "username="+$('#disabled_user option:selected').text(),
-									success: function(data){
-										if (data === "success")
-										{
-											$('#userDisabledModal').modal('hide');
-
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Información</strong>');
-											$("#ModalBody").html('El usuario ha sido desbloqueado satisfactoriamente.');
-										}
-										else
-										{
-											$('#userDisabledModal').modal('hide');
-
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Error</strong>');
-											$("#ModalBody").html(data);
-
-										}
-									}
-								})
-							});
-							$('#pass_change').click(function() {
-								$.ajax({
-									type: "POST",
-									url: "pass_change.php",
-									data: {'username': $('#mod_user').html(),
-										'newpass': $('#newpass').val()},
-									success: function(data){
-										if (data === "success")
-										{
-											$('#passwordResetModal').modal('hide');
-
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Información</strong>');
-											$("#ModalBody").html('La contraseña ha sido cambiada satisfactoriamente.');
-										}
-										else
-										{
-											$('#passwordResetModal').modal('hide');
-
-											$('#modal').modal('show');
-											$("#ModalLabel").html('<strong>Error</strong>');
-											$("#ModalBody").html(data);
-
-										}
-									}
-								})
-							});
-							$('#cancel_button').click(function()
+							if ($('#check_all').is(':checked'))
+								perm_string = 'all';
+							else
 							{
-								// When user clicks cancel button the page is reloaded and home content is displayed
-								window.location.href = 'index.php';
-							});
-							$('#modal').on('hidden.bs.modal', function() { 
-								//location.reload();
-								window.location.href = 'index.php';
-							});
-							$('.check_parent').click(function(event) {  //on click 
-								 if(this.checked) { // check select status
-									 $('.check_child').each(function() { //loop through each checkbox
-										 this.disabled = true;  //disable all checkboxes with class "check_child"  
-										 this.checked = false;              														 
-									 });
-								 }else{
-									$('.check_child').each(function() { //loop through each checkbox
-										 this.disabled = false; //deselect all checkboxes with class "check_child"  
-										 this.checked = false;              														 
-									});         
+								if ($('#check_u').is(':checked')) perm_string += ' u ';
+								if ($('#check_s').is(':checked')) perm_string += ' s ';
+								if ($('#check_o').is(':checked')) perm_string += ' o ';
+								if ($('#check_r').is(':checked')) perm_string += ' r ';
+								if ($('#check_f').is(':checked')) perm_string += ' f ';
+								
+								perm_string.trim();
+							}
+							
+							if (perm_string === '')
+								perm_string = 'none';
+							$.ajax({
+								type: "POST",
+								url: "save_perms.php",
+								data: {'username': $('#perm_user').html(),
+									'permissions': perm_string},
+								success: function(data){
+									if (data === "success")
+									{
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Información</strong>');
+										$("#ModalBody").html('¡Los permisos del usuario han sido guardados exitosamente!');
+									}
+									else
+									{
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Error</strong>');
+										$("#ModalBody").html(data);
+									}
 								}
-							});
+							})
+						});
+						$("#activate_user").click(function() {
+							$.ajax({
+								type: "POST",
+								url: "activate_user.php",
+								data: "username="+$('#inactive_user option:selected').text(),
+								success: function(data){
+									if (data === "success")
+									{
+										$('#userInactiveModal').modal('hide');
+
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Información</strong>');
+										$("#ModalBody").html('El usuario ha sido activado satisfactoriamente.');
+									}
+									else
+									{
+										$('#userInactiveModal').modal('hide');
+
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Error</strong>');
+										$("#ModalBody").html(data);
+
+									}
+								}
+							})
+						});
+						$("#unlock_user").click(function() {
+							$.ajax({
+								type: "POST",
+								url: "unlock_user.php",
+								data: "username="+$('#disabled_user option:selected').text(),
+								success: function(data){
+									if (data === "success")
+									{
+										$('#userDisabledModal').modal('hide');
+
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Información</strong>');
+										$("#ModalBody").html('El usuario ha sido desbloqueado satisfactoriamente.');
+									}
+									else
+									{
+										$('#userDisabledModal').modal('hide');
+
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Error</strong>');
+										$("#ModalBody").html(data);
+
+									}
+								}
+							})
+						});
+						$('#pass_change').click(function() {
+							$.ajax({
+								type: "POST",
+								url: "pass_change.php",
+								data: {'username': $('#mod_user').html(),
+									'newpass': $('#newpass').val()},
+								success: function(data){
+									if (data === "success")
+									{
+										$('#passwordResetModal').modal('hide');
+
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Información</strong>');
+										$("#ModalBody").html('La contraseña ha sido cambiada satisfactoriamente.');
+									}
+									else
+									{
+										$('#passwordResetModal').modal('hide');
+
+										$('#modal').modal('show');
+										$("#ModalLabel").html('<strong>Error</strong>');
+										$("#ModalBody").html(data);
+
+									}
+								}
+							})
+						});
+						$('#cancel_button').click(function()
+						{
+							// When user clicks cancel button the page is reloaded and home content is displayed
+							window.location.href = 'index.php';
+						});
+						$('#modal').on('hidden.bs.modal', function() { 
+							//location.reload();
+							window.location.href = 'index.php';
+						});
+						$('.check_parent').click(function(event) {  //on click 
+							 if(this.checked) { // check select status
+								 $('.check_child').each(function() { //loop through each checkbox
+									 this.disabled = true;  //disable all checkboxes with class "check_child"  
+									 this.checked = false;              														 
+								 });
+							 }else{
+								$('.check_child').each(function() { //loop through each checkbox
+									 this.disabled = false; //deselect all checkboxes with class "check_child"  
+									 this.checked = false;              														 
+								});         
+							}
 						});
 					</script>
 				</div>

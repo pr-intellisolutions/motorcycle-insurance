@@ -1,6 +1,6 @@
 <?php
 
-require_once('./common.php');
+require_once('../common.php');
 
 $template->set_custom_template(DIR_BASE.'styles', 'default');
 
@@ -29,7 +29,7 @@ else
 		'USER_ROLE' => $user->role));
 }
 
-$template->set_filenames(array('body' => 'contact.html'));
+$template->set_filenames(array('body' => 'about.html'));
 $template->display('body');
 
 ?>

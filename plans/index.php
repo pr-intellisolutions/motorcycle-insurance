@@ -1,6 +1,6 @@
 <?php
 
-require_once('./common.php');
+require_once('../common.php');
 
 $template->set_custom_template(DIR_BASE.'styles', 'default');
 
@@ -21,15 +21,34 @@ if ($user->auth())
 		$result->close();
 	}
 	$template->assign_vars(array('USER_AUTH_VALID' => true,
+		'USER_ID'	=> $user->user_id,
 		'USER_ROLE' => $user->role));
 }
 else
 {
 	$template->assign_vars(array('USER_AUTH_VALID' => false,
+		'USER_ID'	=> $user->user_id,
 		'USER_ROLE' => $user->role));
 }
 
-$template->set_filenames(array('body' => 'index.html'));
+$stmnt = sprintf("SELECT * FROM plans WHERE active=1");
+
+$result = $user->sql_conn->query($stmnt);
+
+if ($result->num_rows > 0)
+{
+	while ($row = $result->fetch_assoc())
+	{
+		$template->assign_block_vars('plan',
+			array('ID'	  => $row['id'],
+				  'TITLE' => $row['title'],
+				  'DESC'  => $row['description'],
+				  'PRICE' => $row['plan_price']));
+	}
+	$result->close();
+}
+
+$template->set_filenames(array('body' => 'plans.html'));
 $template->display('body');
 
 ?>
