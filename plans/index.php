@@ -4,10 +4,19 @@ require_once('../common.php');
 
 $template->set_custom_template(DIR_BASE.'styles', 'default');
 
-$template->assign_var('SITE_URL', SITE_URL);
+	$template->assign_vars(array('SITE_URL' => SITE_URL,
+		'FORM_ACTION' => $_SERVER['PHP_SELF'],
+		'FORM_METHOD' => 'POST'));
 
 if ($user->auth())
 {
+	if (isset($_POST['plan_id']))
+	{
+		//add plan id to current session
+		//redirect to shopping cart
+		header('Location: '.SITE_URL.'shopping_cart.php');
+		die();
+	}
 	$stmnt = sprintf("SELECT first, middle, last FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.userid=%d", $user->user_id);
 	
 	$result = $user->sql_conn->query($stmnt);
@@ -26,6 +35,13 @@ if ($user->auth())
 }
 else
 {
+	if (isset($_POST['plan_id']))
+	{
+		//add plan id to current session
+		//redirect user registration
+		header('Location: '.SITE_URL.'newuser');
+		die();
+	}
 	$template->assign_vars(array('USER_AUTH_VALID' => false,
 		'USER_ID'	=> $user->user_id,
 		'USER_ROLE' => $user->role));
@@ -47,6 +63,7 @@ if ($result->num_rows > 0)
 	}
 	$result->close();
 }
+$template->assign_var('NO_LOGIN_INFO', false);
 
 $template->set_filenames(array('body' => 'plans.html'));
 $template->display('body');

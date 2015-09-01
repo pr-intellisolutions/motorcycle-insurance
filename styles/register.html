@@ -1,2 +1,118 @@
 	<!-- INCLUDE header.html -->
+		<div class="page-header">
+			<h1>Registrar cuenta</h1>
+		</div>
+		<div class="row row-centered">
+			<div class="col-md-6 col-centered">
+				<div class="alert alert-info" role="alert">
+					Para tener acceso a nuestros servicios es necesario que registre una cuenta con nosotros.
+				</div>
+				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+					<p class="text-info">Información de la cuenta</p>
+					<hr>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Nombre de usuario: </label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="username" required>
+							<span id="check_user_status"></span>
+						</div>
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-default" id="check_user">Verificar disponibilidad</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Contraseña: </label>
+						<div class="col-sm-4">
+							<input type="password" class="form-control" id="password" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Confirmar contraseña: </label>
+						<div class="col-sm-4">
+							<input type="password" class="form-control" id="password_confirm" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Email: </label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="email" required>
+						</div>
+					</div>
+					<p class="text-info">Información personal</p>
+					<hr>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Primer nombre:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="first">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Segundo nombre:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="middle">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Apellido paterno:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="last">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Apellido materno:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="maiden">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Dirección Línea 1:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="address1">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Dirección Línea 2:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="address2">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ciudad:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="city">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Estado:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="state">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Zip:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="zip">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">País:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="country">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Teléfono:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="telephone">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-4">
+							<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
+							<button type="button" class="btn btn-primary" id="create_user">Crear cuenta</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	<!-- INCLUDE footer.html -->

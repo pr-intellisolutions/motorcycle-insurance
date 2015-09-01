@@ -11,7 +11,8 @@ if ($user->auth())
 }
 else
 {
-	$template->assign_var('USER_AUTH_VALID',false);
+	$template->assign_vars(array('USER_AUTH_VALID' => false,
+		'NO_LOGIN_INFO' => true));
 }
 
 require_once('./login.php');

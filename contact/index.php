@@ -28,6 +28,7 @@ else
 	$template->assign_vars(array('USER_AUTH_VALID' => false,
 		'USER_ROLE' => $user->role));
 }
+$template->assign_var('NO_LOGIN_INFO', false);
 
 $template->set_filenames(array('body' => 'contact.html'));
 $template->display('body');

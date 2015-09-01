@@ -29,6 +29,8 @@ else
 		'USER_ROLE' => $user->role));
 }
 
+$template->assign_var('NO_LOGIN_INFO', false);
+
 $template->set_filenames(array('body' => 'index.html'));
 $template->display('body');
 
