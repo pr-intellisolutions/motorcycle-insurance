@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.4.14
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2015 at 05:14 PM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: Sep 12, 2015 at 05:58 PM
+-- Server version: 5.6.26
+-- PHP Version: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `prmi`
@@ -23,11 +23,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `activations`
+--
+
+CREATE TABLE IF NOT EXISTS `activations` (
+  `id` int(11) unsigned NOT NULL,
+  `userid` int(11) unsigned NOT NULL,
+  `token` varchar(256) NOT NULL,
+  `request` date NOT NULL,
+  `expiration` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `assist`
 --
 
 CREATE TABLE IF NOT EXISTS `assist` (
-`id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL,
   `customer_id` int(11) unsigned NOT NULL,
   `provider_id` int(11) unsigned NOT NULL,
   `assist_desc` varchar(128) NOT NULL,
@@ -44,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `assist` (
 --
 
 CREATE TABLE IF NOT EXISTS `config` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `site_name` varchar(64) NOT NULL,
   `site_desc` varchar(128) NOT NULL,
   `site_host` varchar(64) NOT NULL,
@@ -102,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 
 INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisit`, `lastip`, `lastbrowser`, `ip`, `browser`, `session`, `token`, `expired`, `disabled`, `active`, `passchg`, `passdate`, `login_attempts`, `permissions`) VALUES
 (4157, '', '$2y$11$VpfY7vUX1hOJU2LukJkocun5qFJ4CYb2CKi7Qrv8/FQAk5p15xPDC', '', 'user', '2015-08-08 11:35:48', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 11:35:48', 0, 'none'),
-(12854, 'admin', '$2y$11$4CnuTprD.hJvi2Eg2riMTefQSHfO5EPFjQyDySOd4DxCmiIPPBNfO', 'dennis.borrerotorres@gmai..com', 'admin', '2015-02-02 23:37:12', '2015-09-12 10:57:17', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 's4lt7rjts7jqc9lqa42crpj7n0', 'd5bfb9b52385fa5592b99ee2b372893c795f4782', 0, 0, 1, 0, '2015-10-08 15:53:54', 0, 'all'),
+(12854, 'admin', '$2y$11$4CnuTprD.hJvi2Eg2riMTefQSHfO5EPFjQyDySOd4DxCmiIPPBNfO', 'dennis.borrerotorres@gmai..com', 'admin', '2015-02-02 23:37:12', '2015-09-12 11:18:36', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.1024', 'kcscna9i0t395p1s2clapp5702', 'd5bfb9b52385fa5592b99ee2b372893c795f4782', 0, 0, 1, 0, '2015-10-08 15:53:54', 0, 'all'),
 (39824, 'test', '$2y$11$jcWj3x8AxQdATeO4Gj4oYuLG0vybEbAllN/FSonjFNk6JiTBaVYYG', 'test', 'user', '2015-08-09 19:56:07', '2015-09-12 10:55:50', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 's4lt7rjts7jqc9lqa42crpj7n0', '27dd2f6dc6b3d94c36e33e86c1a12947b97982dc', 0, 0, 1, 0, '2015-10-08 19:56:07', 0, 'none'),
 (48752, 'dborrero', '$2y$11$7NI64MwCZf6doF4H/qAiJO9gN6kIHZaRx5hC4fgTfLmHBVEvbumi2', 'my@email.com', 'admin', '2015-08-08 09:37:50', '2015-08-08 13:12:50', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 19:14:23', 3, 'all'),
 (50807, 'provider', '$2y$11$8Bp/psg/cyA25Chr87pkju.VPWwYzzMcryNqwHrLAu5TUdj/UAKdu', 'provider', 'provider', '2015-08-08 18:00:45', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 18:00:45', 0, 'none');
@@ -114,7 +128,7 @@ INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisi
 --
 
 CREATE TABLE IF NOT EXISTS `plans` (
-`id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL,
   `name` varchar(64) NOT NULL,
   `title` varchar(64) NOT NULL,
   `description` varchar(128) NOT NULL,
@@ -145,7 +159,7 @@ INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `n
 --
 
 CREATE TABLE IF NOT EXISTS `profile` (
-`id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL,
   `userid` int(11) unsigned NOT NULL,
   `first` varchar(32) NOT NULL,
   `middle` varchar(32) NOT NULL,
@@ -178,7 +192,7 @@ INSERT INTO `profile` (`id`, `userid`, `first`, `middle`, `last`, `maiden`, `pho
 --
 
 CREATE TABLE IF NOT EXISTS `providers` (
-`id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL,
   `userid` int(11) unsigned NOT NULL,
   `profile_id` int(11) unsigned NOT NULL,
   `companyName` varchar(64) NOT NULL,
@@ -202,11 +216,23 @@ INSERT INTO `providers` (`id`, `userid`, `profile_id`, `companyName`, `companyPh
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reset`
+--
+
+CREATE TABLE IF NOT EXISTS `reset` (
+  `id` int(11) unsigned NOT NULL,
+  `userid` int(11) unsigned NOT NULL,
+  `token` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `services`
 --
 
 CREATE TABLE IF NOT EXISTS `services` (
-`id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL,
   `userid` int(11) unsigned NOT NULL,
   `plan_id` int(11) unsigned NOT NULL,
   `occurrence_counter` int(11) NOT NULL,
@@ -229,7 +255,7 @@ INSERT INTO `services` (`id`, `userid`, `plan_id`, `occurrence_counter`, `miles_
 --
 
 CREATE TABLE IF NOT EXISTS `vehicles` (
-`id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL,
   `userid` int(11) unsigned NOT NULL,
   `service_id` int(11) unsigned NOT NULL,
   `type` enum('carro','motora','lancha','bote') NOT NULL,
@@ -252,129 +278,177 @@ INSERT INTO `vehicles` (`id`, `userid`, `service_id`, `type`, `model`, `brand`, 
 --
 
 --
+-- Indexes for table `activations`
+--
+ALTER TABLE `activations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`);
+
+--
 -- Indexes for table `assist`
 --
 ALTER TABLE `assist`
- ADD PRIMARY KEY (`id`), ADD KEY `customer_id` (`customer_id`,`provider_id`), ADD KEY `provider_id` (`provider_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`,`provider_id`),
+  ADD KEY `provider_id` (`provider_id`);
 
 --
 -- Indexes for table `config`
 --
 ALTER TABLE `config`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `login`
 --
 ALTER TABLE `login`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `user` (`user`), ADD UNIQUE KEY `id` (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user` (`user`),
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indexes for table `plans`
 --
 ALTER TABLE `plans`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `profile`
 --
 ALTER TABLE `profile`
- ADD PRIMARY KEY (`id`), ADD KEY `profile_ibfk_1` (`userid`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `profile_ibfk_1` (`userid`);
 
 --
 -- Indexes for table `providers`
 --
 ALTER TABLE `providers`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `profile_id` (`profile_id`), ADD UNIQUE KEY `userid` (`userid`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `profile_id` (`profile_id`),
+  ADD UNIQUE KEY `userid` (`userid`);
+
+--
+-- Indexes for table `reset`
+--
+ALTER TABLE `reset`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`);
 
 --
 -- Indexes for table `services`
 --
 ALTER TABLE `services`
- ADD PRIMARY KEY (`id`), ADD KEY `userid` (`userid`), ADD KEY `plan_id` (`plan_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid` (`userid`),
+  ADD KEY `plan_id` (`plan_id`);
 
 --
 -- Indexes for table `vehicles`
 --
 ALTER TABLE `vehicles`
- ADD PRIMARY KEY (`id`), ADD KEY `vehicles_ibfk_1` (`userid`), ADD KEY `service_id` (`service_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehicles_ibfk_1` (`userid`),
+  ADD KEY `service_id` (`service_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `activations`
+--
+ALTER TABLE `activations`
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `assist`
 --
 ALTER TABLE `assist`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `config`
 --
 ALTER TABLE `config`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1032;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1032;
 --
 -- AUTO_INCREMENT for table `providers`
 --
 ALTER TABLE `providers`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `reset`
+--
+ALTER TABLE `reset`
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `activations`
+--
+ALTER TABLE `activations`
+  ADD CONSTRAINT `activations_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `assist`
 --
 ALTER TABLE `assist`
-ADD CONSTRAINT `assist_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `assist_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `assist_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `assist_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `profile`
 --
 ALTER TABLE `profile`
-ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `providers`
 --
 ALTER TABLE `providers`
-ADD CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `providers_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `providers_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `providers_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `reset`
+--
+ALTER TABLE `reset`
+  ADD CONSTRAINT `reset_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `services`
 --
 ALTER TABLE `services`
-ADD CONSTRAINT `services_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `services_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `services_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `services_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `vehicles`
 --
 ALTER TABLE `vehicles`
-ADD CONSTRAINT `vehicles_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `vehicles_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `vehicles_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vehicles_ibfk_2` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
