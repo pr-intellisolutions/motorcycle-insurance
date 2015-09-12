@@ -14,7 +14,10 @@ if ($user->auth())
 	{
 		//add plan id to current session
 		//redirect to shopping cart
-		header('Location: '.SITE_URL.'shopping_cart.php');
+		$_SESSION['buy_plan'] = true;
+		$_SESSION['selected_plan'] = $_POST['plan_id'];
+	
+		header('Location: '.SITE_URL.'shop');
 		die();
 	}
 	$stmnt = sprintf("SELECT first, middle, last FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.userid=%d", $user->user_id);
@@ -39,6 +42,9 @@ else
 	{
 		//add plan id to current session
 		//redirect user registration
+		$_SESSION['buy_plan'] = true;
+		$_SESSION['selected_plan'] = $_POST['plan_id'];
+	
 		header('Location: '.SITE_URL.'newuser');
 		die();
 	}

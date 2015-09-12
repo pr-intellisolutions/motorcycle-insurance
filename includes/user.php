@@ -22,6 +22,30 @@ class User extends Session
 	}
 	public function auth()
 	{
+		// Check for remember me cookie
+		if (isset($_COOKIE['username']) && isset($_COOKIE['token']))
+		{
+			$stmt = sprintf("SELECT * FROM login WHERE user='%s' AND token='%s'", $_COOKIE['username'], $_COOKIE['token']);
+
+			$result = $this->sql_conn->query($stmt);
+
+			if ($result->num_rows > 0)
+			{
+				if (!$this->session_id)
+				{
+					$row = $result->fetch_assoc();
+					
+					$this->session_init($row);
+					
+					header("Refresh:0");
+				}
+				$result->close();
+				return true;
+			}
+			$this->set_error(self::TOKEN_MISMATCH);
+			return false;
+		}
+
 		// Checking for a the session id guarantees that the user was previously validated through proper login
 		if (!$this->session_id)
 		{
@@ -29,7 +53,7 @@ class User extends Session
 			return false;
 		}
 
-		// Check if session has expired after inactivity
+		// Check if session has expired after inactivity 
 		if ($this->session_exp)
 		{
 			$this->session_close();
@@ -37,6 +61,7 @@ class User extends Session
 			$this->set_error(self::SESSION_EXPIRED);
 			return false;
 		}
+
 		$stmt = sprintf("SELECT * FROM login WHERE id = %d", $this->user_id);
 
 		$result = $this->sql_conn->query($stmt);
@@ -249,6 +274,9 @@ class User extends Session
 	public function logoff()
 	{
 		$this->session_close();
+
+		setcookie("username",false,time()-86400, "/");
+		setcookie("token",false,time()-86400, "/");		
 	}
 	public function create_account($account)
 	{

@@ -6,6 +6,7 @@
 			<div class="col-md-6 col-centered">
 				<div class="alert alert-info" role="alert">
 					Para tener acceso a nuestros servicios es necesario que registre una cuenta con nosotros.
+					Si ya tiene una cuenta con nosotros, puede acceder a ella precionando <a href="{SITE_URL}login">aqui.</a>
 				</div>
 				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 					<p class="text-info">Información de la cuenta</p>
@@ -108,11 +109,40 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-4">
-							<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
-							<button type="button" class="btn btn-primary" id="create_user">Crear cuenta</button>
+							<button type="reset" class="btn btn-default" value="reset">Cancelar</button>
+							<button type="submit" class="btn btn-primary" name="action" value="createAccount">Crear cuenta</button>
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
+		<script>
+			$(document).ready(function()
+			{
+				$("#check_user").click(function() {
+					var username = $("#username").val();
+					
+					if (username !== "")
+					{
+						$.ajax({
+							type: "POST",
+							url: "check_user.php",
+							data: "username="+username,
+							success: function(data){
+								if (data === "available")
+								{
+									$("#check_user_status").attr("class", "label label-success");
+									$("#check_user_status").html("'"+username+"' está disponible!");
+								}
+								else
+								{
+									$("#check_user_status").attr("class", "label label-warning");
+									$("#check_user_status").html("'"+username+"' no está disponible!");
+								}
+							}
+						})
+					}
+				});
+			});
+		</script>
 	<!-- INCLUDE footer.html -->

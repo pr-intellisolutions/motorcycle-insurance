@@ -3,21 +3,23 @@ class Session extends SiteDB
 {
 	// Error constants
 	const BAD_INPUT 				= 0;
-	const SESSION_INVALID			= 1;
-	const SESSION_EXPIRED			= 2;
-	const USER_INVALID				= 3;
-	const PASS_INVALID				= 4;
-	const NEWPASS_REQUEST			= 5;
-	const OLDPASS_EXPIRED			= 6;
-	const USER_TAKEN				= 7;
-	const PLAN_TAKEN				= 8;
-	const LOGIN_EXPIRED				= 9;
-	const LOGIN_DISABLED			= 10;
-	const LOGIN_INVALID				= 11;
-	const UNREGISTERED_USER			= 12;
-	const NO_SLOTS_AVAILABLE		= 13;
-	const INCOMPLETE_TRANSACTION	= 14;
-	const UNREGISTERED_PROVIDER		= 15;
+	const TOKEN_MISMATCH			= 1;
+	const SESSION_INVALID			= 2;
+	const SESSION_EXPIRED			= 3;
+	const USER_INVALID				= 4;
+	const PASS_INVALID				= 5;
+	const NEWPASS_REQUEST			= 6;
+	const OLDPASS_EXPIRED			= 7;
+	const USER_TAKEN				= 8;
+	const PLAN_TAKEN				= 9;
+	const LOGIN_EXPIRED				= 10;
+	const LOGIN_DISABLED			= 11;
+	const LOGIN_INVALID				= 12;
+	const UNREGISTERED_USER			= 13;
+	const NO_SLOTS_AVAILABLE		= 14;
+	const INCOMPLETE_TRANSACTION	= 15;
+	const UNREGISTERED_PROVIDER		= 16;
+	
 
 	// Session is alive in seconds
 	const SESSION_TIME_WAIT_INACTIVITY = 1800;
@@ -88,6 +90,9 @@ class Session extends SiteDB
 		case self::BAD_INPUT:
 			$this->error = 'La información de entrada no se pudo leer correctamente.';
 			break;	
+		case self::TOKEN_MISMATCH:
+			$this->error = 'Occurió un error al extraer el token de seguridad.';
+			break;
 		case self::SESSION_INVALID:
 			$this->error = 'La sesión actual es invalida.';
 			break;

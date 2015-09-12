@@ -86,5 +86,21 @@ class Login extends User
 		else
 			return false;
 	}
+	public function set_remember_me($user)
+	{
+		$user = $this->sanitize_input($user);
+
+		$token = sha1(openssl_random_pseudo_bytes(256));
+
+		setcookie("username", $user, time() + 86400, "/"); // set to last a day
+		setcookie("token", $token, time() + 86400, "/"); // set to last a day
+
+		$stmt = sprintf("UPDATE login SET token='%s' WHERE user='%s'", $token, $user);
+
+		if (!$this->sql_conn->query($stmt))
+			trigger_error('Login::valid(): '.$this->sql_conn->error, E_USER_ERROR);
+
+		
+	}
 }
 ?>

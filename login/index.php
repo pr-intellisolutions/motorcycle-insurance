@@ -34,6 +34,9 @@ if (isset($_POST['username']) && isset($_POST['password']))
 			}
 			else
 			{
+				if (isset($_POST['remember_me']) && $_POST['remember_me'] === "true")
+					$login->set_remember_me($_POST['username']);
+
 				header('Location: '.SITE_URL);
 				die();
 			}
