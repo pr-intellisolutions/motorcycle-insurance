@@ -29,7 +29,20 @@
 			<hr>
 			<div style="text-align:right;">
 				<h4><strong>Total: </strong>$<span id="total">60</span></h4>
-				<button type="button" class="btn btn-primary" id="checkout">Comprar</button>
+					
+				<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+				<input type="hidden" name="cmd" value="_xclick">
+				<input type="hidden" name="business" value="dennis.borrerotorres-facilitator@gmail.com">
+				<input type="hidden" name="lc" value="US">
+				<input type="hidden" name="item_name" value="Plan" id="item_name">
+				<input type="hidden" name="amount" value="" id="amount">
+				<input type="hidden" name="currency_code" value="USD">
+				<input type="hidden" name="button_subtype" value="services">
+				<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+				</form>
+
 			</div>
 		</div>
 		<script>
