@@ -431,6 +431,28 @@ class User extends Session
 	
 		return $user_id;
 	}
+	public function get_username($userid)
+	{
+		$username = "";
+		$userid = $this->sanitize_input($userid);
+
+		$stmt = sprintf("SELECT user FROM login WHERE id = %d", $userid);
+		
+		$result = $this->sql_conn->query($stmt);
+	
+		if ($result->num_rows > 0)
+		{
+			$row = $result->fetch_assoc();
+			$username = $row['user'];
+		}
+		else
+		{
+			$this->set_error(self::UNREGISTERED_USER);
+		}
+		$result->close();
+	
+		return $username;
+	}
 	public function get_member_id($username)
 	{
 		$member_id = -1;

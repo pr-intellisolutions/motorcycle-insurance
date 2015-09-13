@@ -1,0 +1,41 @@
+	<!-- INCLUDE header.html -->
+		<div class="page-header">
+			<h1>Recuperar contraseña</h1>
+		</div>
+		<!-- IF SIDE_CONTENT == "home" -->
+		<p class="text-info">Entre su dirección de correro electrónico</p>
+
+		<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+		  <div class="form-group">
+			<label class="sr-only" for="email">Dirección de correro electrónico</label>
+			<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+		  </div>
+		  <button class="btn btn-default navbar-btn" type="submit" name="action" value="reset_password">Recuperar</button>
+		</form>
+		<p class="text-danger">{ERROR_STATUS}</p>
+		<!-- ELSEIF SIDE_CONTENT == "password_reset" -->
+		<p class="text-info">Entre su nueva contraseña</p>
+
+		<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
+		  <input type="hidden" class="form-control" id="userid" name="userid" value="{USER_ID}">
+		  <input type="hidden" class="form-control" id="token" name="token" value="{TOKEN}">
+		  <div class="form-group">
+			<label class="sr-only" for="password">Contraseña</label>
+			<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+		  </div>
+		  <div class="form-group">
+			<label class="sr-only" for="pass_confirm">Contraseña</label>
+			<input type="password" class="form-control" id="pass_confirm" name="pass_confirm" placeholder="Confirme su contraseña">
+		  </div>
+		  <button class="btn btn-default navbar-btn" type="submit" name="action" value="new_password">Recuperar</button>
+		</form>
+		
+		<p class="text-danger">{ERROR_STATUS}</p>
+		<!-- ELSEIF SIDE_CONTENT == "status" -->
+			<!-- IF PASSCHG_SUCCESS == true -->
+				<p class="text-info">{ERROR_STATUS}</p>
+			<!-- ELSE -->
+				<p class="text-danger">{ERROR_STATUS}</p>
+			<!-- ENDIF -->
+		<!-- ENDIF -->
+	<!-- INCLUDE footer.html -->
