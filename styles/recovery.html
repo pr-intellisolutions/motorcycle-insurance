@@ -8,7 +8,7 @@
 		<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
 		  <div class="form-group">
 			<label class="sr-only" for="email">Dirección de correro electrónico</label>
-			<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+			<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
 		  </div>
 		  <button class="btn btn-default navbar-btn" type="submit" name="action" value="reset_password">Recuperar</button>
 		</form>
@@ -21,11 +21,11 @@
 		  <input type="hidden" class="form-control" id="token" name="token" value="{TOKEN}">
 		  <div class="form-group">
 			<label class="sr-only" for="password">Contraseña</label>
-			<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+			<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
 		  </div>
 		  <div class="form-group">
 			<label class="sr-only" for="pass_confirm">Contraseña</label>
-			<input type="password" class="form-control" id="pass_confirm" name="pass_confirm" placeholder="Confirme su contraseña">
+			<input type="password" class="form-control" id="pass_confirm" name="pass_confirm" placeholder="Confirme su contraseña" required>
 		  </div>
 		  <button class="btn btn-default navbar-btn" type="submit" name="action" value="new_password">Recuperar</button>
 		</form>

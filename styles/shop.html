@@ -1,2 +1,65 @@
 	<!-- INCLUDE header.html -->
+	<div class="page-header">
+		<h1>Tu plan de servicio</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Descripción</th>
+						<th>Precio</th>
+						<th>Cantidad</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr>
+						<td><strong>{PLAN_TITLE}</strong><br><br>{PLAN_DESC}</td>
+						<td>$<span id="plan_price">{PLAN_PRICE}</span></td>
+						<td><select class="form-control" disabled><option>1</option></td>
+					</tr>
+					<tr>
+						<td><strong>Vehículos</strong><br><br>Precio por vehículo adicional: $<span id="plan_extended">{PLAN_EXTENDED}</span></td>
+						<td>$<span id="plan_extended_price">0.00</span></td>
+						<td class="col-sm-1"><select class="form-control" id="vehicle_select"><option>1</option><option>2</option></select></td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+			<div style="text-align:right;">
+				<h4><strong>Total: </strong>$<span id="total">60</span></h4>
+				<button type="button" class="btn btn-primary" id="checkout">Comprar</button>
+			</div>
+		</div>
+		<script>
+		$( document ).ready(function()
+		{
+			var n = Number($("#vehicle_select").val());
+			var k = Number($("#plan_extended").text());
+		
+			var plan_price = Number($("#plan_price").text());
+			var plan_extended_price = (n-1)*k;
+
+			var total = plan_price + plan_extended_price;
+			
+			$("#total").text(total.toFixed(2));
+		});
+
+		$("#vehicle_select").change(function()
+		{
+			var n = Number($("#vehicle_select").val());
+			var k = Number($("#plan_extended").text());
+		
+			var plan_price = Number($("#plan_price").text());
+			var plan_extended_price = (n-1)*k;
+
+			var total = plan_price + plan_extended_price;
+	
+			$("#plan_extended_price").text(plan_extended_price.toFixed(2));
+			$("#total").text(total.toFixed(2));
+			
+		});
+		</script>
+	</div>
 	<!-- INCLUDE footer.html -->
