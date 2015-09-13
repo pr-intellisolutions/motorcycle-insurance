@@ -34,6 +34,9 @@
 		<!-- ELSEIF SIDE_CONTENT == "status" -->
 			<!-- IF PASSCHG_SUCCESS == true -->
 				<p class="text-info">{ERROR_STATUS}</p>
+				<script type="text/JavaScript">
+					setTimeout("location.href = '{SITE_URL}/login';",1500);
+				</script>
 			<!-- ELSE -->
 				<p class="text-danger">{ERROR_STATUS}</p>
 			<!-- ENDIF -->

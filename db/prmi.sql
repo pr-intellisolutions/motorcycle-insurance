@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2015 at 05:58 PM
+-- Generation Time: Sep 13, 2015 at 06:59 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -115,9 +115,9 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisit`, `lastip`, `lastbrowser`, `ip`, `browser`, `session`, `token`, `expired`, `disabled`, `active`, `passchg`, `passdate`, `login_attempts`, `permissions`) VALUES
-(4157, '', '$2y$11$VpfY7vUX1hOJU2LukJkocun5qFJ4CYb2CKi7Qrv8/FQAk5p15xPDC', '', 'user', '2015-08-08 11:35:48', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 11:35:48', 0, 'none'),
-(12854, 'admin', '$2y$11$4CnuTprD.hJvi2Eg2riMTefQSHfO5EPFjQyDySOd4DxCmiIPPBNfO', 'dennis.borrerotorres@gmai..com', 'admin', '2015-02-02 23:37:12', '2015-09-12 11:18:36', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.1024', 'kcscna9i0t395p1s2clapp5702', 'd5bfb9b52385fa5592b99ee2b372893c795f4782', 0, 0, 1, 0, '2015-10-08 15:53:54', 0, 'all'),
-(39824, 'test', '$2y$11$jcWj3x8AxQdATeO4Gj4oYuLG0vybEbAllN/FSonjFNk6JiTBaVYYG', 'test', 'user', '2015-08-09 19:56:07', '2015-09-12 10:55:50', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 's4lt7rjts7jqc9lqa42crpj7n0', '27dd2f6dc6b3d94c36e33e86c1a12947b97982dc', 0, 0, 1, 0, '2015-10-08 19:56:07', 0, 'none'),
+(4157, '', '$2y$11$6oki4teEbBOD/iINtblkfeFZbRRwxcBtCQa5ucWm5Df65vV2EXsKu', '', 'user', '2015-08-08 11:35:48', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-11-12 15:27:46', 0, 'none'),
+(12854, 'admin', '$2y$11$dFeJ1Fu3kLdCU0pd.0kVP.j0y2UhKO/P8rGZClyPqzJpMdZ1MWscy', 'dennis.borrerotorres@gmail.com', 'admin', '2015-02-02 23:37:12', '2015-09-13 10:05:28', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.1024', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.1024', 'l2d0rco0n3h6f8gfro5fav0pl0', 'd4c41c9df9297866756b42514a4806c224c93541', 0, 0, 1, 0, '2015-11-12 15:32:04', 0, 'all'),
+(39824, 'test', '$2y$11$jcWj3x8AxQdATeO4Gj4oYuLG0vybEbAllN/FSonjFNk6JiTBaVYYG', 'test', 'user', '2015-08-09 19:56:07', '2015-09-13 12:57:28', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.1024', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.1024', '2v7k6ap08tj82o92qlqe64jjt1', '27dd2f6dc6b3d94c36e33e86c1a12947b97982dc', 0, 0, 1, 0, '2015-10-08 19:56:07', 0, 'none'),
 (48752, 'dborrero', '$2y$11$7NI64MwCZf6doF4H/qAiJO9gN6kIHZaRx5hC4fgTfLmHBVEvbumi2', 'my@email.com', 'admin', '2015-08-08 09:37:50', '2015-08-08 13:12:50', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 19:14:23', 3, 'all'),
 (50807, 'provider', '$2y$11$8Bp/psg/cyA25Chr87pkju.VPWwYzzMcryNqwHrLAu5TUdj/UAKdu', 'provider', 'provider', '2015-08-08 18:00:45', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 18:00:45', 0, 'none');
 
@@ -135,9 +135,9 @@ CREATE TABLE IF NOT EXISTS `plans` (
   `num_occurrences` int(11) NOT NULL,
   `num_miles` int(11) NOT NULL,
   `num_vehicles` int(11) NOT NULL,
-  `plan_price` float NOT NULL,
-  `mile_price` float NOT NULL,
-  `extend_price` float NOT NULL,
+  `plan_price` decimal(5,2) NOT NULL,
+  `mile_price` decimal(5,2) NOT NULL,
+  `extend_price` decimal(5,2) NOT NULL,
   `term` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL,
   `date_entered` datetime NOT NULL,
@@ -149,8 +149,8 @@ CREATE TABLE IF NOT EXISTS `plans` (
 --
 
 INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `num_miles`, `num_vehicles`, `plan_price`, `mile_price`, `extend_price`, `term`, `active`, `date_entered`, `last_modify`) VALUES
-(14, 'basico', 'Servicio B&aacute;sico', 'Incluye 4 ocurrencias en adici&oacute;n 50 millas de remolque', 4, 50, 2, 60, 3, 30, 12, 1, '2015-07-28 21:37:01', '2015-08-05 09:26:06'),
-(15, 'extendido', 'Servicio Extendido', 'Incluye 4 ocurrencias en adici&oacute;n 100 millas de remolque', 4, 100, 2, 90, 3, 30, 12, 1, '2015-07-28 21:45:00', '2015-07-28 21:45:33');
+(14, 'basico', 'Servicio B&aacute;sico', 'Incluye 4 ocurrencias en adici&oacute;n 50 millas de remolque', 4, 50, 2, '60.00', '3.00', '30.00', 12, 1, '2015-07-28 21:37:01', '2015-08-05 09:26:06'),
+(15, 'extendido', 'Servicio Extendido', 'Incluye 4 ocurrencias en adici&oacute;n 100 millas de remolque', 4, 100, 2, '90.00', '3.00', '45.00', 12, 1, '2015-07-28 21:45:00', '2015-07-28 21:45:33');
 
 -- --------------------------------------------------------
 
@@ -222,8 +222,15 @@ INSERT INTO `providers` (`id`, `userid`, `profile_id`, `companyName`, `companyPh
 CREATE TABLE IF NOT EXISTS `reset` (
   `id` int(11) unsigned NOT NULL,
   `userid` int(11) unsigned NOT NULL,
-  `token` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `token` varchar(256) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reset`
+--
+
+INSERT INTO `reset` (`id`, `userid`, `token`) VALUES
+(22, 12854, '82101bbadb90ee15f94c5710e3b05eeae6e070e6');
 
 -- --------------------------------------------------------
 
@@ -333,6 +340,7 @@ ALTER TABLE `providers`
 --
 ALTER TABLE `reset`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `userid_2` (`userid`),
   ADD KEY `userid` (`userid`);
 
 --
@@ -389,7 +397,7 @@ ALTER TABLE `providers`
 -- AUTO_INCREMENT for table `reset`
 --
 ALTER TABLE `reset`
-  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `services`
 --
