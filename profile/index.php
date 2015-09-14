@@ -20,17 +20,19 @@ if ($user->auth())
 
 		$result->close();
 	}
+
 	$template->assign_vars(array('USER_AUTH_VALID' => true,
-		'USER_ROLE' => $user->role));
+		'USER_ROLE' => $user->role,
+		'SIDE_CONTENT' => "home",
+		'NO_LOGIN_INFO' => false));
+
+	$template->set_filenames(array('body' => 'profile.html'));
+	$template->display('body');
 }
 else
 {
-	$template->assign_vars(array('USER_AUTH_VALID' => false,
-		'USER_ROLE' => $user->role));
+	header('Location: '.SITE_URL);
+	die();
 }
-$template->assign_var('NO_LOGIN_INFO', false);
-
-$template->set_filenames(array('body' => 'profile.html'));
-$template->display('body');
 
 ?>

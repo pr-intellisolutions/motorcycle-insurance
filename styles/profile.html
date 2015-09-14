@@ -1,2 +1,103 @@
 	<!-- INCLUDE header.html -->
+	<div class="page-header">
+		<h1>Tu perfil de usuario</h1>
+	</div>
+
+	<div class="row">
+		<div class="col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Navegación</h3>
+				</div>
+				<div class="list-group">
+				  <a href="index.php?option=1" class="list-group-item">Modificar información personal</a>
+				  <a href="index.php?option=2" class="list-group-item">Ver planes de servicio y covertura</a>
+				  <a href="index.php?option=3" class="list-group-item">Añadir vehículos a planes de servicio</a>
+				  <a href="index.php?option=4" class="list-group-item">Historial de pagos</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<!-- IF SIDE_CONTENT == "home" -->
+			<div class="col-md-4">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Información Personal</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Número de socio</td>
+							<td>{LAST_VISIT}</td>
+						</tr>
+						<tr> 
+							<td>Nombre completo</td>
+							<td>{LAST_IP_ADDRESS}</td>
+						</tr>
+						<tr> 
+							<td>Dirección de correo electrónico</td>
+							<td>{LAST_BROWSER}</td>
+						</tr>
+					</tbody>
+				</table>
+				<hr>
+				<p class="text-info" align="right"><a href="#">Ver más...</a></p>
+			</div>
+			<div class="col-md-4">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Planes de servicios</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Número de socio</td>
+							<td>{LAST_VISIT}</td>
+						</tr>
+						<tr> 
+							<td>Nombre completo</td>
+							<td>{LAST_IP_ADDRESS}</td>
+						</tr>
+						<tr> 
+							<td>Dirección de correo electrónico</td>
+							<td>{LAST_BROWSER}</td>
+						</tr>
+					</tbody>
+				</table>
+				<hr>
+				<p class="text-info" align="right"><a href="#">Ver más...</a></p>
+			</div>
+			<div class="col-md-4">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Vehículos registrados</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Número de socio</td>
+							<td>{LAST_VISIT}</td>
+						</tr>
+						<tr> 
+							<td>Nombre completo</td>
+							<td>{LAST_IP_ADDRESS}</td>
+						</tr>
+						<tr> 
+							<td>Dirección de correo electrónico</td>
+							<td>{LAST_BROWSER}</td>
+						</tr>
+					</tbody>
+				</table>
+				<hr>
+				<p class="text-info" align="right"><a href="#">Ver más...</a></p>
+			</div>
+			<!-- ENDIF -->
+		</div>
+	</div>
 	<!-- INCLUDE footer.html -->
