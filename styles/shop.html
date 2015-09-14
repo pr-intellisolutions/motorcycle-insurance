@@ -1,4 +1,5 @@
 	<!-- INCLUDE header.html -->
+	<script src="{SITE_URL}styles/js/shop.js"></script>
 	<div class="page-header">
 		<h1>Tu plan de servicio</h1>
 	</div>
@@ -22,57 +23,26 @@
 					<tr>
 						<td><strong>Vehículos</strong><br><br>Precio por vehículo adicional: $<span id="plan_extended">{PLAN_EXTENDED}</span></td>
 						<td>$<span id="plan_extended_price">0.00</span></td>
-						<td class="col-sm-1"><select class="form-control" id="vehicle_select"><option>1</option><option>2</option></select></td>
+						<td class="col-sm-1"><select class="form-control" id="vehicle_select"><option>1</option><option>2</option><option>3</option></select></td>
 					</tr>
 				</tbody>
 			</table>
 			<hr>
 			<div style="text-align:right;">
-				<h4><strong>Total: </strong>$<span id="total">60</span></h4>
-					
+				<h4><strong>Total: </strong>$<span id="total"></span></h4>
 				<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-				<input type="hidden" name="cmd" value="_xclick">
-				<input type="hidden" name="business" value="dennis.borrerotorres-facilitator@gmail.com">
-				<input type="hidden" name="lc" value="US">
-				<input type="hidden" name="item_name" value="Plan" id="item_name">
-				<input type="hidden" name="amount" value="" id="amount">
-				<input type="hidden" name="currency_code" value="USD">
-				<input type="hidden" name="button_subtype" value="services">
-				<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
-				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+					<input type="hidden" name="cmd" value="_xclick">
+					<input type="hidden" name="business" value="dennis.borrerotorres-facilitator@gmail.com">
+					<input type="hidden" name="lc" value="US">
+					<input type="hidden" name="item_name" value="Plan de servicio">
+					<input type="hidden" name="amount" value="" id="amount">
+					<input type="hidden" name="currency_code" value="USD">
+					<input type="hidden" name="button_subtype" value="services">
+					<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+					<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 				</form>
-
 			</div>
 		</div>
-		<script>
-		$( document ).ready(function()
-		{
-			var n = Number($("#vehicle_select").val());
-			var k = Number($("#plan_extended").text());
-		
-			var plan_price = Number($("#plan_price").text());
-			var plan_extended_price = (n-1)*k;
-
-			var total = plan_price + plan_extended_price;
-			
-			$("#total").text(total.toFixed(2));
-		});
-
-		$("#vehicle_select").change(function()
-		{
-			var n = Number($("#vehicle_select").val());
-			var k = Number($("#plan_extended").text());
-		
-			var plan_price = Number($("#plan_price").text());
-			var plan_extended_price = (n-1)*k;
-
-			var total = plan_price + plan_extended_price;
-	
-			$("#plan_extended_price").text(plan_extended_price.toFixed(2));
-			$("#total").text(total.toFixed(2));
-			
-		});
-		</script>
 	</div>
 	<!-- INCLUDE footer.html -->
