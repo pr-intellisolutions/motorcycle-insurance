@@ -8,7 +8,7 @@ $template->assign_var('SITE_URL', SITE_URL);
 
 if ($user->auth())
 {
-	$stmnt = sprintf("SELECT first, middle, last, maiden FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.userid=%d", $user->user_id);
+	$stmnt = sprintf("SELECT first, middle, last FROM profile INNER JOIN login ON profile.userid = login.id WHERE profile.userid=%d", $user->user_id);
 	
 	$result = $user->sql_conn->query($stmnt);
 	
@@ -16,7 +16,7 @@ if ($user->auth())
 	{
 		$row = $result->fetch_assoc();
 
-		$template->assign_var('USERNAME', sprintf("%s %s %s %s", $row['first'], $row['middle'], $row['last'], $row['maiden']));
+		$template->assign_var('USERNAME', sprintf("%s %s %s", $row['first'], $row['middle'], $row['last']));
 
 		$result->close();
 	}

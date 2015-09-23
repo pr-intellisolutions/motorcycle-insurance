@@ -8,13 +8,20 @@
 					Para tener acceso a nuestros servicios es necesario que registre una cuenta con nosotros.
 					Si ya tiene una cuenta con nosotros, puede acceder a ella precionando <a href="{SITE_URL}login">aqui.</a>
 				</div>
+				<!-- IF REGISTER_ERROR_MESSAGE -->
+				<div class="alert alert-danger" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					{REGISTER_ERROR_MESSAGE}
+				</div>
+				<!-- ENDIF -->
+
 				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
 					<p class="text-info">Información de la cuenta</p>
 					<hr>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Nombre de usuario: </label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="username" required>
+							<input type="text" class="form-control" name="username" id="username" required>
 							<span id="check_user_status"></span>
 						</div>
 						<div class="col-sm-4">
@@ -24,91 +31,92 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Contraseña: </label>
 						<div class="col-sm-4">
-							<input type="password" class="form-control" id="password" required>
+							<input type="password" class="form-control" name="password" required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Confirmar contraseña: </label>
 						<div class="col-sm-4">
-							<input type="password" class="form-control" id="password_confirm" required>
+							<input type="password" class="form-control" name="password_confirm" required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Email: </label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="email" required>
+							<input type="text" class="form-control" name="email" required>
 						</div>
 					</div>
+					<input type="hidden" name="role" value="user">
 					<p class="text-info">Información personal</p>
 					<hr>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Primer nombre:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="first">
+							<input type="text" class="form-control" name="first" required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Segundo nombre:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="middle">
+							<input type="text" class="form-control" name="middle">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Apellido paterno:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="last">
+							<input type="text" class="form-control" name="last" required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Apellido materno:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="maiden">
+							<input type="text" class="form-control" name="maiden">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Dirección Línea 1:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="address1">
+							<input type="text" class="form-control" name="address1">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Dirección Línea 2:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="address2">
+							<input type="text" class="form-control" name="address2">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Ciudad:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="city">
+							<input type="text" class="form-control" name="city">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Estado:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="state">
+							<input type="text" class="form-control" name="state">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Zip:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="zip">
+							<input type="text" class="form-control" name="zip">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">País:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="country">
+							<input type="text" class="form-control" name="country">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Teléfono:</label>
 						<div class="col-sm-4">
-							<input type="text" class="form-control" id="telephone">
+							<input type="text" class="form-control" name="telephone" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-4">
+						<div class="col-sm-offset-3 col-sm-6">
 							<button type="reset" class="btn btn-default" value="reset">Cancelar</button>
 							<button type="submit" class="btn btn-primary" name="action" value="createAccount">Crear cuenta</button>
 						</div>

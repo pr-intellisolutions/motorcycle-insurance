@@ -21,7 +21,7 @@ if ($user->auth() && (isset($_SESSION['buy_plan']) && $_SESSION['buy_plan'] == t
 		$result->close();
 	}
 
-	$stmnt = sprintf("SELECT title, description, plan_price, extend_price FROM plans WHERE id=%d", $_SESSION['selected_plan']);
+	$stmnt = sprintf("SELECT id, title, description, plan_price, extend_price FROM plans WHERE id=%d", $_SESSION['selected_plan']);
 	
 	$result = $user->sql_conn->query($stmnt);
 	
@@ -29,7 +29,8 @@ if ($user->auth() && (isset($_SESSION['buy_plan']) && $_SESSION['buy_plan'] == t
 	{
 		$row = $result->fetch_assoc();
 		
-		$template->assign_vars(array('PLAN_TITLE' => $row['title'],
+		$template->assign_vars(array('PLAN_ID' => $row['id'],
+			'PLAN_TITLE' => $row['title'],
 			'PLAN_DESC' => $row['description'],
 			'PLAN_PRICE' => $row['plan_price'],
 			'PLAN_EXTENDED' => $row['extend_price']));
