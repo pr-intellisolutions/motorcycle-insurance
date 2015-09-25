@@ -18,84 +18,111 @@
 			</div>
 		</div>
 		<div class="col-md-8">
+			<div class="alert alert-info" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>Información:</strong>
+				Su plan de servicio ha sido procesado correctamente
+			</div>
+			<div class="alert alert-warning" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>Información:</strong>
+				Tiene planes de servicio sin ningún vehículo registrado
+			</div>
 			<!-- IF SIDE_CONTENT == "home" -->
 			<div class="col-md-4">
 				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>Información Personal</th>
-							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>Número de socio</td>
-							<td>{LAST_VISIT}</td>
 						</tr>
 						<tr> 
 							<td>Nombre completo</td>
-							<td>{LAST_IP_ADDRESS}</td>
 						</tr>
 						<tr> 
 							<td>Dirección de correo electrónico</td>
-							<td>{LAST_BROWSER}</td>
 						</tr>
 					</tbody>
 				</table>
 				<hr>
-				<p class="text-info" align="right"><a href="#">Ver más...</a></p>
+				<p class="text-info" align="right"><a href="index.php?option=1"															data-container="body"
+															data-toggle="popover"
+															data-placement="top"
+															data-trigger="hover"
+															title="Información sobre la opción"
+															data-content="Sample Text">Ver más...</a></p>
+
 			</div>
 			<div class="col-md-4">
 				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>Planes de servicios</th>
-							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>Número de socio</td>
-							<td>{LAST_VISIT}</td>
+							<td>Planes Activos</td>
 						</tr>
 						<tr> 
-							<td>Nombre completo</td>
-							<td>{LAST_IP_ADDRESS}</td>
-						</tr>
-						<tr> 
-							<td>Dirección de correo electrónico</td>
-							<td>{LAST_BROWSER}</td>
+							<td>Términos </td>
 						</tr>
 					</tbody>
 				</table>
 				<hr>
-				<p class="text-info" align="right"><a href="#">Ver más...</a></p>
+				<p class="text-info" align="right"><a href="index.php?option=2"															data-container="body"
+															data-toggle="popover"
+															data-placement="top"
+															data-trigger="hover"
+															title="Información sobre la opción"
+															data-content="Sample Text">Ver más...</a></p>
+
 			</div>
 			<div class="col-md-4">
 				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>Vehículos registrados</th>
-							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>Número de socio</td>
-							<td>{LAST_VISIT}</td>
+							<td>Vehículos registrados</td>
 						</tr>
 						<tr> 
-							<td>Nombre completo</td>
-							<td>{LAST_IP_ADDRESS}</td>
-						</tr>
-						<tr> 
-							<td>Dirección de correo electrónico</td>
-							<td>{LAST_BROWSER}</td>
+							<td>Vehículos registrados por plan</td>
 						</tr>
 					</tbody>
 				</table>
 				<hr>
-				<p class="text-info" align="right"><a href="#">Ver más...</a></p>
+				<p class="text-info" align="right"><a href="index.php?option=3"
+															data-container="body"
+															data-toggle="popover"
+															data-placement="top"
+															data-trigger="hover"
+															title="Información sobre la opción"
+															data-content="Sample Text">Ver más...</a></p>
+
+			</div>
+			<!-- ELSEIF SIDE_CONTENT == 1 -->
+			<div class="col-md-9">
+				<h3 class="text-muted">Información personal</h3><hr>
+			</div>
+			<!-- ELSEIF SIDE_CONTENT == 2 -->
+			<div class="col-md-9">
+				<h3 class="text-muted">Planes de servicio</h3><hr>
+			</div>
+			<!-- ELSEIF SIDE_CONTENT == 3 -->
+			<div class="col-md-9">
+				<h3 class="text-muted">Vehículos registrados</h3><hr>
+			</div>
+			<!-- ELSEIF SIDE_CONTENT == 4 -->
+			<div class="col-md-9">
+				<h3 class="text-muted">Historial de pagos</h3><hr>
 			</div>
 			<!-- ENDIF -->
 		</div>
