@@ -10,13 +10,10 @@
 					<h3 class="panel-title">Navegación</h3>
 				</div>
 				<div class="list-group">
-				  <a href="index.php?option=1" class="list-group-item">Modificar información personal</a>
-				  <a href="index.php?option=2" class="list-group-item">Ver planes de servicio y covertura</a>
-				  <!-- IF REGISTER_VEHICLE == true -->
-				  <a href="index.php?option=3" class="list-group-item list-group-item-warning">Añadir vehículos a planes de servicio</a>
-				  <!-- ELSE -->
-				  <a href="index.php?option=3" class="list-group-item">Añadir vehículos a planes de servicio</a>
-				  <!-- ENDIF -->
+				  <a href="index.php?" class="list-group-item">Información general</a>
+				  <a href="index.php?option=1" class="list-group-item">Información personal</a>
+				  <a href="index.php?option=2" class="list-group-item">Planes de servicio</a>
+				  <a href="index.php?option=3" class="list-group-item">Vehículos registrados</a>
 				  <a href="index.php?option=4" class="list-group-item">Historial de pagos</a>
 				</div>
 			</div>
@@ -33,104 +30,234 @@
 			<div class="alert alert-warning" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<strong>Información:</strong>
-				Tiene planes de servicio sin ningún vehículo registrado.
+				Su cuenta no tiene ningún vehículo registrado.
 			</div>
 			<!-- ENDIF -->
 			<!-- IF SIDE_CONTENT == "home" -->
-			<div class="col-md-4">
+			<div class="col-md-11">
+				<h3 class="text-muted">Información General</h3><hr>
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Información Personal</th>
+							<th>Información General</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>Número de socio</td>
-						</tr>
-						<tr> 
-							<td>Nombre completo</td>
+							<td>{U_MEMBER_ID}</td>
 						</tr>
 						<tr> 
 							<td>Dirección de correo electrónico</td>
+							<td><a href="mailto:{U_EMAIL}">{U_EMAIL}</a></td>
 						</tr>
-					</tbody>
-				</table>
-				<hr>
-				<p class="text-info" align="right"><a href="index.php?option=1"															data-container="body"
-															data-toggle="popover"
-															data-placement="top"
-															data-trigger="hover"
-															title="Información sobre la opción"
-															data-content="Sample Text">Ver más...</a></p>
-
-			</div>
-			<div class="col-md-4">
-				<table class="table table-striped">
-					<thead>
 						<tr>
-							<th>Planes de servicios</th>
+							<td>Planes de servicio activos</td>
+							<td>{U_MEMBER_ID}</td>
 						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Planes Activos</td>
-						</tr>
-						<tr> 
-							<td>Términos </td>
-						</tr>
-					</tbody>
-				</table>
-				<hr>
-				<p class="text-info" align="right"><a href="index.php?option=2"															data-container="body"
-															data-toggle="popover"
-															data-placement="top"
-															data-trigger="hover"
-															title="Información sobre la opción"
-															data-content="Sample Text">Ver más...</a></p>
-
-			</div>
-			<div class="col-md-4">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Vehículos registrados</th>
-						</tr>
-					</thead>
-					<tbody>
 						<tr>
 							<td>Vehículos registrados</td>
-						</tr>
-						<tr> 
-							<td>Vehículos registrados por plan</td>
+							<td>{U_MEMBER_ID}</td>
 						</tr>
 					</tbody>
 				</table>
-				<hr>
-				<p class="text-info" align="right"><a href="index.php?option=3"
-															data-container="body"
-															data-toggle="popover"
-															data-placement="top"
-															data-trigger="hover"
-															title="Información sobre la opción"
-															data-content="Sample Text">Ver más...</a></p>
-
+				<div class="well well-lg">
+					Si necesita de algun tipo de asistencia en la carretera, favor de llamar al número 787-XXX-XXXX.
+				</div>
 			</div>
 			<!-- ELSEIF SIDE_CONTENT == 1 -->
-			<div class="col-md-9">
+				<!-- IF SAVE_DATA_ERROR == true -->
+				<div class="alert alert-danger" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<strong>Error:</strong>
+					{SAVE_DATA_ERROR_MGS}
+				</div>
+				<!-- ENDIF -->
+			<div class="col-md-11">
 				<h3 class="text-muted">Información personal</h3><hr>
+				<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Primer nombre:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="first" value="{FIRST}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Segundo nombre:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="middle" value="{MIDDLE}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Apellido paterno:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="last" value="{LAST}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Apellido materno:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="maiden" value="{MAIDEN}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Dirección Línea 1:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="address1" value="{ADDRESS1}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Dirección Línea 2:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="address2" value="{ADDRESS2}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Ciudad:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="city" value="{CITY}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Estado:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="state" value="{STATE}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Zip:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="zip" value="{ZIP}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">País:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="country" value="{COUNTRY}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Teléfono:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="phone" value="{PHONE}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Email: </label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" name="email" value="{EMAIL}">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-5 col-sm-4">
+							<button type="submit" class="btn btn-primary" name="action" value="save_user">Guardar</button>
+						</div>
+					</div>
+				</form>
 			</div>
 			<!-- ELSEIF SIDE_CONTENT == 2 -->
-			<div class="col-md-9">
+			<div class="col-md-11">
 				<h3 class="text-muted">Planes de servicio</h3><hr>
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						Opciones
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
+						<li><a href="{SITE_URL}plans">Añadir plan de servicio</a></li>
+					</ul>
+				</div>
+				<!-- BEGIN user_plans -->
+					<table class="table table-striped">
+						<thead>
+							<th>Información del plan {user_plans.INDEX}</th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Plan de servicio</td>
+								<td>{user_plans.PLAN_NAME}</td>
+							</tr>
+							<tr>
+								<td>Occurencias utilizadas</td>
+								<td>{user_plans.OCCUR_CURR} de {user_plans.OCCUR_MAX}</td>
+							</tr>
+							<tr>
+								<td>Millas utilizadas</td>
+								<td>{user_plans.MILE_CURR} de {user_plans.MILE_MAX}</td>
+							</tr>
+							<tr>
+								<td>Fecha de expiración</td>
+								<td>{user_plans.PLAN_EXP}</td>
+							</tr>
+						</tbody>
+					</table>
+				<!-- END -->
 			</div>
 			<!-- ELSEIF SIDE_CONTENT == 3 -->
-			<div class="col-md-9">
+			<div class="col-md-11">
 				<h3 class="text-muted">Vehículos registrados</h3><hr>
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						Opciones
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
+						<li><a href=#>Añadir vehículo</a></li>
+					</ul>
+				</div>
+				<table class="table table-striped">
+					<thead>
+						<th>Tipo de vehículo</th>
+						<th>Modelo</th>
+						<th>Marca</th>
+						<th>Año</th>
+						<th>tablilla</th>
+						<th>Número de serie</th>
+						<th>Plan de servicio</th>
+						<th></th>
+					</thead>
+					<tbody>
+					<!-- BEGIN vehicle_list -->
+						<tr>
+							<td>{vehicle_list.TYPE}</td>
+							<td>{vehicle_list.MODEL}</td>
+							<td>{vehicle_list.BRAND}</td>
+							<td>{vehicle_list.YEAR}</td>
+							<td>{vehicle_list.PLATE}</td>
+							<td>{vehicle_list.SERIAL}</td>
+							<td>{vehicle_list.SERVICE_PLAN}</td>
+							<td></td>
+						</tr>
+					<!-- END -->
+					</tbody>
+				</table>
 			</div>
 			<!-- ELSEIF SIDE_CONTENT == 4 -->
-			<div class="col-md-9">
+			<div class="col-md-11">
 				<h3 class="text-muted">Historial de pagos</h3><hr>
+				<table class="table table-stripped">
+					<thead>
+						<tr>
+							<th>Número de transacción</th>
+							<th>Pago emitido</th>
+							<th>Método de pago</th>
+							<th>Fecha de expedición</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+					<!-- BEGIN payment_history -->
+					<tr>
+						<td>{payment_history.TX}</td>
+						<td>{payment_history.AMT}</td>
+						<td>{payment_history.METHOD}</td>
+						<td>{payment_history.DATE}</td>
+					<tr>
+					<!-- END -->
+					</tbody>
+				</table>
 			</div>
 			<!-- ENDIF -->
 		</div>
