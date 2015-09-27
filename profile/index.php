@@ -28,6 +28,8 @@ if ($user->auth())
 		$result->close();
 	}
 	// Process PayPal confirmation
+	// Bug #0x001 - Illegal payments can get through the system without actually paying for services
+	$template->assign_var('BUY_PLAN', false);
 	if (isset($_GET['trf']) && $_GET['trf'] === "PayPal")
 	{
 		// Process PayPal payment confirmation
@@ -37,13 +39,28 @@ if ($user->auth())
 		$user->sql_conn->query($stmnt);
 		
 		// Add plan to the database and link to the user
-		// Add transaction to the finance section (possible sells table)
+		$stmnt = sprintf("INSERT INTO services(userid, plan_id, exp_date)
+			VALUES (%d, %d, date_add(now(), INTERVAL (select term from plans where id=%d) MONTH))",
+			$user->user_id, $_GET['item_number'], $_GET['item_number']);
+			
+		$user->sql_conn->query($stmnt);
+
 		// Show status message
+		$template->assign_var('BUY_PLAN', true);
 	}
 	
 	// Check if user service plan has any vehicles attached to it
+	$stmnt = sprintf("SELECT * FROM services WHERE userid = %d", $user->user_id);
+	$result = $user->sql_conn->query($stmnt);
+	if ($result->num_rows > 0)
 	{
-		
+		$template->assign_var('REGISTER_VEHICLE', true);
+		$stmnt = sprintf("SELECT * FROM vehicles WHERE userid = %d", $user->user_id);
+		$result = $user->sql_conn->query($stmnt);
+		if ($result->num_rows > 0)
+		{
+			$template->assign_var('REGISTER_VEHICLE', false);
+		}
 	}
 	
 	//# Show modify profile content

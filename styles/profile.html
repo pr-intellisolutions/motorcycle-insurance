@@ -12,22 +12,30 @@
 				<div class="list-group">
 				  <a href="index.php?option=1" class="list-group-item">Modificar información personal</a>
 				  <a href="index.php?option=2" class="list-group-item">Ver planes de servicio y covertura</a>
+				  <!-- IF REGISTER_VEHICLE == true -->
+				  <a href="index.php?option=3" class="list-group-item list-group-item-warning">Añadir vehículos a planes de servicio</a>
+				  <!-- ELSE -->
 				  <a href="index.php?option=3" class="list-group-item">Añadir vehículos a planes de servicio</a>
+				  <!-- ENDIF -->
 				  <a href="index.php?option=4" class="list-group-item">Historial de pagos</a>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-8">
+			<!-- IF BUY_PLAN == true -->
 			<div class="alert alert-info" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<strong>Información:</strong>
-				Su plan de servicio ha sido procesado correctamente
+				Su plan de servicio ha sido procesado correctamente.
 			</div>
+			<!-- ENDIF -->
+			<!-- IF REGISTER_VEHICLE == true-->
 			<div class="alert alert-warning" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<strong>Información:</strong>
-				Tiene planes de servicio sin ningún vehículo registrado
+				Tiene planes de servicio sin ningún vehículo registrado.
 			</div>
+			<!-- ENDIF -->
 			<!-- IF SIDE_CONTENT == "home" -->
 			<div class="col-md-4">
 				<table class="table table-striped">

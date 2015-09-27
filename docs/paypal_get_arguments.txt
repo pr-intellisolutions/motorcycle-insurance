@@ -1,15 +1,2 @@
-index.php?
+http://127.0.0.1/motorcycle-insurance/profile/index.php?trf=PayPal&tx=2JX653960T3171013&st=Completed&amt=60%2e00&cc=USD&cm=&item_number=14
 
-transferFromPaypal=true // To be used by the system
-&
-tx=0L522882LS8520635 // To be used by the system
-&
-st=Completed // 
-&
-amt=60%2e00
-&
-cc=USD
-&
-cm=
-&
-item_number=14 // To be used by the system
