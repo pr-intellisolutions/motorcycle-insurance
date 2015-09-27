@@ -208,7 +208,7 @@ if ($user->auth())
 	//# Show profile content
 	else
 	{
-		$stmnt = sprintf("SELECT login.email, profile.id FROM login INNER JOIN profile ON profile.userid=login.id WHERE profile.userid=%d", $user->user_id);
+		$stmnt = sprintf("SELECT login.user, profile.id FROM login INNER JOIN profile ON profile.userid=login.id WHERE profile.userid=%d", $user->user_id);
 		
 		$result = $user->sql_conn->query($stmnt);
 		
@@ -217,8 +217,39 @@ if ($user->auth())
 			$row = $result->fetch_assoc();
 	
 			$template->assign_vars(array('U_MEMBER_ID' => $row['id'],
-				'U_EMAIL' => $row['email']));
+				'U_USER' => $row['user']));
+			
+			$result->close();
 		}
+		
+		$stmnt = sprintf("SELECT * FROM services WHERE userid=%d", $user->user_id);
+		$result = $user->sql_conn->query($stmnt);
+		if ($result->num_rows > 0)
+		{
+			$index = 0;
+			while($row=$result->fetch_assoc())
+			{
+				$index++;
+			}
+			$template->assign_var('U_SERVICE_PLANS', $index);
+		}
+		else
+			$template->assign_var('U_SERVICE_PLANS', 0);
+
+		$stmnt = sprintf("SELECT * FROM vehicles WHERE userid=%d", $user->user_id);
+		$result = $user->sql_conn->query($stmnt);
+		if ($result->num_rows > 0)
+		{
+			$index = 0;
+			while($row=$result->fetch_assoc())
+			{
+				$index++;
+			}
+			$template->assign_var('U_REGISTERED_VEHICLES', $index);
+		}
+		else
+			$template->assign_var('U_REGISTERED_VEHICLES', 0);
+
 		$template->assign_var('SIDE_CONTENT', 'home');
 	}
 
