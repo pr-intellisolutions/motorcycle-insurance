@@ -150,7 +150,8 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-offset-5 col-sm-4">
+						<div class="col-sm-offset-4 col-sm-4">
+							<button type="button" class="btn btn-default" id="cancel_button">Cancelar</button>
 							<button type="submit" class="btn btn-primary" name="action" value="save_user">Guardar</button>
 						</div>
 					</div>
@@ -159,20 +160,21 @@
 			<!-- ELSEIF SIDE_CONTENT == 2 -->
 			<div class="col-md-11">
 				<h3 class="text-muted">Planes de servicio</h3><hr>
-				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						Opciones
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
-						<li><a href="{SITE_URL}plans">Añadir plan de servicio</a></li>
-					</ul>
-				</div>
 				<!-- BEGIN user_plans -->
 					<table class="table table-striped">
 						<thead>
 							<th>Información del plan {user_plans.INDEX}</th>
-							<th></th>
+							<th>
+								<div class="dropdown">
+									<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										Opciones
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
+										<li><a class="addVehicleLink" href="#" data-id="{user_plans.SERVICE_ID}" data-toggle="modal" data-target="#addVehicleModal">Añadir vehículo</a></li>
+									</ul>
+								</div>
+							</th>
 						</thead>
 						<tbody>
 							<tr>
@@ -188,6 +190,10 @@
 								<td>{user_plans.MILE_CURR} de {user_plans.MILE_MAX}</td>
 							</tr>
 							<tr>
+								<td>Vehículos registrados</td>
+								<td>{user_plans.VEHICLE_CURR} de {user_plans.VEHICLE_MAX}</td>
+							</tr>
+							<tr>
 								<td>Fecha de expiración</td>
 								<td>{user_plans.PLAN_EXP}</td>
 							</tr>
@@ -195,18 +201,86 @@
 					</table>
 				<!-- END -->
 			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="addVehicleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Añadir vehículo nuevo</h4>
+			      </div>
+			      <div class="modal-body">
+					<form class="form-horizontal">
+					  <input type="hidden" name="planId" id="planId" value=""/>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="type">Tipo:</label>
+							<div class="col-sm-6">
+								<select class="form-control" id="type" disabled>
+									<option value="motora" default>Motora</option>
+									<option value="carro" default>carro</option>
+									<option value="lancha" default>Motora</option>
+									<option value="bote" default>Motora</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="model">Modelo:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="model">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="brand">Marca:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="brand">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="year">Año:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="year">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="plate">Tablilla:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="plate">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="plate">Serie:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="plate">
+							</div>
+						</div>
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			        <button type="button" class="btn btn-primary" id="add_vehicle">Añadir</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- Status modal -->
+			<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+			  <div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="ModalLabel"></h4>
+				  </div>
+				  <div class="modal-body" id="ModalBody">
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
 			<!-- ELSEIF SIDE_CONTENT == 3 -->
 			<div class="col-md-11">
 				<h3 class="text-muted">Vehículos registrados</h3><hr>
-				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						Opciones
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
-						<li><a href="#" data-toggle="modal" data-target="#addVehicleModal">Añadir vehículo</a></li>
-					</ul>
-				</div>
 				<table class="table table-striped">
 					<thead>
 						<th>Tipo de vehículo</th>
@@ -234,38 +308,10 @@
 					</tbody>
 				</table>
 			</div>
-			<!-- Modal -->
-			<div class="modal fade" id="addVehicleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog modal-lg" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-			      </div>
-			      <div class="modal-body">
-				<form class="form-inline">
-				  <div class="form-group">
-				    <label for="exampleInputName2">Name</label>
-				    <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-				  </div>
-				  <div class="form-group">
-				    <label for="exampleInputEmail2">Email</label>
-				    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-				  </div>
-				  <button type="submit" class="btn btn-default">Send invitation</button>
-				</form>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-			        <button type="button" class="btn btn-primary">Añadir</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
 			<!-- ELSEIF SIDE_CONTENT == 4 -->
 			<div class="col-md-11">
 				<h3 class="text-muted">Historial de pagos</h3><hr>
-				<table class="table table-stripped">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>Número de transacción</th>
@@ -282,7 +328,7 @@
 						<td>{payment_history.AMT}</td>
 						<td>{payment_history.METHOD}</td>
 						<td>{payment_history.DATE}</td>
-					<tr>
+					</tr>
 					<!-- END -->
 					</tbody>
 				</table>
@@ -290,4 +336,58 @@
 			<!-- ENDIF -->
 		</div>
 	</div>
+	<script>
+		$(document).on("click", ".addVehicleLink", function () {
+			 var planId = $(this).data('id');
+			 $(".modal-body #planId").val( planId );
+		});
+		$('#add_vehicle').click(function(){
+			$.ajax({
+				type: "POST",
+				url: "add_vehicle.php",
+				data: {'username': $('#mod_user').html(),
+					'first': $('#first').val(),
+					'middle': $('#middle').val(),
+					'last': $('#last').val(),
+					'maiden': $('#maiden').val(),
+					'address1': $('#address1').val(),
+					'address2': $('#address2').val(),
+					'city': $('#city').val(),
+					'state': $('#state').val(),
+					'zip': $('#zip').val(),
+					'country': $('#country').val(),
+					'phone': $('#phone').val(),
+					'state': $('#state').val(),
+					'zip': $('#zip').val(),
+					'email': $('#email').val()},
+				success: function(data){
+					if (data === "success")
+					{
+						$('#addVehicleModal').modal('hide');
+
+						$('#modal').modal('show');
+						$("#ModalLabel").html('<strong>Información</strong>');
+						$("#ModalBody").html('¡El vehículo ha sido añadido exitosamente!');
+					}
+					else
+					{
+						$('#addVehicleModal').modal('hide');
+
+						$('#modal').modal('show');
+						$("#ModalLabel").html('<strong>Error</strong>');
+						$("#ModalBody").html(data);
+					}
+				}
+			})
+		});
+		$('#modal').on('hidden.bs.modal', function() { 
+			location.reload();
+			//window.location.href = 'index.php';
+		});
+		$('#cancel_button').click(function()
+		{
+			// When user clicks cancel button the page is reloaded and home content is displayed
+			window.location.href = 'index.php';
+		});
+	</script>
 	<!-- INCLUDE footer.html -->

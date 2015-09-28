@@ -100,7 +100,7 @@ if ($user->auth())
 	//# Show service plan content
 	else if (isset($_GET['option']) && $_GET['option'] == 2)
 	{
-		$stmnt = sprintf("SELECT s.id, s.occurrence_counter, s.miles_counter, s.exp_date, p.title, p.num_occurrences, p.num_miles FROM login l, services s, plans p WHERE l.id=s.userid and p.id=s.plan_id and l.id=%d", $user->user_id);
+		$stmnt = sprintf("SELECT s.id, s.occurrence_counter, s.miles_counter, s.vehicle_counter, s.max_vehicles, s.exp_date, p.title, p.num_occurrences, p.num_miles FROM login l, services s, plans p WHERE l.id=s.userid and p.id=s.plan_id and l.id=%d", $user->user_id);
 		
 		$result = $user->sql_conn->query($stmnt);
 		
@@ -120,6 +120,8 @@ if ($user->auth())
 					'OCCUR_MAX' => $row['num_occurrences'],
 					'MILE_CURR' => $row['miles_counter'],
 					'MILE_MAX' => $row['num_miles'],
+					'VEHICLE_CURR' => $row['vehicle_counter'],
+					'VEHICLE_MAX' => $row['max_vehicles'],
 					'PLAN_EXP' => $row['exp_date']));
 			}
 		}
