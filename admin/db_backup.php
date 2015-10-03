@@ -1,7 +1,8 @@
 <?php 
+require_once('../common.php');
 
 /* backup the db OR just a table */
-function backup_tables($host,$user,$pass,$name,$tables = '*',$directory = './')
+function backup_tables($host,$user,$pass,$name,$directory = './',$filename='db-backup-',$tables = '*')
 {
 	
 	$link = mysql_connect($host,$user,$pass);
@@ -21,14 +22,13 @@ function backup_tables($host,$user,$pass,$name,$tables = '*',$directory = './')
 	{
 		$tables = is_array($tables) ? $tables : explode(',',$tables);
 	}
-	
+	$return = '';
 	//cycle through
 	foreach($tables as $table)
 	{
 		$result = mysql_query('SELECT * FROM '.$table);
 		$num_fields = mysql_num_fields($result);
 		
-		$return.= 'DROP TABLE '.$table.';';
 		$row2 = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table));
 		$return.= "\n\n".$row2[1].";\n\n";
 		
@@ -51,9 +51,28 @@ function backup_tables($host,$user,$pass,$name,$tables = '*',$directory = './')
 	}
 	
 	//save file
-	$handle = fopen($directory.'db-backup-'.time().'-'.(md5(implode(',',$tables))).'.sql','w+');
+	$handle = fopen(DIR_BASE.$directory.$filename.time().'-'.(md5(implode(',',$tables))).'.sql','w+');
 	fwrite($handle,$return);
 	fclose($handle);
+	return true;
 }
 
+if ($user->auth() && $user->role === 'admin')
+{
+	if (backup_tables($user->db_host, $user->db_user, $user->db_pass, $user->db_name, $_POST['directory'], $_POST['filename']))
+	{
+		echo "success";
+		die();
+	}
+	else
+	{
+		echo 'Error desconocido';
+		die();
+	}
+}
+else
+{
+	http_response_code(400);
+	die();
+}
 ?>

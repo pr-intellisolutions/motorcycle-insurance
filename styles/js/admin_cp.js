@@ -77,6 +77,49 @@
 			}
 		});
 	});
+	$("#create_backup").click(function() {
+		$.ajax({
+			type: "POST",
+			url: "db_backup.php",
+			data: {'directory': $('#directory').val(),
+			'filename': $('#filename').val()},
+			success: function(data) {
+				if (data === "success")
+				{
+					$('#modal').modal('show');
+					$("#ModalLabel").html('<strong>Información</strong>');
+					$("#ModalBody").html('¡La base de datos ha sido resguardada satisfactoriamente!');
+				}
+				else
+				{
+					$('#modal').modal('show');
+					$("#ModalLabel").html('<strong>Error</strong>');
+					$("#ModalBody").html(data);
+				}
+			}
+		});
+	});
+	$("#restore_backup").click(function() {
+		$.ajax({
+			type: "POST",
+			url: "db_restore.php",
+			data: 'filename='+$('#filename').val(),
+			success: function(data) {
+				if (data === "success")
+				{
+					$('#modal').modal('show');
+					$("#ModalLabel").html('<strong>Información</strong>');
+					$("#ModalBody").html('¡La base de datos ha sido recuperada satisfactoriamente!');
+				}
+				else
+				{
+					$('#modal').modal('show');
+					$("#ModalLabel").html('<strong>Error</strong>');
+					$("#ModalBody").html(data);
+				}
+			}
+		});
+	});
 	$('#cancel').click(function() {
 		window.location.href = 'index.php';
 	});

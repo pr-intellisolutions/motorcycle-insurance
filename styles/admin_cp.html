@@ -349,15 +349,50 @@
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Resguardar base de datos</li>
 						</ol>
-						<p class="text-muted"> El archivo se va a guardar en {SITE_URL}db/backups/</p><hr>
-						<form class="form-inline" action="{FORM_ACTION}" method="{FORM_METHOD}">
-						  <button class="btn btn-primary navbar-btn" type="submit" value="create_backup">Resguardar</button>
+						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Directorio:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="directory" name="directory" value="db\backup\" disabled
+									data-container="body"
+									data-toggle="popover"
+									data-placement="right"
+									data-trigger="hover"
+									title="Información sobre la opción"
+									data-content="Directorio donde se va a guardar la base de datos.">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Nombre:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="filename" name="filename" value="prmi" disabled
+									data-container="body"
+									data-toggle="popover"
+									data-placement="right"
+									data-trigger="hover"
+									title="Información sobre la opción"
+									data-content="Nombre que se le va a asignar a la base de datos cuando se resguarde.">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-4">
+								  <button type="button" class="btn btn-default" id="cancel">Cancelar</button>
+								  <button type="button" class="btn btn-primary" id="create_backup">Guardar</button>
+								</div>
+							</div>
 						</form>
 					<!-- ELSEIF SIDE_CONTENT == 5 -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Recuperar base de datos</li>
 						</ol>
+						<form action="{FORM_ACTION}" method="{FORM_METHOD}">
+						  <div class="form-group">
+							<label for="filename">Buscar base de datos</label>
+							<input type="file" id="filename">
+						  </div>
+						  <button type="button" class="btn btn-primary" id="restore_backup">Recuperar</button>
+						</form>
 					<!-- ENDIF -->
 					<!-- Status modal -->
 					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">

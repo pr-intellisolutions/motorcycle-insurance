@@ -1,7 +1,6 @@
 <?php
 
 require_once('../common.php');
-require_once('./db_backup.php');
 
 $template->set_custom_template(DIR_BASE.'styles', 'default');
 
