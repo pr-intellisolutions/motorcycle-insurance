@@ -23,7 +23,13 @@
 					<tr>
 						<td><strong>Vehículos</strong><br><br>Precio por vehículo adicional: $<span id="plan_extended">{PLAN_EXTENDED}</span></td>
 						<td>$<span id="plan_extended_price">0.00</span></td>
-						<td class="col-sm-1"><select class="form-control" id="vehicle_select"><option>1</option><option>2</option><option>3</option></select></td>
+						<td class="col-sm-1">
+							<select class="form-control" id="vehicle_select">
+							<!-- BEGIN num_vehicles -->
+								<option>{num_vehicles.INDEX}</option>
+							<!-- END -->
+							</select>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -35,7 +41,7 @@
 					<input type="hidden" name="business" value="dennis.borrerotorres-facilitator@gmail.com">
 					<input type="hidden" name="lc" value="US">
 					<input type="hidden" name="item_name" value="Plan de servicio">
-					<input type="hidden" name="item_number" value="{PLAN_ID}" id="item_number">
+					<input type="hidden" name="item_number" value="{PLAN_ID}">
 					<input type="hidden" name="amount" value="" id="amount">
 					<input type="hidden" name="currency_code" value="USD">
 					<input type="hidden" name="button_subtype" value="services">

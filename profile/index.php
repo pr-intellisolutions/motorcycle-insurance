@@ -31,23 +31,25 @@ if ($user->auth())
 	// Process PayPal confirmation
 	// Bug #0x001 - Illegal payments can get through the system without actually paying for services
 	$template->assign_var('BUY_PLAN', false);
-	if (isset($_GET['trf']) && $_GET['trf'] === "PayPal")
+	if (isset($_GET['trf']) && $_GET['trf'] === "PayPal" && $_SESSION['buy_plan'] == true)
 	{
 		// Process PayPal payment confirmation
 		$stmnt = sprintf("INSERT INTO sales(userid, plan_id, transaction, method, amount, date) VALUES(%d, %d, '%s', '%s', %f, now())", 
-			$user->user_id, $_GET['item_number'], $_GET['tx'], $_GET['trf'], $_GET['amt']);
+			$user->user_id, $_SESSION['selected_plan'], $_GET['tx'], $_GET['trf'], $_GET['amt']);
 		
 		$user->sql_conn->query($stmnt);
 		
 		// Add plan to the database and link to the user
-		$stmnt = sprintf("INSERT INTO services(userid, plan_id, reg_date, exp_date)
-			VALUES (%d, %d, now(), date_add(now(), INTERVAL (select term from plans where id=%d) MONTH))",
-			$user->user_id, $_GET['item_number'], $_GET['item_number']);
+		$stmnt = sprintf("INSERT INTO services(userid, plan_id, reg_date, exp_date, max_vehicles)
+			VALUES (%d, %d, now(), date_add(now(), INTERVAL (select term from plans where id=%d) MONTH), %d)",
+			$user->user_id, $_GET['item_number'], $_GET['item_number'], $_SESSION['num_vehicles']);
 			
 		$user->sql_conn->query($stmnt);
 
 		// Show status message
 		$template->assign_var('BUY_PLAN', true);
+
+		$_SESSION['buy_plan'] = false;
 	}
 	
 	// Check if user service plan has any vehicles attached to it

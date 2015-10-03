@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2015 at 03:18 PM
+-- Generation Time: Oct 03, 2015 at 07:26 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -116,8 +116,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 
 INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisit`, `lastip`, `lastbrowser`, `ip`, `browser`, `session`, `token`, `expired`, `disabled`, `active`, `passchg`, `passdate`, `login_attempts`, `permissions`) VALUES
 (7816, 'qwerty', '$2y$11$rImxCU0KbEq.cuM0Qgd2N.5osl4.feKg9Mk5pRp9SyUTTqhC8l20i', 'qwerty', 'user', '2015-09-22 20:43:17', '2015-09-22 20:43:18', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'jp7fll4ef897884abvpfjaoaj4', '', 0, 0, 1, 0, '2015-11-21 20:43:17', 0, 'none'),
-(12854, 'admin', '$2y$11$dFeJ1Fu3kLdCU0pd.0kVP.j0y2UhKO/P8rGZClyPqzJpMdZ1MWscy', 'dennis.borrerotorres@gmail.com', 'admin', '2015-02-02 23:37:12', '2015-09-26 18:26:56', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', 'hvl8de2l5uvnk7uda3021dijd0', 'd4c41c9df9297866756b42514a4806c224c93541', 0, 0, 1, 0, '2015-11-12 15:32:04', 0, 'all'),
-(39824, 'test', '$2y$11$jcWj3x8AxQdATeO4Gj4oYuLG0vybEbAllN/FSonjFNk6JiTBaVYYG', 'test', 'user', '2015-08-09 19:56:07', '2015-09-14 17:33:47', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qhpfud3iqjd4b5bgoh2k9ko4s0', '27dd2f6dc6b3d94c36e33e86c1a12947b97982dc', 0, 0, 1, 0, '2015-10-08 19:56:07', 0, 'none'),
+(12854, 'admin', '$2y$11$dFeJ1Fu3kLdCU0pd.0kVP.j0y2UhKO/P8rGZClyPqzJpMdZ1MWscy', 'dennis.borrerotorres@gmail.com', 'admin', '2015-02-02 23:37:12', '2015-10-02 18:15:06', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'ehjij85oigjpdrq0ug0bcbf6d0', 'd4c41c9df9297866756b42514a4806c224c93541', 0, 0, 1, 0, '2015-11-12 15:32:04', 0, 'all'),
+(39824, 'test', '$2y$11$jcWj3x8AxQdATeO4Gj4oYuLG0vybEbAllN/FSonjFNk6JiTBaVYYG', 'test@gmail.com', 'user', '2015-08-09 19:56:07', '2015-09-29 19:28:27', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'pcmc15b6a7u5sjj4gh48e5m8p1', '27dd2f6dc6b3d94c36e33e86c1a12947b97982dc', 0, 0, 1, 0, '2015-10-08 19:56:07', 0, 'none'),
 (40910, 'test1', '$2y$11$nugNWYRQ.HMnJ764NOi4Euqp8uzngPhIDJ5Aa..fUYOSBllRv4o7O', 'test', 'user', '2015-09-22 20:49:31', '2015-09-22 20:49:31', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', 'kohtv0n82olbljivhj7a99rq32', '', 0, 0, 1, 0, '2015-11-21 20:49:31', 0, 'none'),
 (48752, 'dborrero', '$2y$11$7NI64MwCZf6doF4H/qAiJO9gN6kIHZaRx5hC4fgTfLmHBVEvbumi2', 'my@email.com', 'admin', '2015-08-08 09:37:50', '2015-08-08 13:12:50', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 19:14:23', 3, 'all'),
 (50807, 'provider', '$2y$11$8Bp/psg/cyA25Chr87pkju.VPWwYzzMcryNqwHrLAu5TUdj/UAKdu', 'provider', 'provider', '2015-08-08 18:00:45', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 18:00:45', 0, 'none');
@@ -150,8 +150,8 @@ CREATE TABLE IF NOT EXISTS `plans` (
 --
 
 INSERT INTO `plans` (`id`, `name`, `title`, `description`, `num_occurrences`, `num_miles`, `num_vehicles`, `plan_price`, `mile_price`, `extend_price`, `term`, `active`, `date_entered`, `last_modify`) VALUES
-(14, 'basico', 'Servicio B&aacute;sico', 'Incluye 4 ocurrencias en adici&oacute;n 50 millas de remolque', 4, 50, 2, '60.00', '3.00', '30.00', 12, 1, '2015-07-28 21:37:01', '2015-08-05 09:26:06'),
-(15, 'extendido', 'Servicio Extendido', 'Incluye 4 ocurrencias en adici&oacute;n 100 millas de remolque', 4, 100, 2, '90.00', '3.00', '45.00', 12, 1, '2015-07-28 21:45:00', '2015-07-28 21:45:33');
+(14, 'basico', 'Servicio B&aacute;sico', 'Incluye 4 ocurrencias en adici&oacute;n 50 millas de remolque', 4, 50, 3, '60.00', '3.00', '30.00', 12, 1, '2015-07-28 21:37:01', '2015-09-30 18:18:18'),
+(15, 'extendido', 'Servicio Extendido', 'Incluye 4 ocurrencias en adici&oacute;n 100 millas de remolque', 4, 100, 3, '90.00', '3.00', '45.00', 12, 1, '2015-07-28 21:45:00', '2015-09-30 18:18:32');
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `profile` (
 --
 
 INSERT INTO `profile` (`id`, `userid`, `first`, `middle`, `last`, `maiden`, `phone`, `address1`, `address2`, `city`, `state`, `zip`, `country`) VALUES
-(1016, 12854, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', '6109 Calle San Claudio', '', 'Ponce', 'PR', '00731', 'Puerto Rico'),
+(1016, 12854, 'Dennis', 'J.', 'Borrero', 'Torres', '(224) 321-7628', 'Urb. Santa Teresita', '6109 Calle San Claudio', 'Ponce', 'PR', '00731', 'Puerto Rico'),
 (1020, 48752, 'Dennis', 'J', 'Borrero', 'Torres', '', '', '', '', '', '', ''),
 (1030, 50807, 'Rubeli', '', 'Ortiz', '', '', '', '', '', '', '', ''),
 (1031, 39824, 'cuenta', 'de', 'prueba', '', '', '', '', '', '', '', ''),
@@ -227,13 +227,6 @@ CREATE TABLE IF NOT EXISTS `reset` (
   `token` varchar(256) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `reset`
---
-
-INSERT INTO `reset` (`id`, `userid`, `token`) VALUES
-(22, 12854, '82101bbadb90ee15f94c5710e3b05eeae6e070e6');
-
 -- --------------------------------------------------------
 
 --
@@ -248,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `sales` (
   `method` enum('PayPal','Visa','Mastercard','Check') NOT NULL,
   `amount` decimal(5,2) NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sales`
@@ -256,14 +249,15 @@ CREATE TABLE IF NOT EXISTS `sales` (
 
 INSERT INTO `sales` (`id`, `userid`, `plan_id`, `transaction`, `method`, `amount`, `date`) VALUES
 (1, 12854, 14, '0BR99752Y1905570X', 'PayPal', '60.00', '2015-09-24 16:07:18'),
-(2, 12854, 14, '48K9671015715363N', 'PayPal', '60.00', '2015-09-24 16:11:35'),
-(3, 12854, 14, '2JX653960T3171013', 'PayPal', '60.00', '2015-09-24 18:32:37'),
-(4, 12854, 14, '3CH87341H22216845', 'PayPal', '60.00', '2015-09-26 13:42:09'),
-(5, 12854, 14, '3CH87341H22216845', 'PayPal', '60.00', '2015-09-26 13:42:31'),
-(6, 12854, 14, '94J89708662348150', 'PayPal', '60.00', '2015-09-26 14:46:07'),
-(7, 12854, 14, '94J89708662348150', 'PayPal', '60.00', '2015-09-26 14:59:30'),
-(8, 12854, 14, '94J89708662348150', 'PayPal', '60.00', '2015-09-26 15:05:36'),
-(9, 12854, 14, '94J89708662348150', 'PayPal', '60.00', '2015-09-26 15:07:20');
+(11, 39824, 14, '5D130364R19716613', 'PayPal', '60.00', '2015-09-27 14:56:30'),
+(12, 39824, 14, '94J89708662348150', 'PayPal', '60.00', '2015-09-28 16:45:11'),
+(16, 39824, 15, '1L5517513K5927159', 'PayPal', '135.00', '2015-09-29 20:08:45'),
+(17, 39824, 14, '1Y762571TK691962F', 'PayPal', '60.00', '2015-09-29 20:09:39'),
+(18, 39824, 15, '2EC795260R249471F', 'PayPal', '135.00', '2015-09-29 20:11:17'),
+(19, 39824, 15, '8RK98484LS281323X', 'PayPal', '90.00', '2015-09-29 20:12:19'),
+(20, 39824, 15, '8MJ81644DH987081G', 'PayPal', '135.00', '2015-09-29 20:23:38'),
+(21, 39824, 15, '9GC263306A4615315', 'PayPal', '90.00', '2015-09-29 20:24:28'),
+(22, 12854, 15, '5G904858NU9923321', 'PayPal', '180.00', '2015-09-30 18:19:24');
 
 -- --------------------------------------------------------
 
@@ -277,20 +271,24 @@ CREATE TABLE IF NOT EXISTS `services` (
   `plan_id` int(11) unsigned NOT NULL,
   `occurrence_counter` int(11) NOT NULL,
   `miles_counter` int(11) NOT NULL,
+  `vehicle_counter` int(11) NOT NULL,
+  `max_vehicles` int(11) NOT NULL,
   `renewal` tinyint(1) NOT NULL,
+  `reg_date` date NOT NULL,
   `exp_date` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `services`
 --
 
-INSERT INTO `services` (`id`, `userid`, `plan_id`, `occurrence_counter`, `miles_counter`, `renewal`, `exp_date`) VALUES
-(26, 12854, 14, 0, 0, 0, '2016-09-26'),
-(27, 12854, 14, 0, 0, 0, '2016-09-26'),
-(28, 12854, 14, 0, 0, 0, '2016-09-26'),
-(29, 12854, 14, 0, 0, 0, '2016-09-26'),
-(30, 12854, 14, 0, 0, 0, '2016-09-26');
+INSERT INTO `services` (`id`, `userid`, `plan_id`, `occurrence_counter`, `miles_counter`, `vehicle_counter`, `max_vehicles`, `renewal`, `reg_date`, `exp_date`) VALUES
+(26, 39824, 14, 0, 0, 2, 2, 0, '0000-00-00', '2016-09-26'),
+(33, 39824, 14, 0, 0, 1, 1, 0, '2015-09-28', '2016-09-28'),
+(34, 39824, 15, 0, 0, 0, 2, 0, '2015-09-29', '2016-09-29'),
+(35, 39824, 15, 0, 0, 0, 2, 0, '2015-09-29', '2016-09-29'),
+(36, 39824, 15, 0, 0, 0, 1, 0, '2015-09-29', '2016-09-29'),
+(37, 12854, 15, 0, 0, 1, 3, 0, '2015-09-30', '2016-09-30');
 
 -- --------------------------------------------------------
 
@@ -306,9 +304,19 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   `model` varchar(64) NOT NULL,
   `brand` varchar(64) NOT NULL,
   `year` int(11) NOT NULL,
-  `plate` int(11) NOT NULL,
+  `plate` varchar(8) NOT NULL,
   `serial` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `vehicles`
+--
+
+INSERT INTO `vehicles` (`id`, `userid`, `service_id`, `type`, `model`, `brand`, `year`, `plate`, `serial`) VALUES
+(3, 39824, 26, 'motora', 'Yokohama', 'SD-232', 2014, '123-DFD', 'qwertyu6543wsdfg'),
+(4, 39824, 26, 'motora', 'Yokohama', 'WQWE-21', 1998, '643-121', 'BNM53jklsdfJK'),
+(5, 39824, 33, 'motora', 'Ducatti', 'Italia-21', 2015, '453-3232', 'wqaefsgjkfs123'),
+(6, 12854, 37, 'motora', 'Ducatti', 'Italia-4452', 2015, '123-DFR', 'QWERXFVB567');
 
 --
 -- Indexes for dumped tables
@@ -423,17 +431,17 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --

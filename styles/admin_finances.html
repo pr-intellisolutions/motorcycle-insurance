@@ -1,3 +1,32 @@
 		<!-- INCLUDE admin_header.html -->
-
+		<div class="row">
+			<div class="col-md-3">
+				<!-- guide -->
+			</div>
+			<div class="col-md-8">
+			<ol class="breadcrumb">
+				<li><a href="{SITE_URL}admin">Inicio</a></li>
+				<li class="active">Finanzas</li>
+			</ol>
+			  <table class="table table-striped">
+				  <thead>
+					<tr>
+						<th>Ingresos y estadísticas generales</th>
+						<th></th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr>
+						<td>Cantidad de planes vendidos</td>
+						<td>{TOTAL_SALES}</td>
+					</tr>
+					<tr>
+						<td>Ingreso total</td>
+						<td>{TOTAL_AMT}</td>
+					</tr>
+				  </tbody>
+			  </table>
+			  <form action="{FORM_ACTION}" method="{FORM_METHOD}">
+				<button type="submit" class="btn btn-primary" name="action" value="generate_report">Imprimir</button>
+			</form>
 		<!-- INCLUDE admin_footer.html -->

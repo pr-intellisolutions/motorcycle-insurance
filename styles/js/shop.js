@@ -12,8 +12,17 @@ $( document ).ready(function()
 
 		$("#plan_extended_price").text(plan_extended_price.toFixed(2));
 		$("#total").text(total.toFixed(2));
-		
+
 		$("#amount").val(total);
+
+		$.ajax({
+			type: "POST",
+			url: "vehicles.php",
+			data: "max_vehicles="+n,
+			success: function(data){
+				;
+			}
+		})		
 	}
 	calc_plan_fields();
 
