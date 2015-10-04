@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2015 at 07:26 PM
+-- Generation Time: Oct 04, 2015 at 04:28 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -32,7 +32,14 @@ CREATE TABLE IF NOT EXISTS `activations` (
   `token` varchar(256) NOT NULL,
   `request` date NOT NULL,
   `expiration` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `activations`
+--
+
+INSERT INTO `activations` (`id`, `userid`, `token`, `request`, `expiration`) VALUES
+(1, 50807, 'kjnkjkjkjjkjkjk', '2015-10-03', 1);
 
 -- --------------------------------------------------------
 
@@ -47,9 +54,11 @@ CREATE TABLE IF NOT EXISTS `assist` (
   `assist_desc` varchar(128) NOT NULL,
   `assist_area` varchar(64) NOT NULL,
   `assist_city` varchar(64) NOT NULL,
-  `assist_date` date NOT NULL,
-  `assist_time` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `assist_date` datetime NOT NULL,
+  `dest_area` varchar(64) NOT NULL,
+  `dest_city` varchar(64) NOT NULL,
+  `estimated_miles` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -283,7 +292,7 @@ CREATE TABLE IF NOT EXISTS `services` (
 --
 
 INSERT INTO `services` (`id`, `userid`, `plan_id`, `occurrence_counter`, `miles_counter`, `vehicle_counter`, `max_vehicles`, `renewal`, `reg_date`, `exp_date`) VALUES
-(26, 39824, 14, 0, 0, 2, 2, 0, '0000-00-00', '2016-09-26'),
+(26, 39824, 14, 0, 0, 2, 2, 1, '0000-00-00', '2016-09-26'),
 (33, 39824, 14, 0, 0, 1, 1, 0, '2015-09-28', '2016-09-28'),
 (34, 39824, 15, 0, 0, 0, 2, 0, '2015-09-29', '2016-09-29'),
 (35, 39824, 15, 0, 0, 0, 2, 0, '2015-09-29', '2016-09-29'),
@@ -396,12 +405,12 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT for table `activations`
 --
 ALTER TABLE `activations`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `assist`
 --
 ALTER TABLE `assist`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `config`
 --
