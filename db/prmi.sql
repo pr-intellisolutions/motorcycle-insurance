@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2015 at 04:28 AM
+-- Generation Time: Oct 04, 2015 at 06:46 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -33,32 +33,6 @@ CREATE TABLE IF NOT EXISTS `activations` (
   `request` date NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `activations`
---
-
-INSERT INTO `activations` (`id`, `userid`, `token`, `request`, `expiration`) VALUES
-(1, 50807, 'kjnkjkjkjjkjkjk', '2015-10-03', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `assist`
---
-
-CREATE TABLE IF NOT EXISTS `assist` (
-`id` int(11) unsigned NOT NULL,
-  `customer_id` int(11) unsigned NOT NULL,
-  `provider_id` int(11) unsigned NOT NULL,
-  `assist_desc` varchar(128) NOT NULL,
-  `assist_area` varchar(64) NOT NULL,
-  `assist_city` varchar(64) NOT NULL,
-  `assist_date` datetime NOT NULL,
-  `dest_area` varchar(64) NOT NULL,
-  `dest_city` varchar(64) NOT NULL,
-  `estimated_miles` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -125,11 +99,38 @@ CREATE TABLE IF NOT EXISTS `login` (
 
 INSERT INTO `login` (`id`, `user`, `pass`, `email`, `role`, `regdate`, `lastvisit`, `lastip`, `lastbrowser`, `ip`, `browser`, `session`, `token`, `expired`, `disabled`, `active`, `passchg`, `passdate`, `login_attempts`, `permissions`) VALUES
 (7816, 'qwerty', '$2y$11$rImxCU0KbEq.cuM0Qgd2N.5osl4.feKg9Mk5pRp9SyUTTqhC8l20i', 'qwerty', 'user', '2015-09-22 20:43:17', '2015-09-22 20:43:18', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'jp7fll4ef897884abvpfjaoaj4', '', 0, 0, 1, 0, '2015-11-21 20:43:17', 0, 'none'),
-(12854, 'admin', '$2y$11$dFeJ1Fu3kLdCU0pd.0kVP.j0y2UhKO/P8rGZClyPqzJpMdZ1MWscy', 'dennis.borrerotorres@gmail.com', 'admin', '2015-02-02 23:37:12', '2015-10-02 18:15:06', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'ehjij85oigjpdrq0ug0bcbf6d0', 'd4c41c9df9297866756b42514a4806c224c93541', 0, 0, 1, 0, '2015-11-12 15:32:04', 0, 'all'),
+(12854, 'admin', '$2y$11$dFeJ1Fu3kLdCU0pd.0kVP.j0y2UhKO/P8rGZClyPqzJpMdZ1MWscy', 'dennis.borrerotorres@gmail.com', 'admin', '2015-02-02 23:37:12', '2015-10-03 23:40:26', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'qmkebed37192dtuomaea2hd1j6', 'd4c41c9df9297866756b42514a4806c224c93541', 0, 0, 1, 0, '2015-11-12 15:32:04', 0, 'all'),
 (39824, 'test', '$2y$11$jcWj3x8AxQdATeO4Gj4oYuLG0vybEbAllN/FSonjFNk6JiTBaVYYG', 'test@gmail.com', 'user', '2015-08-09 19:56:07', '2015-09-29 19:28:27', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'pcmc15b6a7u5sjj4gh48e5m8p1', '27dd2f6dc6b3d94c36e33e86c1a12947b97982dc', 0, 0, 1, 0, '2015-10-08 19:56:07', 0, 'none'),
 (40910, 'test1', '$2y$11$nugNWYRQ.HMnJ764NOi4Euqp8uzngPhIDJ5Aa..fUYOSBllRv4o7O', 'test', 'user', '2015-09-22 20:49:31', '2015-09-22 20:49:31', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0', 'kohtv0n82olbljivhj7a99rq32', '', 0, 0, 1, 0, '2015-11-21 20:49:31', 0, 'none'),
 (48752, 'dborrero', '$2y$11$7NI64MwCZf6doF4H/qAiJO9gN6kIHZaRx5hC4fgTfLmHBVEvbumi2', 'my@email.com', 'admin', '2015-08-08 09:37:50', '2015-08-08 13:12:50', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 19:14:23', 3, 'all'),
 (50807, 'provider', '$2y$11$8Bp/psg/cyA25Chr87pkju.VPWwYzzMcryNqwHrLAu5TUdj/UAKdu', 'provider', 'provider', '2015-08-08 18:00:45', '0000-00-00 00:00:00', '', '', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko', 'j8t3dkvvraku0722e7p0kbvhs4', '', 0, 0, 1, 0, '2015-10-07 18:00:45', 0, 'none');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE IF NOT EXISTS `orders` (
+`id` int(11) unsigned NOT NULL,
+  `customer_id` int(11) unsigned NOT NULL,
+  `provider_id` int(11) unsigned NOT NULL,
+  `vehicle_id` int(11) unsigned NOT NULL,
+  `description` varchar(128) NOT NULL,
+  `area` varchar(64) NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `order_date` datetime NOT NULL,
+  `dest_area` varchar(64) NOT NULL,
+  `dest_city` varchar(64) NOT NULL,
+  `estimated_miles` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_id`, `provider_id`, `vehicle_id`, `description`, `area`, `city`, `order_date`, `dest_area`, `dest_city`, `estimated_miles`) VALUES
+(10, 39824, 11, 3, 'Se quedo sin gasolina.', '', '', '2015-10-04 00:15:24', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -292,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `services` (
 --
 
 INSERT INTO `services` (`id`, `userid`, `plan_id`, `occurrence_counter`, `miles_counter`, `vehicle_counter`, `max_vehicles`, `renewal`, `reg_date`, `exp_date`) VALUES
-(26, 39824, 14, 0, 0, 2, 2, 1, '0000-00-00', '2016-09-26'),
+(26, 39824, 14, 3, 0, 2, 2, 0, '0000-00-00', '2016-09-26'),
 (33, 39824, 14, 0, 0, 1, 1, 0, '2015-09-28', '2016-09-28'),
 (34, 39824, 15, 0, 0, 0, 2, 0, '2015-09-29', '2016-09-29'),
 (35, 39824, 15, 0, 0, 0, 2, 0, '2015-09-29', '2016-09-29'),
@@ -338,12 +339,6 @@ ALTER TABLE `activations`
  ADD PRIMARY KEY (`id`), ADD KEY `userid` (`userid`);
 
 --
--- Indexes for table `assist`
---
-ALTER TABLE `assist`
- ADD PRIMARY KEY (`id`), ADD KEY `customer_id` (`customer_id`,`provider_id`), ADD KEY `provider_id` (`provider_id`);
-
---
 -- Indexes for table `config`
 --
 ALTER TABLE `config`
@@ -354,6 +349,12 @@ ALTER TABLE `config`
 --
 ALTER TABLE `login`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `user` (`user`), ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+ ADD PRIMARY KEY (`id`), ADD KEY `customer_id` (`customer_id`,`provider_id`), ADD KEY `provider_id` (`provider_id`), ADD KEY `vehicle_id` (`vehicle_id`);
 
 --
 -- Indexes for table `plans`
@@ -407,15 +408,15 @@ ALTER TABLE `vehicles`
 ALTER TABLE `activations`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `assist`
---
-ALTER TABLE `assist`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
---
 -- AUTO_INCREMENT for table `config`
 --
 ALTER TABLE `config`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `plans`
 --
@@ -462,11 +463,12 @@ ALTER TABLE `activations`
 ADD CONSTRAINT `activations_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `assist`
+-- Constraints for table `orders`
 --
-ALTER TABLE `assist`
-ADD CONSTRAINT `assist_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `assist_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `orders`
+ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `profile`

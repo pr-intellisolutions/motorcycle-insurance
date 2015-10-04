@@ -38,7 +38,27 @@ if ($user->auth() && $user->role == 'admin')
 	}
 	else
 	{
-		$template->assign_var('SIDE_CONTENT', 'home');
+		$stmnt = sprintf("select orders.id as po, profile.id, vehicles.plate, orders.description, orders.order_date from orders inner join vehicles on orders.vehicle_id=vehicles.id inner join login on orders.customer_id=login.id inner join profile on profile.userid=login.id order by orders.order_date asc");
+		
+		$result = $user->sql_conn->query($stmnt);
+
+		if ($result->num_rows > 0)
+		{
+			$index = 0;
+
+			while ($row = $result->fetch_assoc())
+			{
+				$index++;
+
+				$template->assign_block_vars('service_order',
+				array('PO' => $row['po'],
+					'MEMBER_ID' => $row['id'],
+					'PLATE' => $row['plate'],
+					'DESC' => $row['description'],
+					'DATE' => $row['order_date']));
+			}
+			$result->close();
+		}		$template->assign_var('SIDE_CONTENT', 'home');
 	}		
 	$template->set_filenames(array('body' => 'admin_assistance.html'));
 	$template->display('body');

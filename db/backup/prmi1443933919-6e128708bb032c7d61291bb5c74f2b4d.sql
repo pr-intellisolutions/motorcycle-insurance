@@ -1,4 +1,4 @@
-DROP TABLE activations;
+
 
 CREATE TABLE `activations` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -9,33 +9,13 @@ CREATE TABLE `activations` (
   PRIMARY KEY (`id`),
   KEY `userid` (`userid`),
   CONSTRAINT `activations_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+INSERT INTO activations VALUES("1","50807","kjnkjkjkjjkjkjk","2015-10-03","1");
 
 
 
 
-DROP TABLE assist;
-
-CREATE TABLE `assist` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) unsigned NOT NULL,
-  `provider_id` int(11) unsigned NOT NULL,
-  `assist_desc` varchar(128) NOT NULL,
-  `assist_area` varchar(64) NOT NULL,
-  `assist_city` varchar(64) NOT NULL,
-  `assist_date` date NOT NULL,
-  `assist_time` time NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `customer_id` (`customer_id`,`provider_id`),
-  KEY `provider_id` (`provider_id`),
-  CONSTRAINT `assist_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `assist_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-
-DROP TABLE config;
 
 CREATE TABLE `config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -59,7 +39,7 @@ INSERT INTO config VALUES("1","Puerto Rico Motorcycle Road Assistance Services",
 
 
 
-DROP TABLE login;
+
 
 CREATE TABLE `login` (
   `id` int(11) unsigned NOT NULL DEFAULT '0',
@@ -88,7 +68,7 @@ CREATE TABLE `login` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO login VALUES("7816","qwerty","$2y$11$rImxCU0KbEq.cuM0Qgd2N.5osl4.feKg9Mk5pRp9SyUTTqhC8l20i","qwerty","user","2015-09-22 20:43:17","2015-09-22 20:43:18","::1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","::1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","jp7fll4ef897884abvpfjaoaj4","","0","0","1","0","2015-11-21 20:43:17","0","none");
-INSERT INTO login VALUES("12854","admin","$2y$11$dFeJ1Fu3kLdCU0pd.0kVP.j0y2UhKO/P8rGZClyPqzJpMdZ1MWscy","dennis.borrerotorres@gmail.com","admin","2015-02-02 23:37:12","2015-10-03 18:17:52","127.0.0.1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","127.0.0.1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","0v4cu8rsn8pk3kmoe2e20q74i7","d4c41c9df9297866756b42514a4806c224c93541","0","0","1","0","2015-11-12 15:32:04","0","all");
+INSERT INTO login VALUES("12854","admin","$2y$11$dFeJ1Fu3kLdCU0pd.0kVP.j0y2UhKO/P8rGZClyPqzJpMdZ1MWscy","dennis.borrerotorres@gmail.com","admin","2015-02-02 23:37:12","2015-10-03 23:40:26","127.0.0.1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","127.0.0.1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","qmkebed37192dtuomaea2hd1j6","d4c41c9df9297866756b42514a4806c224c93541","0","0","1","0","2015-11-12 15:32:04","0","all");
 INSERT INTO login VALUES("39824","test","$2y$11$jcWj3x8AxQdATeO4Gj4oYuLG0vybEbAllN/FSonjFNk6JiTBaVYYG","test@gmail.com","user","2015-08-09 19:56:07","2015-09-29 19:28:27","127.0.0.1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","127.0.0.1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","pcmc15b6a7u5sjj4gh48e5m8p1","27dd2f6dc6b3d94c36e33e86c1a12947b97982dc","0","0","1","0","2015-10-08 19:56:07","0","none");
 INSERT INTO login VALUES("40910","test1","$2y$11$nugNWYRQ.HMnJ764NOi4Euqp8uzngPhIDJ5Aa..fUYOSBllRv4o7O","test","user","2015-09-22 20:49:31","2015-09-22 20:49:31","::1","Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0","::1","Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0","kohtv0n82olbljivhj7a99rq32","","0","0","1","0","2015-11-21 20:49:31","0","none");
 INSERT INTO login VALUES("48752","dborrero","$2y$11$7NI64MwCZf6doF4H/qAiJO9gN6kIHZaRx5hC4fgTfLmHBVEvbumi2","my@email.com","admin","2015-08-08 09:37:50","2015-08-08 13:12:50","::1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko","::1","Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko","j8t3dkvvraku0722e7p0kbvhs4","","0","0","1","0","2015-10-07 19:14:23","3","all");
@@ -96,7 +76,34 @@ INSERT INTO login VALUES("50807","provider","$2y$11$8Bp/psg/cyA25Chr87pkju.VPWwY
 
 
 
-DROP TABLE plans;
+
+
+CREATE TABLE `orders` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) unsigned NOT NULL,
+  `provider_id` int(11) unsigned NOT NULL,
+  `vehicle_id` int(11) unsigned NOT NULL,
+  `description` varchar(128) NOT NULL,
+  `area` varchar(64) NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `order_date` datetime NOT NULL,
+  `dest_area` varchar(64) NOT NULL,
+  `dest_city` varchar(64) NOT NULL,
+  `estimated_miles` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `customer_id` (`customer_id`,`provider_id`),
+  KEY `provider_id` (`provider_id`),
+  KEY `vehicle_id` (`vehicle_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `providers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+INSERT INTO orders VALUES("10","39824","11","3","Se quedo sin gasolina.","","","2015-10-04 00:15:24","","","0");
+
+
+
+
 
 CREATE TABLE `plans` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -122,7 +129,7 @@ INSERT INTO plans VALUES("15","extendido","Servicio Extendido","Incluye 4 ocurre
 
 
 
-DROP TABLE profile;
+
 
 CREATE TABLE `profile` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -152,7 +159,7 @@ INSERT INTO profile VALUES("1038","40910","test","","test","","test","","","",""
 
 
 
-DROP TABLE providers;
+
 
 CREATE TABLE `providers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -178,7 +185,7 @@ INSERT INTO providers VALUES("11","50807","1030","Transporte Rubeli Ortiz","787 
 
 
 
-DROP TABLE reset;
+
 
 CREATE TABLE `reset` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -193,7 +200,7 @@ CREATE TABLE `reset` (
 
 
 
-DROP TABLE sales;
+
 
 CREATE TABLE `sales` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -223,7 +230,7 @@ INSERT INTO sales VALUES("22","12854","15","5G904858NU9923321","PayPal","180.00"
 
 
 
-DROP TABLE services;
+
 
 CREATE TABLE `services` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -243,7 +250,7 @@ CREATE TABLE `services` (
   CONSTRAINT `services_ibfk_2` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
-INSERT INTO services VALUES("26","39824","14","0","0","2","2","0","0000-00-00","2016-09-26");
+INSERT INTO services VALUES("26","39824","14","3","0","2","2","0","0000-00-00","2016-09-26");
 INSERT INTO services VALUES("33","39824","14","0","0","1","1","0","2015-09-28","2016-09-28");
 INSERT INTO services VALUES("34","39824","15","0","0","0","2","0","2015-09-29","2016-09-29");
 INSERT INTO services VALUES("35","39824","15","0","0","0","2","0","2015-09-29","2016-09-29");
@@ -252,7 +259,7 @@ INSERT INTO services VALUES("37","12854","15","0","0","1","3","0","2015-09-30","
 
 
 
-DROP TABLE vehicles;
+
 
 CREATE TABLE `vehicles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

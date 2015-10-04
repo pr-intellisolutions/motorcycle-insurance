@@ -9,7 +9,8 @@ if ($user->auth() && $user->role === 'admin')
 		echo "El número de socio no puede estar en blanco.";
 		die();
 	}
-	$user_id;
+	$user_id = 0;
+	$vehicle_id = 0;
 
 	$stmnt = sprintf("SELECT l.id FROM login l INNER JOIN profile p ON p.userid=l.id WHERE p.id=%d", $_POST['member_id']);
 	
@@ -30,7 +31,7 @@ if ($user->auth() && $user->role === 'admin')
 		die();
 	}
 	
-	$stmnt = sprintf("SELECT * FROM vehicles WHERE userid=%d AND plate='%s'", $user_id, $_POST['plate']);
+	$stmnt = sprintf("SELECT id FROM vehicles WHERE userid=%d AND plate='%s'", $user_id, $_POST['plate']);
 	
 	$result = $user->sql_conn->query($stmnt);
 	
@@ -39,8 +40,14 @@ if ($user->auth() && $user->role === 'admin')
 		echo "Este vehículo no está registrado a este usuario.";
 		die();
 	}
+	else
+	{
+		$row = $result->fetch_assoc();
+
+		$vehicle_id = $row['id'];
+		$result->close();
+	}
 	
-	$result->close();
 
 	$stmnt = sprintf("SELECT * FROM vehicles v, services s, plans p WHERE v.service_id=s.id AND s.plan_id=p.id AND s.userid=%d AND v.plate='%s'", $user_id, $_POST['plate']);
 	
@@ -71,10 +78,10 @@ if ($user->auth() && $user->role === 'admin')
 	$stmnt = sprintf("UPDATE vehicles, services SET occurrence_counter=occurrence_counter+1, miles_counter=miles_counter+%d WHERE vehicles.service_id=services.id AND services.userid=%d AND vehicles.plate='%s'", $_POST['miles'], $user_id, $_POST['plate']);
 	$user->sql_conn->query($stmnt);
 
-	$stmnt = sprintf("INSERT INTO assist(customer_id, provider_id, assist_desc, assist_area, assist_city, assist_date, dest_area, dest_city, estimated_miles) 
-		VALUES(%d,%d,'%s','%s','%s',NOW(),'%s','%s',%d)",
-		$user_id, $_POST['provider_id'], $_POST['desc'], $_POST['place'], $_POST['city'], $_POST['dest'], $_POST['city2'], $_POST['miles']);
-		
+	$stmnt = sprintf("INSERT INTO orders(customer_id, provider_id, vehicle_id, description, area, city, order_date, dest_area, dest_city, estimated_miles) 
+		VALUES(%d,%d,%d,'%s','%s','%s',NOW(),'%s','%s',%d)",
+		$user_id, $_POST['provider_id'], $vehicle_id, $_POST['desc'], $_POST['place'], $_POST['city'], $_POST['dest'], $_POST['city2'], $_POST['miles']);
+
 	$user->sql_conn->query($stmnt);
 	
 	echo "success";

@@ -11,27 +11,43 @@
 					</div>
 				</div>
 				<div class="col-md-8">
-					<!-- IF SIDE_CONTENT == "home" -->
+					<!-- IF SIDE_CONTENT == 'home' -->
 						<ol class="breadcrumb">
 							<li><a href="{SITE_URL}admin">Inicio</a></li>
 							<li class="active">Asistencia en la carretera</li>
 						</ol>
+						
+						<p class="text-info">Listado de ordenes de servicio</p>
 						<table class="table table-striped">
 							<thead>
-								<tr>
-									<th>Información general</th>
-									<th></th>
-								<tr>
+								<th>PO</th>
+								<th>Número de socio</th>
+								<th>Tablilla del vehículo</th>
+								<th>Descripción del incidente</th>
+								<th>Fecha del incidente</th>
+								<th></th>
 							</thead>
 							<tbody>
+							<!-- BEGIN service_order -->
 								<tr>
-									<td><a href="#" data-toggle="modal" data-target="#">Ordenes corrientes</td>
-									<td>{ACTIVE_ORDERS}0</td>
+									<td>{service_order.PO}</td>
+									<td>{service_order.MEMBER_ID}</td>
+									<td>{service_order.PLATE}</td>
+									<td>{service_order.DESC}</td>
+									<td>{service_order.DATE}</td>
+									<td>
+										<div class="dropdown">
+											<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+												Opciones
+												<span class="caret"></span>
+											</button>
+												<ul class="dropdown-menu" aria-labelledby="dropDownMenu">
+													<li><a href="print_order.php?id={service_order.PO}" target="_blank">Imprimir orden de servicio</a></li>
+												</ul>
+										</div>
+									</td>
 								</tr>
-								<tr>
-									<td><a href="#" data-toggle="modal" data-target="#">Ordenes archivadas</td>
-									<td>{ARCHIVED_ORDERS}0</td>
-								</tr>
+							<!-- END -->
 							</tbody>
 						</table>
 					<!-- ELSEIF SIDE_CONTENT == 1 -->
@@ -114,12 +130,6 @@
 								</div>
 							</div>
 						</form>
-					<!-- ELSEIF SIDE_CONTENT == 2 -->
-						<ol class="breadcrumb">
-							<li><a href="{SITE_URL}admin">Inicio</a></li>
-							<li><a href="{SITE_URL}admin/assistance">Asistencia en la carretera</a></li>
-							<li class="active">Ver reportes de servicio</li>
-						</ol>
 					<!-- ENDIF -->
 					<!-- Status modal -->
 					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
