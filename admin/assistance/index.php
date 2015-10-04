@@ -17,11 +17,24 @@ if ($user->auth() && $user->role == 'admin')
 		$template->assign_var('SIDE_CONTENT', 1);
 		
 		// Generate providers list
-		$stmnt = sprintf("SELECT * FROM providers INNER JOIN login ON providers.userid = login.id INNER JOIN profile ON login.id = profile.userid");
-	}
-	else if (isset($_GET['option']) && $_GET['option'] == 2)
-	{
-		$template->assign_var('SIDE_CONTENT', 2);
+		$stmnt = sprintf("SELECT  p.id, p.area, p.companyPhone, p.city, p.companyEmail, CONCAT (pr.first, ' ', pr.middle, ' ', pr.last, ' ', pr.maiden) as fullName FROM providers p, profile pr WHERE p.userid=pr.userid ORDER BY p.area ASC;");
+
+		$result = $user->sql_conn->query($stmnt);
+
+		if ($result->num_rows > 0)
+		{
+			$index = 0;
+
+			while ($row = $result->fetch_assoc())
+			{
+				$index++;
+
+				$template->assign_block_vars('providers_list',
+				array('PROVIDER_ID' => $row['id'],
+					'PROVIDER_NAME' => $row['fullName']));
+			}
+			$result->close();
+		}
 	}
 	else
 	{

@@ -7,7 +7,6 @@
 						</div>
 						<div class="list-group">
 						  <a href="index.php?option=1" class="list-group-item">Crear orden de servicio</a>
-						  <a href="index.php?option=2" class="list-group-item">Ver reportes de servicio</a>
 						</div>
 					</div>
 				</div>
@@ -42,21 +41,19 @@
 							<li class="active">Crear orden de servicio</li>
 						</ol>
 						<form class="form-horizontal" action="{FORM_ACTION}" method="{FORM_METHOD}">
-							<p class="text-info" id="user_info_status">Información del usuario</p>
-							<div id="hide_this">
-								<div class="form-group">
-									<div class="col-sm-3">
-										<select class="form-control" id="search_type">
-												<option default value="username">Nombre de usuario</option>
-												<option value="member_id">Número de miembro</option>
-										</select>
-									</div>
-									<div class="col-sm-3">
-										<input type="text" class="form-control" id="search_input">
-									</div>
-									<div class="col-sm-3">
-											<button type="button" class="btn btn-default" id="verify_user">Verificar</button>
-									</div>
+							<p class="text-info">Información del usuario</p>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Número de socio:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="member_id">
+								</div>
+							</div>
+							<hr>
+							<p class="text-info">Información del vehículo</p>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Tablilla del vehículo:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="plate">
 								</div>
 							</div>
 							<hr>
@@ -64,57 +61,49 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Descripción del incidente:</label>
 								<div class="col-sm-4">
-									<textarea class="form-control" rows="3"></textarea>
+									<textarea class="form-control" rows="3" id="desc"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Lugar del incidente:</label>
 								<div class="col-sm-4">
-									<textarea class="form-control" rows="3"></textarea>
+									<textarea class="form-control" rows="3" id="place"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Ciudad o pueblo:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Lugar de destino:</label>
 								<div class="col-sm-4">
-									<textarea class="form-control" rows="3"></textarea>
+									<textarea class="form-control" rows="3" id="dest"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Ciudad o pueblo:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" id="city2">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Millas estimadas:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="miles">
 								</div>
 							</div>
 							<hr>
 							<p class="text-info">Información del proveedor</p>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Proveedor asignado:</label>
-								<div class="col-sm-3">
-									<select class="form-control">
+								<div class="col-sm-4">
+									<select class="form-control" id="provider_id">
 									<!-- BEGIN providers_list -->
 										<option value={providers_list.PROVIDER_ID}>{providers_list.PROVIDER_NAME}</option>
 									<!-- END -->
 									</select>
-								</div>
-								<div class="col-sm-3">
-										<button type="button" class="btn btn-default">Asignar</button>
-								</div>
-							</div>
-							<hr>
-							<p class="text-info">Información del vehículo</p>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Tablilla:</label>
-								<div class="col-sm-3">
-									<input type="text" class="form-control">
-								</div>
-								<div class="col-sm-3">
-										<button type="button" class="btn btn-default">Verificar</button>
 								</div>
 							</div>
 							<hr>
@@ -149,34 +138,43 @@
 					  </div>
 					</div>
 					<script>
-						$(document).ready(function() {
-							$("#verify_user").click(function(){
+						$(document).ready(function()
+						{
+							$("#create_order").click(function(){
 								$.ajax({
 									type: "POST",
-									url: "verify_user.php",
-									data: {'search_type': $('#search_type').val(),
-										   'search_input': $('#search_input').val() },
-									dataType: 'json',
+									url: "create_order.php",
+									data: {'member_id': $('#member_id').val(),
+										   'plate': $('#plate').val(),
+										   'desc': $('#desc').val(),
+										   'place': $('#place').val(),
+										   'city': $('#city').val(),
+										   'dest': $('#dest').val(),
+										   'city2': $('#city2').val(),
+										   'miles': $('#miles').val(),
+										   'provider_id': $('#provider_id').val()},
 									success: function(data) {
-										if (data.status === "success")
+										if (data === "success")
 										{
-											$("#user_info_status").html("Generando orden para " + data.name);
-											//$("#hide_this").hide();
+											$('#modal').modal('show');
+											$("#ModalLabel").html('<strong>Información</strong>');
+											$("#ModalBody").html('¡Orden de servicio ha sido generada!');
 										}
 										else
 										{
 											$('#modal').modal('show');
 											$("#ModalLabel").html('<strong>Error</strong>');
-											$("#ModalBody").html(data.error);
+											$("#ModalBody").html(data);
 										}
 									}
 								});
 							});
-							$("#create_order").click(function(){
-								alert("test");
-							});
 							$('#cancel').click(function()
 							{
+								window.location.href = 'index.php';
+							});
+							$('#modal').on('hidden.bs.modal', function() { 
+								//location.reload();
 								window.location.href = 'index.php';
 							});
 						});
